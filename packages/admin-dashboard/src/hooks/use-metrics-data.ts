@@ -20,42 +20,26 @@ export interface MetricsData {
 	}>;
 }
 
-// Mock API function - replace with actual API call
+// API function to fetch metrics data
 const fetchMetricsData = async (): Promise<MetricsData> => {
-	// Simulate API delay
-	await new Promise((resolve) => setTimeout(resolve, 1500));
+	const response = await fetch('/api/monitoring/metrics?timeRange=12h');
 
-	// Generate sample time series data
-	const now = new Date();
-	const systemMetrics = Array.from({ length: 12 }, (_, i) => {
-		const time = new Date(now.getTime() - (11 - i) * 5 * 60 * 1000);
-		return {
-			time: time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-			cpu: Math.floor(Math.random() * 30) + 40, // 40-70%
-			memory: Math.floor(Math.random() * 25) + 55, // 55-80%
-		};
-	});
+	if (!response.ok) {
+		throw new Error('Failed to fetch metrics data');
+	}
 
-	const agentMetrics = [
-		{ name: 'Content Agent', requests: 245, errors: 3 },
-		{ name: 'Analysis Agent', requests: 189, errors: 1 },
-		{ name: 'Email Agent', requests: 156, errors: 0 },
-		{ name: 'Data Agent', requests: 98, errors: 2 },
-	];
+	const data = await response.json();
 
-	const workflowMetrics = Array.from({ length: 12 }, (_, i) => {
-		const time = new Date(now.getTime() - (11 - i) * 5 * 60 * 1000);
-		return {
-			time: time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-			executions: Math.floor(Math.random() * 20) + 5, // 5-25 executions
-			success_rate: Math.floor(Math.random() * 15) + 85, // 85-100% success rate
-		};
-	});
-
+	// Transform the data to match the expected interface
 	return {
-		systemMetrics,
-		agentMetrics,
-		workflowMetrics,
+		systemMetrics: data.systemUsage,
+		agentMetrics: [
+			{ name: 'Content Agent', requests: 245, errors: 3 },
+			{ name: 'Analysis Agent', requests: 189, errors: 1 },
+			{ name: 'Email Agent', requests: 156, errors: 0 },
+			{ name: 'Data Agent', requests: 98, errors: 2 },
+		],
+		workflowMetrics: data.workflowMetrics,
 	};
 };
 

@@ -347,7 +347,7 @@ class ToolRegistry {
 | M4: MCP Implementation | Month 6 | Full MCP support with n8n tools |
 | M5: Advanced Planning | Month 8 | Recursive planning and reasoning |
 | M6: Production Ready | Month 12 | Enterprise-grade agent capabilities |
-
+f
 ## Documentation Requirements
 
 1. **API Documentation**: Complete OpenAPI specs for all endpoints

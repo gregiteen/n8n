@@ -15,24 +15,15 @@ export interface SystemHealth {
 	}>;
 }
 
-// Mock API function - replace with actual API call
+// API function to fetch system health
 const fetchSystemHealth = async (): Promise<SystemHealth> => {
-	// Simulate API delay
-	await new Promise((resolve) => setTimeout(resolve, 1200));
+	const response = await fetch('/api/monitoring/health');
 
-	return {
-		cpu: 45,
-		memory: 62,
-		disk: 38,
-		network: 23,
-		uptime: 432000, // 5 days in seconds
-		services: [
-			{ name: 'API Gateway', status: 'healthy', responseTime: 45 },
-			{ name: 'Database', status: 'healthy', responseTime: 23 },
-			{ name: 'AI Engine', status: 'warning', responseTime: 156 },
-			{ name: 'n8n Service', status: 'healthy', responseTime: 67 },
-		],
-	};
+	if (!response.ok) {
+		throw new Error('Failed to fetch system health');
+	}
+
+	return response.json();
 };
 
 export function useSystemHealth() {

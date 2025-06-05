@@ -4,10 +4,10 @@ import { AlertTriangle, AlertCircle, CheckCircle } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useSystemAlerts } from '@/hooks/use-system-alerts';
+import { useAlerts } from '@/hooks/use-alerts';
 
 export function AlertsPanel() {
-  const { data: alerts, isLoading } = useSystemAlerts();
+  const { data: alerts, isLoading } = useAlerts(false); // Only show unresolved alerts
 
   if (isLoading) {
     return (
@@ -36,8 +36,12 @@ export function AlertsPanel() {
     switch (severity) {
       case 'critical':
         return <AlertCircle className="h-5 w-5 text-red-500" />;
-      case 'warning':
+      case 'high':
+        return <AlertCircle className="h-5 w-5 text-red-400" />;
+      case 'medium':
         return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
+      case 'low':
+        return <AlertTriangle className="h-5 w-5 text-blue-500" />;
       default:
         return <CheckCircle className="h-5 w-5 text-green-500" />;
     }
@@ -46,9 +50,12 @@ export function AlertsPanel() {
   const getAlertVariant = (severity: string) => {
     switch (severity) {
       case 'critical':
+      case 'high':
         return 'destructive';
-      case 'warning':
+      case 'medium':
         return 'secondary';
+      case 'low':
+        return 'outline';
       default:
         return 'default';
     }
@@ -71,17 +78,17 @@ export function AlertsPanel() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium truncate">
-                      {alert.title}
+                      {alert.message}
                     </p>
                     <Badge variant={getAlertVariant(alert.severity) as any}>
                       {alert.severity}
                     </Badge>
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {alert.description}
+                    Metric: {alert.metric}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {alert.timestamp}
+                    {new Date(alert.timestamp).toLocaleString()}
                   </p>
                 </div>
               </div>

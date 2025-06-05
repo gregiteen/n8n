@@ -28,6 +28,7 @@
   ],
   "devDependencies": {
     "@n8n/typescript-config": "workspace:*",
+    "@sentry/types": "^9.27.0",
     "@types/express": "catalog:",
     "@types/jsonwebtoken": "catalog:",
     "@types/lodash": "catalog:",
