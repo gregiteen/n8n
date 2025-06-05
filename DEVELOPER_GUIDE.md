@@ -522,6 +522,39 @@ async function makeAnonymousRequest(url: string, options: RequestOptions): Promi
 }
 ```
 
+### Using the Privacy Layer Package
+
+The `@n8n/privacy-layer` package provides reusable classes for secure requests
+and credential management.
+
+```typescript
+import { PrivacyGateway, SecureVault } from '@n8n/privacy-layer';
+
+const gateway = new PrivacyGateway({
+  anonymizeRequests: true,
+  routeThroughTor: false,
+  stripMetadata: true,
+  maskPII: true,
+  encryptPayloads: true,
+  preventFingerprinting: true,
+});
+
+const vault = new SecureVault({ url: 'http://localhost:8200' });
+await vault.initialize();
+
+
+// Encrypted request payload
+await gateway.request('https://example.com/api', 'POST', {
+  email: 'user@example.com',
+});
+
+const id = await vault.storeCredential('github', 'user1', {
+  token: 'ghp_secret',
+});
+const list = await vault.listCredentials('github', 'user1');
+await vault.deleteCredential('github', 'user1', id);
+```
+
 ## Debugging & Troubleshooting
 
 ### Logging Standards
