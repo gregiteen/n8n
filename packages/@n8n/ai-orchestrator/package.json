@@ -1,0 +1,27 @@
+{
+  "name": "@n8n/ai-orchestrator",
+  "version": "0.1.0",
+  "description": "AI Orchestration for n8n",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "clean": "rimraf dist .turbo",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@n8n/config": "workspace:*",
+    "@n8n/constants": "workspace:*"
+  },
+  "devDependencies": {
+    "@n8n/typescript-config": "workspace:*",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.0.0",
+    "jest": "^29.5.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0"
+  }
+}
