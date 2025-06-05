@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import dotenv from 'dotenv';
 import { ApplicationError } from 'n8n-workflow';
 import { OpenAI } from 'openai';
@@ -11,6 +12,7 @@ export class OpenAIClient {
 		if (!apiKey) {
 			throw new ApplicationError('OPENAI_API_KEY is required');
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		this.client = new OpenAI({ apiKey });
 	}
 
@@ -25,3 +27,4 @@ export class OpenAIClient {
 		return String(response.choices[0]?.message?.content ?? '');
 	}
 }
+/* eslint-enable @typescript-eslint/no-unsafe-call */

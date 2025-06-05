@@ -2,6 +2,10 @@ import { AnthropicClient } from '../src/clients/anthropic';
 import { OpenAIClient } from '../src/clients/openai';
 import { OpenRouterClient } from '../src/clients/openrouter';
 
+jest.mock('n8n-workflow', () => ({ ApplicationError: class ApplicationError extends Error {} }), {
+	virtual: true,
+});
+
 describe('LLM clients', () => {
 	const env = process.env;
 

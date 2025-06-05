@@ -6,7 +6,9 @@
 		"paths": {
 			"@/*": ["./*"]
 		},
-		"tsBuildInfoFile": "dist/typecheck.tsbuildinfo"
+		"tsBuildInfoFile": "dist/typecheck.tsbuildinfo",
+		"module": "Node16",
+		"moduleResolution": "Node16"
 	},
 	"include": ["src/**/*.ts", "test/**/*.ts"]
 }
