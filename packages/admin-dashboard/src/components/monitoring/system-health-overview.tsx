@@ -8,7 +8,8 @@ import { Progress } from '@/components/ui/progress';
 import { useSystemHealth } from '@/hooks/use-system-health';
 
 export function SystemHealthOverview() {
-  const { data: health, isLoading } = useSystemHealth();
+  const { data, isLoading, error } = useSystemHealth();
+  const healthData = data?.current;
 
   if (isLoading) {
     return (
@@ -32,31 +33,49 @@ export function SystemHealthOverview() {
       </Card>
     );
   }
+  
+  if (error || !healthData) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>System Health Overview</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="p-4 text-center">
+            <p className="text-muted-foreground">Failed to load system health data</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const healthMetrics = [
     {
       name: 'CPU Usage',
-      value: health?.cpu || 0,
+      value: healthData.cpu || 0,
       icon: Cpu,
-      status: health?.cpu < 80 ? 'healthy' : 'warning',
+      status: healthData.status === 'critical' && healthData.cpu > 90 ? 'critical' : 
+             healthData.cpu > 80 ? 'warning' : 'healthy',
     },
     {
       name: 'Memory Usage',
-      value: health?.memory || 0,
+      value: healthData.memory || 0,
       icon: Database,
-      status: health?.memory < 85 ? 'healthy' : 'critical',
+      status: healthData.status === 'critical' && healthData.memory > 90 ? 'critical' : 
+             healthData.memory > 85 ? 'warning' : 'healthy',
     },
     {
       name: 'Disk Usage',
-      value: health?.disk || 0,
+      value: healthData.disk || 0,
       icon: HardDrive,
-      status: health?.disk < 90 ? 'healthy' : 'warning',
+      status: healthData.disk > 90 ? 'critical' : 
+             healthData.disk > 80 ? 'warning' : 'healthy',
     },
     {
       name: 'Network I/O',
-      value: health?.network || 0,
+      value: healthData.network || 0,
       icon: Network,
-      status: 'healthy',
+      status: healthData.network > 90 ? 'warning' : 'healthy',
     },
   ];
 
@@ -100,6 +119,31 @@ export function SystemHealthOverview() {
               />
             </div>
           ))}
+          
+          {healthData.services && healthData.services.length > 0 && (
+            <div className="mt-6">
+              <h3 className="text-sm font-medium mb-2">Service Status</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {healthData.services.map((service) => (
+                  <div key={service.name} className="flex justify-between items-center p-2 rounded-md bg-muted/50">
+                    <span className="text-sm">{service.name}</span>
+                    <div className="flex items-center">
+                      <span className="text-xs text-muted-foreground mr-2">{service.responseTime}ms</span>
+                      <Badge 
+                        variant={
+                          service.status === 'healthy' ? 'outline' :
+                          service.status === 'warning' ? 'secondary' : 'destructive'
+                        }
+                        className="text-xs"
+                      >
+                        {service.status}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
