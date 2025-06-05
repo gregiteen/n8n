@@ -112,8 +112,17 @@ install_dependencies() {
     
     cd "$SCRIPT_DIR"
     
-    # Install root dependencies
-    pnpm install --frozen-lockfile
+    # Check if we should skip frozen lockfile
+    if [ "$NO_FROZEN_LOCKFILE" = true ]; then
+        print_warning "Skipping frozen lockfile, running regular install..."
+        pnpm install
+    else
+        # Try frozen lockfile first, fallback to regular install if it fails
+        if ! pnpm install --frozen-lockfile 2>/dev/null; then
+            print_warning "Frozen lockfile failed, running regular install..."
+            pnpm install
+        fi
+    fi
     
     print_success "Dependencies installed successfully"
 }
@@ -185,6 +194,7 @@ show_help() {
     echo "  --skip-build        Skip the build step"
     echo "  --skip-tests        Skip running tests"
     echo "  --skip-lint         Skip linting checks"
+    echo "  --no-frozen-lockfile    Skip frozen lockfile, useful for development"
     echo "  --install-only      Only install dependencies"
     echo "  --build-only        Only build the project"
     echo ""
@@ -200,6 +210,7 @@ SKIP_TESTS=false
 SKIP_LINT=false
 INSTALL_ONLY=false
 BUILD_ONLY=false
+NO_FROZEN_LOCKFILE=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -225,6 +236,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --build-only)
             BUILD_ONLY=true
+            shift
+            ;;
+        --no-frozen-lockfile)
+            NO_FROZEN_LOCKFILE=true
             shift
             ;;
         *)

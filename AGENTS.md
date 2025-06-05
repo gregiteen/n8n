@@ -15,8 +15,8 @@ This repository contains the n8n AI Agent Platform with an admin dashboard for m
 # Codex clones the repo directly into the working directory
 # Use these commands in order:
 
-# 1. Install dependencies (required first)
-pnpm install
+# 1. Install dependencies (handle lockfile issues)
+pnpm install --no-frozen-lockfile
 
 # 2. Build the project 
 pnpm build
@@ -30,7 +30,7 @@ pnpm dev
 
 ### Alternative: One-line setup
 ```bash
-pnpm install && pnpm build && pnpm dev
+pnpm install --no-frozen-lockfile && pnpm build && pnpm dev
 ```
 
 ### Admin Dashboard Specific
