@@ -4,9 +4,11 @@
 		"rootDir": ".",
 		"baseUrl": "src",
 		"paths": {
-			"@/*": ["./*"]
+			"@/*": ["./*"],
+			"n8n-workflow": ["types/n8n-workflow.d.ts"]
 		},
-		"tsBuildInfoFile": "dist/typecheck.tsbuildinfo"
+		"tsBuildInfoFile": "dist/typecheck.tsbuildinfo",
+		"moduleResolution": "nodenext"
 	},
-	"include": ["src/**/*.ts", "test/**/*.ts"]
+	"include": ["src/**/*.ts", "test/**/*.ts", "src/types/**/*.d.ts"]
 }

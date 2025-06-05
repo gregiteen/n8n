@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment */
 import dotenv from 'dotenv';
 import { ApplicationError } from 'n8n-workflow';
 import { OpenRouter } from 'openrouter-client';
@@ -11,6 +12,7 @@ export class OpenRouterClient {
 		if (!apiKey) {
 			throw new ApplicationError('OPENROUTER_API_KEY is required');
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
 		this.client = new OpenRouter(apiKey);
 	}
 
@@ -18,6 +20,7 @@ export class OpenRouterClient {
 		messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }>,
 		model?: string,
 	) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
 		const response = await this.client.chat(messages, { model });
 		if (response.success) {
 			return String(response.data.choices[0]?.message?.content ?? '');

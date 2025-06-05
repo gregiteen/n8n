@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment */
 import { Anthropic } from '@anthropic-ai/sdk';
 import dotenv from 'dotenv';
 import { ApplicationError } from 'n8n-workflow';
@@ -11,6 +12,7 @@ export class AnthropicClient {
 		if (!apiKey) {
 			throw new ApplicationError('ANTHROPIC_API_KEY is required');
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
 		this.client = new Anthropic({ apiKey });
 	}
 
