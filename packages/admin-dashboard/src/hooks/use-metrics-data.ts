@@ -3,14 +3,20 @@
 import { useQuery } from '@tanstack/react-query';
 
 export interface MetricsData {
-	systemUsage: Array<{
+	systemMetrics: Array<{
 		time: string;
 		cpu: number;
 		memory: number;
 	}>;
-	agentActivity: Array<{
+	agentMetrics: Array<{
+		name: string;
+		requests: number;
+		errors: number;
+	}>;
+	workflowMetrics: Array<{
 		time: string;
 		executions: number;
+		success_rate: number;
 	}>;
 }
 
@@ -21,7 +27,7 @@ const fetchMetricsData = async (): Promise<MetricsData> => {
 
 	// Generate sample time series data
 	const now = new Date();
-	const systemUsage = Array.from({ length: 12 }, (_, i) => {
+	const systemMetrics = Array.from({ length: 12 }, (_, i) => {
 		const time = new Date(now.getTime() - (11 - i) * 5 * 60 * 1000);
 		return {
 			time: time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
@@ -30,17 +36,26 @@ const fetchMetricsData = async (): Promise<MetricsData> => {
 		};
 	});
 
-	const agentActivity = Array.from({ length: 12 }, (_, i) => {
+	const agentMetrics = [
+		{ name: 'Content Agent', requests: 245, errors: 3 },
+		{ name: 'Analysis Agent', requests: 189, errors: 1 },
+		{ name: 'Email Agent', requests: 156, errors: 0 },
+		{ name: 'Data Agent', requests: 98, errors: 2 },
+	];
+
+	const workflowMetrics = Array.from({ length: 12 }, (_, i) => {
 		const time = new Date(now.getTime() - (11 - i) * 5 * 60 * 1000);
 		return {
 			time: time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
 			executions: Math.floor(Math.random() * 20) + 5, // 5-25 executions
+			success_rate: Math.floor(Math.random() * 15) + 85, // 85-100% success rate
 		};
 	});
 
 	return {
-		systemUsage,
-		agentActivity,
+		systemMetrics,
+		agentMetrics,
+		workflowMetrics,
 	};
 };
 

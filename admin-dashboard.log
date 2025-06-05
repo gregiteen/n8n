@@ -2,8 +2,22 @@
 > @n8n/admin-dashboard@1.0.0 dev /workspaces/n8n/packages/admin-dashboard
 > next dev --port 3001
 
-  ▲ Next.js 14.2.29
-  - Local:        http://localhost:3001
-
- ✓ Starting...
- ✓ Ready in 3.1s
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at /workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:280:16
+    at new Promise (<anonymous>)
+    at startServer (/workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:191:11)
+    at /workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:310:52
+    at Span.traceAsyncFn (/workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/trace/trace.js:154:26)
+    at process.<anonymous> (/workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:310:35)
+    at process.emit (node:events:518:28) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3001
+}
+[?25h
