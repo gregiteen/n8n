@@ -1,4 +1,4 @@
-#!/bin/bash
+cc#!/bin/bash
 
 # Codex Wrapper Script
 # This wrapper ensures the codex-dev-environment.sh script runs properly in Codex environment

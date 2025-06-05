@@ -23,9 +23,6 @@ FIX_ERRORS=true
 SKIP_INSTALL=false
 WORKSTREAM=""
 
-# Default to skipping yarn for Codex to avoid 503 errors
-export SKIP_YARN=true
-
 # Print functions
 print_header() {
   echo ""
@@ -131,57 +128,16 @@ check_prerequisites() {
     print_success "Node.js version $NODE_VERSION"
   fi
   
-  # Skip yarn-related operations if requested (to avoid network errors)
-  if [ "${SKIP_YARN:-false}" == "true" ]; then
-    print_warning "Skipping Yarn installation as requested by SKIP_YARN environment variable"
-  fi
-  
   # Check pnpm
   if ! command -v pnpm &> /dev/null; then
     print_step "Installing pnpm..."
-    npm install -g pnpm@10.11.1 || {
-      print_warning "Could not install pnpm via npm. Trying alternative method..."
-      # Alternative installation method via direct download if npm fails
-      curl -fsSL https://get.pnpm.io/install.sh | sh - || {
-        print_warning "Failed to install pnpm. Will try to continue without it."
-      }
-    }
+    npm install -g pnpm@10.11.1
   fi
   
-  # Ensure pnpm is in PATH after installation
-  if ! command -v pnpm &> /dev/null; then
-    export PATH="$HOME/.local/share/pnpm:$PATH"
-  fi
-  
-  if command -v pnpm &> /dev/null; then
-    PNPM_VERSION=$(pnpm -v)
-    print_success "pnpm version $PNPM_VERSION"
-  else
-    print_error "pnpm is not available in PATH. Continuing anyway, but this may cause issues."
-  fi
+  PNPM_VERSION=$(pnpm -v)
+  print_success "pnpm version $PNPM_VERSION"
   
   return 0
-}
-
-# Check network connectivity to a specific domain
-check_network_connectivity() {
-  local domain=$1
-  if command -v curl &> /dev/null; then
-    if curl -s --head --request GET "https://$domain" | grep "200\|301\|302" > /dev/null; then
-      return 0
-    else
-      return 1
-    fi
-  elif command -v wget &> /dev/null; then
-    if wget -q --spider "https://$domain"; then
-      return 0
-    else
-      return 1
-    fi
-  else
-    # If neither curl nor wget is available, assume connectivity is ok
-    return 0
-  fi
 }
 
 # Fix common project errors
@@ -614,13 +570,8 @@ main() {
   # Parse command line arguments
   parse_args "$@"
   
-  # For Codex startup, make sure we're in the right directory
-  if [ -d "/workspaces/n8n" ]; then
-    cd "/workspaces/n8n"
-    print_success "Changed to n8n workspace directory"
-  else
-    # Change to script directory as fallback
-    cd "$SCRIPT_DIR"
+  # Change to script directory
+  cd "$SCRIPT_DIR"
   
   # Check prerequisites
   check_prerequisites
