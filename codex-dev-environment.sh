@@ -5,6 +5,18 @@
 # Date: June 5, 2025
 # Purpose: Configure development environment for all n8n AI Agent Platform workstreams
 
+# Handle script being executed from a temporary directory in Codex
+if [[ "$0" == "/tmp/"* || "$PWD" == "/tmp/"* ]]; then
+  # If we're running from a temp directory, try to find and change to the n8n directory
+  if [ -d "/workspaces/n8n" ]; then
+    cd /workspaces/n8n
+    exec ./codex-dev-environment.sh "$@"
+  elif [ -d "/workspace/n8n" ]; then
+    cd /workspace/n8n
+    exec ./codex-dev-environment.sh "$@"
+  fi
+fi
+
 set -e
 
 # Colors for terminal output

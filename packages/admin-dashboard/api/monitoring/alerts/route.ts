@@ -1,39 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { monitoringSystem, Alert as DbAlert } from '@/lib/db';
 
 interface Alert {
 	id: string;
 	metric: string;
-	severity: 'low' | 'medium' | 'high' | 'critical';
+	severity: 'info' | 'warning' | 'critical';
 	message: string;
 	timestamp: string;
-	resolved: boolean;
+	status: 'active' | 'acknowledged' | 'resolved';
+	acknowledgedBy?: string;
+	acknowledgedAt?: string;
+	resolvedAt?: string;
 }
 
-// Mock alerts data - in production, this would come from monitoring service
-const mockAlerts: Alert[] = [
+// Helper function to convert from db alert to API alert
+function formatAlert(dbAlert: DbAlert): Alert {
+	return {
+		id: dbAlert.id,
+		metric: dbAlert.relatedMetric || dbAlert.source,
+		severity: dbAlert.severity,
+		message: dbAlert.title + (dbAlert.description ? ': ' + dbAlert.description : ''),
+		timestamp: dbAlert.timestamp.toISOString(),
+		status: dbAlert.status,
+		acknowledgedBy: dbAlert.acknowledgedBy,
+		acknowledgedAt: dbAlert.acknowledgedAt?.toISOString(),
+		resolvedAt: dbAlert.resolvedAt?.toISOString(),
+	};
+}
+
+// Fallback mock alerts if database is unavailable
+const fallbackAlerts: Alert[] = [
 	{
-		id: 'alert-1',
+		id: 'mock-alert-1',
 		metric: 'system.cpu.usage',
-		severity: 'medium',
+		severity: 'warning',
 		message: 'CPU usage is high (85%)',
-		timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 minutes ago
-		resolved: false,
+		timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+		status: 'active',
 	},
 	{
-		id: 'alert-2',
+		id: 'mock-alert-2',
 		metric: 'ai.requests.latency',
-		severity: 'low',
+		severity: 'info',
 		message: 'AI request latency increased (avg 2.5s)',
-		timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(), // 15 minutes ago
-		resolved: false,
+		timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+		status: 'active',
 	},
 	{
-		id: 'alert-3',
+		id: 'mock-alert-3',
 		metric: 'workflow.executions.count',
-		severity: 'high',
+		severity: 'critical',
 		message: 'Workflow execution failure rate above threshold (15%)',
-		timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-		resolved: true,
+		timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+		status: 'resolved',
+		resolvedAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
 	},
 ];
 
@@ -41,24 +61,59 @@ export async function GET(request: NextRequest) {
 	try {
 		const { searchParams } = new URL(request.url);
 		const includeResolved = searchParams.get('includeResolved') === 'true';
-		const severity = searchParams.get('severity') as Alert['severity'] | null;
+		const severityParam = searchParams.get('severity') as DbAlert['severity'] | null;
+		const limit = searchParams.get('limit')
+			? parseInt(searchParams.get('limit') as string, 10)
+			: 100;
 
-		let alerts = [...mockAlerts];
+		try {
+			// Get alerts from the database
+			let dbAlerts: DbAlert[];
 
-		// Filter by resolution status
-		if (!includeResolved) {
-			alerts = alerts.filter((alert) => !alert.resolved);
+			// Convert status and severity params to database format
+			const status = !includeResolved ? 'active' : undefined;
+			const severity = severityParam || undefined;
+
+			// Define from and to dates (default: last 24 hours)
+			const fromDate = new Date();
+			fromDate.setHours(fromDate.getHours() - 24);
+
+			// Query alerts from monitoring system
+			dbAlerts = await monitoringSystem.db.getAlerts({
+				status,
+				severity,
+				fromDate,
+				limit,
+			});
+
+			// Convert database alerts to API format
+			const alerts = dbAlerts.map(formatAlert);
+
+			// Sort by timestamp (newest first)
+			alerts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+			return NextResponse.json(alerts);
+		} catch (dbError) {
+			console.error('Database error fetching alerts:', dbError);
+
+			// Fall back to mock data if database call fails
+			let alerts = [...fallbackAlerts];
+
+			// Filter by resolution status
+			if (!includeResolved) {
+				alerts = alerts.filter((alert) => alert.status !== 'resolved');
+			}
+
+			// Filter by severity
+			if (severityParam) {
+				alerts = alerts.filter((alert) => alert.severity === severityParam);
+			}
+
+			// Sort by timestamp (newest first)
+			alerts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+			return NextResponse.json(alerts);
 		}
-
-		// Filter by severity
-		if (severity) {
-			alerts = alerts.filter((alert) => alert.severity === severity);
-		}
-
-		// Sort by timestamp (newest first)
-		alerts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-
-		return NextResponse.json(alerts);
 	} catch (error) {
 		console.error('Error fetching alerts:', error);
 		return NextResponse.json({ error: 'Failed to fetch alerts' }, { status: 500 });
