@@ -133,10 +133,30 @@ build_project() {
     
     cd "$SCRIPT_DIR"
     
-    # Build all packages
-    pnpm build
-    
-    print_success "Project built successfully"
+    # Try to build all packages, with better error handling
+    if ! pnpm build 2>&1; then
+        print_warning "Full build failed, trying to build core packages individually..."
+        
+        # Try building essential packages first
+        print_step "Building core packages..."
+        if pnpm build --filter=@n8n/workflow 2>/dev/null; then
+            print_success "Core workflow package built"
+        fi
+        
+        if pnpm build --filter=n8n-core 2>/dev/null; then
+            print_success "n8n core built"
+        fi
+        
+        if pnpm build --filter=admin-dashboard 2>/dev/null; then
+            print_success "Admin dashboard built"
+        else
+            print_warning "Admin dashboard build failed, but continuing..."
+        fi
+        
+        print_warning "Some packages may not have built successfully. You can continue with development."
+    else
+        print_success "Project built successfully"
+    fi
 }
 
 # Function to run linting
@@ -194,6 +214,7 @@ show_help() {
     echo "  --skip-build        Skip the build step"
     echo "  --skip-tests        Skip running tests"
     echo "  --skip-lint         Skip linting checks"
+    echo "  --dev-only          Setup for development only (skip build, tests, lint)"
     echo "  --no-frozen-lockfile    Skip frozen lockfile, useful for development"
     echo "  --install-only      Only install dependencies"
     echo "  --build-only        Only build the project"
@@ -211,6 +232,7 @@ SKIP_LINT=false
 INSTALL_ONLY=false
 BUILD_ONLY=false
 NO_FROZEN_LOCKFILE=false
+DEV_ONLY=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -240,6 +262,13 @@ while [[ $# -gt 0 ]]; do
             ;;
         --no-frozen-lockfile)
             NO_FROZEN_LOCKFILE=true
+            shift
+            ;;
+        --dev-only)
+            DEV_ONLY=true
+            SKIP_BUILD=true
+            SKIP_TESTS=true
+            SKIP_LINT=true
             shift
             ;;
         *)

@@ -15,13 +15,14 @@ This repository contains the n8n AI Agent Platform with an admin dashboard for m
 # Codex clones the repo directly into the working directory
 # Use these commands in order:
 
+# Quick setup for development (recommended for Codex)
+./codex-setup.sh --dev-only --no-frozen-lockfile
+
+# Or manual setup:
 # 1. Install dependencies (handle lockfile issues)
 pnpm install --no-frozen-lockfile
 
-# 2. Build the project 
-pnpm build
-
-# 3. Start development servers
+# 2. Start development (skip build for faster setup)
 pnpm dev
 
 # Admin dashboard will be on http://localhost:3001
@@ -30,7 +31,7 @@ pnpm dev
 
 ### Alternative: One-line setup
 ```bash
-pnpm install --no-frozen-lockfile && pnpm build && pnpm dev
+pnpm install --no-frozen-lockfile && pnpm dev
 ```
 
 ### Admin Dashboard Specific

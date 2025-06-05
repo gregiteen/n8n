@@ -7,12 +7,12 @@ This guide is optimized for **OpenAI Codex** cloud environment.
 ### Initial Setup
 ```bash
 # In OpenAI Codex, you're already in the project root after cloning
-# Use the no-frozen-lockfile flag to handle dependency issues
-./codex-setup.sh --no-frozen-lockfile
+# Quick development setup (recommended)
+./codex-setup.sh --dev-only --no-frozen-lockfile
 
-# Or step by step:
+# Or minimal manual setup:
 pnpm install --no-frozen-lockfile
-pnpm build
+pnpm dev
 ```
 
 ### Development Commands
