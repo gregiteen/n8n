@@ -1,8 +1,9 @@
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { PrivacySettings } from '@/components/privacy/privacy-settings';
-import { DataRetentionSettings } from '@/components/privacy/data-retention-settings';
 import { ConsentManagement } from '@/components/privacy/consent-management';
+import { DataRetentionSettings } from '@/components/privacy/data-retention-settings';
 import { PrivacyAuditLog } from '@/components/privacy/privacy-audit-log';
+import { PrivacySettings } from '@/components/privacy/privacy-settings';
+
 
 export default function PrivacyPage() {
   return (

@@ -1,7 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Activity, AlertCircle, Bot, CheckCircle, Clock, Zap } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAgentStatus } from "@/hooks/use-agent-status";
-import { Bot, Activity, AlertCircle, CheckCircle, Clock, Zap } from "lucide-react";
 
 export function AgentStats() {
   const { data: agents, isLoading, error } = useAgentStatus();

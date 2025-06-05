@@ -1,7 +1,8 @@
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { UsersTable } from '@/components/users/users-table';
 import { UserActions } from '@/components/users/user-actions';
 import { UserStats } from '@/components/users/user-stats';
+import { UsersTable } from '@/components/users/users-table';
+
 
 export default function UsersPage() {
   return (

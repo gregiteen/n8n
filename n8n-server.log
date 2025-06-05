@@ -1,0 +1,1007 @@
+ WARN  Unsupported engine: wanted: {"node":">=22.16"} (current: {"node":"v22.15.0","pnpm":"10.11.1"})
+
+> n8n-monorepo@1.97.0 dev /workspaces/n8n
+> turbo run dev --parallel --env-mode=loose --filter=!@n8n/design-system --filter=!@n8n/chat --filter=!@n8n/task-runner
+
+turbo 2.5.4
+
+• Packages in scope: @n8n/admin-dashboard, @n8n/ai-workflow-builder, @n8n/api-types, @n8n/backend-common, @n8n/client-oauth2, @n8n/codemirror-lang, @n8n/composables, @n8n/config, @n8n/constants, @n8n/db, @n8n/decorators, @n8n/di, @n8n/eslint-config, @n8n/extension-sdk, @n8n/i18n, @n8n/imap, @n8n/integration-test-utils, @n8n/json-schema-to-zod, @n8n/n8n-benchmark, @n8n/n8n-extension-insights, @n8n/n8n-nodes-langchain, @n8n/permissions, @n8n/stores, @n8n/storybook, @n8n/typescript-config, @n8n/utils, @n8n/vitest-config, n8n, n8n-core, n8n-cypress, n8n-editor-ui, n8n-node-dev, n8n-nodes-base, n8n-workflow
+• Running dev in 34 packages
+• Remote caching disabled
+@n8n/json-schema-to-zod:dev: cache bypass, force executing b3d14734443a531b
+@n8n/admin-dashboard:dev: cache bypass, force executing 299e4fb4f135dd7a
+@n8n/backend-common:dev: cache bypass, force executing 0569ac9bc6898bf1
+@n8n/config:dev: cache bypass, force executing 283948af1d64c975
+@n8n/decorators:dev: cache bypass, force executing 1a1e37268abb3eab
+n8n-core:dev: cache bypass, force executing 52ecf2f7853dd9f1
+@n8n/client-oauth2:dev: cache bypass, force executing e27866a2a2286637
+@n8n/stores:dev: cache bypass, force executing c13771912df227e9
+@n8n/constants:dev: cache bypass, force executing 5cfefca6786a97e7
+@n8n/db:dev: cache bypass, force executing ba167eb6a9553490
+@n8n/backend-common:dev: 
+@n8n/backend-common:dev: > @n8n/backend-common@0.7.0 dev /workspaces/n8n/packages/@n8n/backend-common
+@n8n/backend-common:dev: > pnpm watch
+@n8n/backend-common:dev: 
+@n8n/json-schema-to-zod:dev: 
+@n8n/json-schema-to-zod:dev: > @n8n/json-schema-to-zod@1.3.0 dev /workspaces/n8n/packages/@n8n/json-schema-to-zod
+@n8n/json-schema-to-zod:dev: > tsc -w
+@n8n/json-schema-to-zod:dev: 
+@n8n/decorators:dev: 
+@n8n/decorators:dev: > @n8n/decorators@0.7.0 dev /workspaces/n8n/packages/@n8n/decorators
+@n8n/decorators:dev: > pnpm watch
+@n8n/decorators:dev: 
+@n8n/admin-dashboard:dev: 
+@n8n/admin-dashboard:dev: > @n8n/admin-dashboard@1.0.0 dev /workspaces/n8n/packages/admin-dashboard
+@n8n/admin-dashboard:dev: > next dev --port 3001
+@n8n/admin-dashboard:dev: 
+@n8n/stores:dev: 
+@n8n/stores:dev: > @n8n/stores@1.4.0 dev /workspaces/n8n/packages/frontend/@n8n/stores
+@n8n/stores:dev: > vite
+@n8n/stores:dev: 
+@n8n/config:dev: 
+@n8n/config:dev: > @n8n/config@1.41.0 dev /workspaces/n8n/packages/@n8n/config
+@n8n/config:dev: > pnpm watch
+@n8n/config:dev: 
+n8n-core:dev: 
+n8n-core:dev: > n8n-core@1.96.0 dev /workspaces/n8n/packages/core
+n8n-core:dev: > pnpm watch
+n8n-core:dev: 
+@n8n/constants:dev: 
+@n8n/constants:dev: > @n8n/constants@0.5.0 dev /workspaces/n8n/packages/@n8n/constants
+@n8n/constants:dev: > pnpm watch
+@n8n/constants:dev: 
+@n8n/client-oauth2:dev: 
+@n8n/client-oauth2:dev: > @n8n/client-oauth2@0.26.0 dev /workspaces/n8n/packages/@n8n/client-oauth2
+@n8n/client-oauth2:dev: > pnpm watch
+@n8n/client-oauth2:dev: 
+@n8n/db:dev: 
+@n8n/db:dev: > @n8n/db@0.8.0 dev /workspaces/n8n/packages/@n8n/db
+@n8n/db:dev: > pnpm watch
+@n8n/db:dev: 
+@n8n/json-schema-to-zod:dev: [2J[3J[H8:24:34 AM - Starting compilation in watch mode...
+@n8n/json-schema-to-zod:dev: 
+@n8n/stores:dev: 
+@n8n/stores:dev:   VITE v6.3.5  ready in 3539 ms
+@n8n/stores:dev: 
+@n8n/stores:dev:   ➜  Local:   http://localhost:5173/
+@n8n/stores:dev:   ➜  Network: use --host to expose
+@n8n/backend-common:dev: 
+@n8n/backend-common:dev: > @n8n/backend-common@0.7.0 watch /workspaces/n8n/packages/@n8n/backend-common
+@n8n/backend-common:dev: > tsc -p tsconfig.build.json --watch
+@n8n/backend-common:dev: 
+@n8n/decorators:dev: 
+@n8n/decorators:dev: > @n8n/decorators@0.7.0 watch /workspaces/n8n/packages/@n8n/decorators
+@n8n/decorators:dev: > tsc -p tsconfig.build.json --watch
+@n8n/decorators:dev: 
+@n8n/config:dev: 
+@n8n/config:dev: > @n8n/config@1.41.0 watch /workspaces/n8n/packages/@n8n/config
+@n8n/config:dev: > tsc -p tsconfig.build.json --watch
+@n8n/config:dev: 
+@n8n/db:dev: 
+@n8n/db:dev: > @n8n/db@0.8.0 watch /workspaces/n8n/packages/@n8n/db
+@n8n/db:dev: > tsc -p tsconfig.build.json --watch
+@n8n/db:dev: 
+@n8n/client-oauth2:dev: 
+@n8n/client-oauth2:dev: > @n8n/client-oauth2@0.26.0 watch /workspaces/n8n/packages/@n8n/client-oauth2
+@n8n/client-oauth2:dev: > tsc -p tsconfig.build.json --watch
+@n8n/client-oauth2:dev: 
+n8n-core:dev: 
+n8n-core:dev: > n8n-core@1.96.0 watch /workspaces/n8n/packages/core
+n8n-core:dev: > tsc-watch -p tsconfig.build.json --onCompilationComplete "tsc-alias -p tsconfig.build.json"
+n8n-core:dev: 
+@n8n/constants:dev: 
+@n8n/constants:dev: > @n8n/constants@0.5.0 watch /workspaces/n8n/packages/@n8n/constants
+@n8n/constants:dev: > tsc -p tsconfig.build.json --watch
+@n8n/constants:dev: 
+@n8n/backend-common:dev: [2J[3J[H8:24:37 AM - Starting compilation in watch mode...
+@n8n/backend-common:dev: 
+@n8n/decorators:dev: [2J[3J[H8:24:38 AM - Starting compilation in watch mode...
+@n8n/decorators:dev: 
+@n8n/admin-dashboard:dev:  ⨯ Failed to start server
+@n8n/admin-dashboard:dev: Error: listen EADDRINUSE: address already in use :::3001
+@n8n/admin-dashboard:dev:     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+@n8n/admin-dashboard:dev:     at listenInCluster (node:net:1996:12)
+@n8n/admin-dashboard:dev:     at Server.listen (node:net:2101:7)
+@n8n/admin-dashboard:dev:     at /workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:280:16
+@n8n/admin-dashboard:dev:     at new Promise (<anonymous>)
+@n8n/admin-dashboard:dev:     at startServer (/workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:191:11)
+@n8n/admin-dashboard:dev:     at /workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:310:52
+@n8n/admin-dashboard:dev:     at Span.traceAsyncFn (/workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/trace/trace.js:154:26)
+@n8n/admin-dashboard:dev:     at process.<anonymous> (/workspaces/n8n/node_modules/.pnpm/next@14.2.29_@babel+core@7.27.4_@opentelemetry+api@1.9.0_@playwright+test@1.52.0_react-_1762a1ad61d74244d1efa3f5c69e389f/node_modules/next/dist/server/lib/start-server.js:310:35)
+@n8n/admin-dashboard:dev:     at process.emit (node:events:518:28) {
+@n8n/admin-dashboard:dev:   code: 'EADDRINUSE',
+@n8n/admin-dashboard:dev:   errno: -98,
+@n8n/admin-dashboard:dev:   syscall: 'listen',
+@n8n/admin-dashboard:dev:   address: '::',
+@n8n/admin-dashboard:dev:   port: 3001
+@n8n/admin-dashboard:dev: }
+@n8n/client-oauth2:dev: [2J[3J[H8:24:38 AM - Starting compilation in watch mode...
+@n8n/client-oauth2:dev: 
+@n8n/admin-dashboard:dev: [?25h
+@n8n/config:dev: [2J[3J[H8:24:39 AM - Starting compilation in watch mode...
+@n8n/config:dev: 
+@n8n/n8n-extension-insights:dev: cache bypass, force executing 42dd520e8589b3b4
+@n8n/constants:dev: [2J[3J[H8:24:39 AM - Starting compilation in watch mode...
+@n8n/constants:dev: 
+@n8n/db:dev: [2J[3J[H8:24:39 AM - Starting compilation in watch mode...
+@n8n/db:dev: 
+n8n-core:dev: [2J[3J[H8:24:40 AM - Starting compilation in watch mode...
+n8n-core:dev: 
+@n8n/n8n-extension-insights:dev: 
+@n8n/n8n-extension-insights:dev: > @n8n/n8n-extension-insights@0.4.0 dev /workspaces/n8n/packages/extensions/insights
+@n8n/n8n-extension-insights:dev: > vite
+@n8n/n8n-extension-insights:dev: 
+@n8n/constants:dev: 
+@n8n/constants:dev: 8:24:57 AM - Found 0 errors. Watching for file changes.
+@n8n/client-oauth2:dev: 
+@n8n/client-oauth2:dev: 8:25:00 AM - Found 0 errors. Watching for file changes.
+@n8n/backend-common:dev: src/license-state.ts(1,69): error TS2307: Cannot find module '@n8n/constants' or its corresponding type declarations.
+@n8n/backend-common:dev: src/license-state.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/backend-common:dev: src/license-state.ts(3,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(1,31): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(2,54): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(3,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(6,41): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(12,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(155,33): error TS2345: Argument of type '({ message }: { message: string; }) => string' is not assignable to parameter of type '(info: TransformableInfo) => string'.
+@n8n/backend-common:dev:   Types of parameters '__0' and 'info' are incompatible.
+@n8n/backend-common:dev:     Type 'TransformableInfo' is not assignable to type '{ message: string; }'.
+@n8n/backend-common:dev:       Types of property 'message' are incompatible.
+@n8n/backend-common:dev:         Type 'unknown' is not assignable to type 'string'.
+@n8n/backend-common:dev: src/logging/logger.ts(172,50): error TS7006: Parameter 's' implicitly has an 'any' type.
+@n8n/backend-common:dev: src/types.ts(1,67): error TS2307: Cannot find module '@n8n/constants' or its corresponding type declarations.
+@n8n/backend-common:dev: 
+@n8n/backend-common:dev: 8:25:00 AM - Found 11 errors. Watching for file changes.
+@n8n/backend-common:dev: [2J[3J[H8:25:02 AM - File change detected. Starting incremental compilation...
+@n8n/backend-common:dev: 
+@n8n/decorators:dev: src/controller/args.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/controller-registry-metadata.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/licensed.ts(1,44): error TS2307: Cannot find module '@n8n/constants' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/licensed.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/middleware.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/rest-controller.ts(1,36): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/route.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/scoped.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/scoped.ts(2,28): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/types.ts(1,44): error TS2307: Cannot find module '@n8n/constants' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/types.ts(2,36): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/controller/types.ts(3,28): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/decorators:dev: src/errors.ts(1,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/decorators:dev:   There are types at '/workspaces/n8n/packages/@n8n/decorators/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/decorators:dev: src/execution-lifecycle/lifecycle-metadata.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/execution-lifecycle/lifecycle-metadata.ts(10,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/decorators:dev:   There are types at '/workspaces/n8n/packages/@n8n/decorators/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/decorators:dev: src/execution-lifecycle/on-lifecycle-event.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/module/module-metadata.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/module/module.ts(1,56): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/multi-main/multi-main-metadata.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/multi-main/on-multi-main-event.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/pubsub/on-pubsub-event.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/pubsub/pubsub-metadata.ts(1,49): error TS2307: Cannot find module '@n8n/constants' or its corresponding type declarations.
+@n8n/decorators:dev: src/pubsub/pubsub-metadata.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/redactable.ts(1,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/decorators:dev:   There are types at '/workspaces/n8n/packages/@n8n/decorators/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/decorators:dev: src/shutdown/on-shutdown.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/shutdown/on-shutdown.ts(2,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/decorators:dev:   There are types at '/workspaces/n8n/packages/@n8n/decorators/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/decorators:dev: src/shutdown/shutdown-registry-metadata.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/decorators:dev: src/shutdown/shutdown-registry-metadata.ts(2,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/decorators:dev:   There are types at '/workspaces/n8n/packages/@n8n/decorators/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/decorators:dev: 
+@n8n/decorators:dev: 8:25:04 AM - Found 28 errors. Watching for file changes.
+@n8n/backend-common:dev: src/license-state.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/backend-common:dev: src/license-state.ts(3,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(1,31): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(2,54): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(3,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(6,41): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(12,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(155,33): error TS2345: Argument of type '({ message }: { message: string; }) => string' is not assignable to parameter of type '(info: TransformableInfo) => string'.
+@n8n/backend-common:dev:   Types of parameters '__0' and 'info' are incompatible.
+@n8n/backend-common:dev:     Type 'TransformableInfo' is not assignable to type '{ message: string; }'.
+@n8n/backend-common:dev:       Types of property 'message' are incompatible.
+@n8n/backend-common:dev:         Type 'unknown' is not assignable to type 'string'.
+@n8n/backend-common:dev: src/logging/logger.ts(172,50): error TS7006: Parameter 's' implicitly has an 'any' type.
+@n8n/backend-common:dev: 
+@n8n/backend-common:dev: 8:25:04 AM - Found 9 errors. Watching for file changes.
+@n8n/backend-common:dev: [2J[3J[H8:25:06 AM - File change detected. Starting incremental compilation...
+@n8n/backend-common:dev: 
+@n8n/config:dev: src/decorators.ts(2,36): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/config:dev: 
+@n8n/config:dev: 8:25:06 AM - Found 1 error. Watching for file changes.
+@n8n/backend-common:dev: src/license-state.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/backend-common:dev: src/license-state.ts(3,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(1,31): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(2,54): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(3,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/backend-common:dev: src/logging/logger.ts(6,41): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(12,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/backend-common:dev:   There are types at '/workspaces/n8n/packages/@n8n/backend-common/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/backend-common:dev: src/logging/logger.ts(155,33): error TS2345: Argument of type '({ message }: { message: string; }) => string' is not assignable to parameter of type '(info: TransformableInfo) => string'.
+@n8n/backend-common:dev:   Types of parameters '__0' and 'info' are incompatible.
+@n8n/backend-common:dev:     Type 'TransformableInfo' is not assignable to type '{ message: string; }'.
+@n8n/backend-common:dev:       Types of property 'message' are incompatible.
+@n8n/backend-common:dev:         Type 'unknown' is not assignable to type 'string'.
+@n8n/backend-common:dev: src/logging/logger.ts(172,50): error TS7006: Parameter 's' implicitly has an 'any' type.
+@n8n/backend-common:dev: 
+@n8n/backend-common:dev: 8:25:07 AM - Found 9 errors. Watching for file changes.
+@n8n/n8n-extension-insights:dev: Port 5173 is in use, trying another one...
+@n8n/n8n-extension-insights:dev: 
+@n8n/n8n-extension-insights:dev:   VITE v6.3.5  ready in 23378 ms
+@n8n/n8n-extension-insights:dev: 
+@n8n/n8n-extension-insights:dev:   ➜  Local:   http://localhost:5174/
+@n8n/n8n-extension-insights:dev:   ➜  Network: use --host to expose
+@n8n/json-schema-to-zod:dev: 
+@n8n/json-schema-to-zod:dev: 8:25:20 AM - Found 0 errors. Watching for file changes.
+@n8n/db:dev: src/entities/abstract-entity.ts(1,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/entities/abstract-entity.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/entities/abstract-entity.ts(12,28): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/entities/abstract-entity.ts(18,25): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ sqlite: string; postgresdb: string; mysqldb: string; mariadb: string; }'.
+@n8n/db:dev: src/entities/abstract-entity.ts(49,24): error TS2507: Type 'T' is not a constructor function type.
+@n8n/db:dev: src/entities/abstract-entity.ts(65,24): error TS2507: Type 'T' is not a constructor function type.
+@n8n/db:dev: src/entities/api-key.ts(1,34): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/credentials-entity.ts(9,14): error TS2420: Class 'CredentialsEntity' incorrectly implements interface 'ICredentialsDb'.
+@n8n/db:dev:   Type 'CredentialsEntity' is missing the following properties from type 'ICredentialsDb': createdAt, updatedAt
+@n8n/db:dev: src/entities/event-destinations.ts(2,51): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/execution-annotation.ee.ts(13,37): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/execution-data.ts(2,31): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/execution-entity.ts(14,54): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/processed-data.ts(2,66): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/project-relation.ts(1,29): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/settings.ts(2,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/shared-credentials.ts(1,39): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/shared-workflow.ts(1,37): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/test-case-execution.ee.ts(2,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/test-run.ee.ts(2,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/types-db.ts(1,40): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/types-db.ts(14,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/types-db.ts(68,38): error TS2344: Type '"name" | "id" | "createdAt" | "updatedAt"' does not satisfy the constraint 'keyof TagEntity'.
+@n8n/db:dev:   Type '"createdAt"' is not assignable to type 'keyof TagEntity'.
+@n8n/db:dev: src/entities/types-db.ts(216,33): error TS2344: Type 'OptionalBaseFields' does not satisfy the constraint 'keyof WorkflowEntity'.
+@n8n/db:dev:   Type '"createdAt"' is not assignable to type 'keyof WorkflowEntity'.
+@n8n/db:dev: src/entities/user.ts(1,36): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/user.ts(2,28): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/user.ts(15,43): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/webhook-entity.ts(2,37): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-entity.ts(12,78): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-entity.ts(13,61): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-history.ts(2,30): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-history.ts(3,28): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(2,36): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(64,33): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(98,32): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(146,45): error TS18047: 'creds' is possibly 'null'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(146,51): error TS2339: Property 'id' does not exist on type 'object'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(180,33): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(188,45): error TS18047: 'creds' is possibly 'null'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(188,51): error TS2339: Property 'id' does not exist on type 'object'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(222,32): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(230,44): error TS18047: 'creds' is possibly 'null'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(230,50): error TS2339: Property 'id' does not exist on type 'object'.
+@n8n/db:dev: src/migrations/common/1658930531669-AddNodeIds.ts(1,28): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1659888469333-AddJsonKeyPinData.ts(1,33): error TS2307: Cannot find module '@n8n/backend-common' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1659888469333-AddJsonKeyPinData.ts(2,54): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1659888469333-AddJsonKeyPinData.ts(15,21): error TS2769: No overload matches this call.
+@n8n/db:dev:   Overload 1 of 2, '(o: {}): string[]', gave the following error.
+@n8n/db:dev:     Argument of type 'unknown' is not assignable to parameter of type '{}'.
+@n8n/db:dev:   Overload 2 of 2, '(o: object): string[]', gave the following error.
+@n8n/db:dev:     Argument of type 'unknown' is not assignable to parameter of type 'object'.
+@n8n/db:dev: src/migrations/common/1674509946020-CreateLdapEntities.ts(1,63): error TS2307: Cannot find module '@n8n/constants' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1675940580449-PurgeInvalidWorkflowConnections.ts(1,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1700571993961-AddGlobalAdminRole.ts(1,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1711390882123-MoveSshKeysToDatabase.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1711390882123-MoveSshKeysToDatabase.ts(2,42): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1711390882123-MoveSshKeysToDatabase.ts(3,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1714133768519-CreateProject.ts(1,34): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1714133768519-CreateProject.ts(2,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1742918400000-AddScopesColumnToApiKeys.ts(1,33): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1742918400000-AddScopesColumnToApiKeys.ts(2,40): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/dsl/table.ts(3,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/migration-helpers.ts(1,24): error TS2307: Cannot find module '@n8n/backend-common' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/migration-helpers.ts(2,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/migration-helpers.ts(3,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/migration-helpers.ts(7,34): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/migration-helpers.ts(8,44): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/migration-types.ts(1,29): error TS2307: Cannot find module '@n8n/backend-common' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/postgresdb/1740445074052-UpdateParentFolderIdColumn.ts(1,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/sqlite/1690000000002-MigrateIntegerKeysToString.ts(1,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/sqlite/1690000000002-MigrateIntegerKeysToString.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/sqlite/1690000000002-MigrateIntegerKeysToString.ts(4,34): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/annotation-tag-mapping.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/annotation-tag.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/api-key.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/auth-identity.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/auth-provider-sync-history.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/credentials.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/credentials.repository.ts(41,69): error TS2322: Type '"createdAt"' is not assignable to type 'keyof CredentialsEntity'.
+@n8n/db:dev: src/repositories/credentials.repository.ts(41,82): error TS2322: Type '"updatedAt"' is not assignable to type 'keyof CredentialsEntity'.
+@n8n/db:dev: src/repositories/event-destinations.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution-annotation.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution-data.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution-metadata.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(1,24): error TS2307: Cannot find module '@n8n/backend-common' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(2,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(3,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(26,50): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(27,58): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/execution.repository.ts(33,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/execution.repository.ts(419,5): error TS2578: Unused '@ts-expect-error' directive.
+@n8n/db:dev: src/repositories/execution.repository.ts(434,5): error TS2578: Unused '@ts-expect-error' directive.
+@n8n/db:dev: src/repositories/execution.repository.ts(824,41): error TS7006: Parameter 'e' implicitly has an 'any' type.
+@n8n/db:dev: src/repositories/execution.repository.ts(869,26): error TS7006: Parameter 'execution' implicitly has an 'any' type.
+@n8n/db:dev: src/repositories/folder-tag-mapping.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/folder.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/folder.repository.ts(4,30): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/installed-nodes.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/installed-packages.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/installed-packages.repository.ts(3,45): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/invalid-auth-token.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/license-metrics.repository.ts(1,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/license-metrics.repository.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/processed-data.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/project-relation.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/project-relation.repository.ts(2,34): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/project.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/settings.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-credentials.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-credentials.repository.ts(2,57): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-workflow.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-workflow.repository.ts(2,42): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/tag.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/tag.repository.ts(37,12): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/tag.repository.ts(38,16): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/tag.repository.ts(39,12): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/tag.repository.ts(39,55): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/test-case-execution.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/test-case-execution.repository.ee.ts(5,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/test-run.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/test-run.repository.ee.ts(4,51): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/test-run.repository.ee.ts(72,13): error TS2353: Object literal may only specify known properties, and 'createdAt' does not exist in type 'FindOptionsOrder<TestRun>'.
+@n8n/db:dev: src/repositories/user.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/user.repository.ts(2,33): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/variables.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/webhook.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow-history.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow-statistics.repository.ts(1,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow-statistics.repository.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow-tag-mapping.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow.repository.ts(1,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow.repository.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow.repository.ts(13,30): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/workflow.repository.ts(78,50): error TS2345: Argument of type '{ take?: number | undefined; order?: { createdAt: string; } | undefined; select: "id"[]; where: { active: true; }; }' is not assignable to parameter of type 'FindManyOptions<WorkflowEntity>'.
+@n8n/db:dev:   Types of property 'order' are incompatible.
+@n8n/db:dev:     Type '{ createdAt: string; } | undefined' is not assignable to type 'FindOptionsOrder<WorkflowEntity> | undefined'.
+@n8n/db:dev:       Object literal may only specify known properties, and 'createdAt' does not exist in type 'FindOptionsOrder<WorkflowEntity>'.
+@n8n/db:dev: src/repositories/workflow.repository.ts(120,5): error TS2353: Object literal may only specify known properties, and 'updatedAt' does not exist in type '_QueryDeepPartialEntity<WorkflowEntity>'.
+@n8n/db:dev: src/subscribers/user-subscriber.ts(1,24): error TS2307: Cannot find module '@n8n/backend-common' or its corresponding type declarations.
+@n8n/db:dev: src/subscribers/user-subscriber.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/subscribers/user-subscriber.ts(5,31): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/subscribers/user-subscriber.ts(6,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/utils/generators.ts(1,35): error TS2307: Cannot find module '@n8n/constants' or its corresponding type declarations.
+@n8n/db:dev: src/utils/generators.ts(2,26): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/utils/transformers.ts(1,30): error TS2307: Cannot find module '@n8n/config' or its corresponding type declarations.
+@n8n/db:dev: src/utils/transformers.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/utils/transformers.ts(4,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: 
+@n8n/db:dev: 8:25:24 AM - Found 139 errors. Watching for file changes.
+@n8n/db:dev: [2J[3J[H8:25:26 AM - File change detected. Starting incremental compilation...
+@n8n/db:dev: 
+n8n-core:dev: src/binary-data/binary-data.config.ts[36m(1,29): error TS2307: [39mCannot find module '@n8n/config' or its corresponding type declarations.
+n8n-core:dev: src/binary-data/binary-data.service.ts[36m(1,36): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/binary-data/binary-data.service.ts[36m(4,50): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/binary-data/binary-data.service.ts[36m(5,54): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/binary-data/file-system.manager.ts[36m(1,27): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/binary-data/object-store.manager.ts[36m(1,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/binary-data/object-store/object-store.config.ts[36m(1,37): error TS2307: [39mCannot find module '@n8n/config' or its corresponding type declarations.
+n8n-core:dev: src/binary-data/object-store/object-store.service.ee.ts[36m(17,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/binary-data/object-store/object-store.service.ee.ts[36m(18,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/binary-data/object-store/object-store.service.ee.ts[36m(19,33): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/binary-data/utils.ts[36m(1,33): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/credentials.ts[36m(1,33): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/credentials.ts[36m(2,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/credentials.ts[36m(3,76): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/credentials.ts[36m(4,59): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/credentials.ts[36m(11,16): error TS2339: [39mProperty 'name' does not exist on type 'Credentials<object>'.
+n8n-core:dev: src/credentials.ts[36m(11,22): error TS2339: [39mProperty 'type' does not exist on type 'Credentials<object>'.
+n8n-core:dev: src/credentials.ts[36m(11,28): error TS2339: [39mProperty 'id' does not exist on type 'Credentials<object>'.
+n8n-core:dev: src/credentials.ts[36m(30,8): error TS2339: [39mProperty 'data' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/credentials.ts[36m(49,12): error TS2339: [39mProperty 'data' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/credentials.ts[36m(55,45): error TS2339: [39mProperty 'data' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/credentials.ts[36m(71,12): error TS2339: [39mProperty 'data' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/credentials.ts[36m(76,13): error TS2339: [39mProperty 'id' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/credentials.ts[36m(77,15): error TS2339: [39mProperty 'name' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/credentials.ts[36m(78,15): error TS2339: [39mProperty 'type' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/credentials.ts[36m(79,15): error TS2339: [39mProperty 'data' does not exist on type 'Credentials<T>'.
+n8n-core:dev: src/data-deduplication-service.ts[36m(11,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/data-deduplication-service.ts[36m(82,31): error TS7006: [39mParameter 'key' implicitly has an 'any' type.
+n8n-core:dev: src/data-deduplication-service.ts[36m(83,43): error TS7006: [39mParameter 'key' implicitly has an 'any' type.
+n8n-core:dev: src/encryption/cipher.ts[36m(1,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/errors/abstract/binary-data.error.ts[36m(1,34): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/abstract/filesystem.error.ts[36m(1,34): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/error-reporter.ts[36m(1,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/errors/error-reporter.ts[36m(2,35): error TS2307: [39mCannot find module '@n8n/constants' or its corresponding type declarations.
+n8n-core:dev: src/errors/error-reporter.ts[36m(3,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/errors/error-reporter.ts[36m(5,44): error TS2307: [39mCannot find module '@sentry/types' or its corresponding type declarations.
+n8n-core:dev: src/errors/error-reporter.ts[36m(7,39): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/error-reporter.ts[36m(8,70): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/error-reporter.ts[36m(57,12): error TS2339: [39mProperty 'level' does not exist on type 'Error'.
+n8n-core:dev: src/errors/error-reporter.ts[36m(60,15): error TS2339: [39mProperty 'extra' does not exist on type 'Error'.
+n8n-core:dev: src/errors/invalid-execution-metadata.error.ts[36m(1,34): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/invalid-manager.error.ts[36m(5,9): error TS2554: [39mExpected 0 arguments, but got 1.
+n8n-core:dev: src/errors/invalid-mode.error.ts[36m(1,34): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/unrecognized-credential-type.error.ts[36m(1,27): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/unrecognized-node-type.error.ts[36m(1,27): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/errors/workflow-has-issues.error.ts[36m(1,40): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/active-workflows.ts[36m(1,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/active-workflows.ts[36m(2,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/active-workflows.ts[36m(11,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/active-workflows.ts[36m(18,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/active-workflows.ts[36m(181,26): error TS18046: [39m'cronTime' is of type 'unknown'.
+n8n-core:dev: src/execution-engine/execution-lifecycle-hooks.ts[36m(12,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/execution-lifecycle-hooks.ts[36m(120,16): error TS2664: [39mInvalid module name in augmentation, module 'n8n-workflow' cannot be found.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/interfaces.ts[36m(9,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/base-execute-context.ts[36m(1,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/base-execute-context.ts[36m(24,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/base-execute-context.ts[36m(31,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/credentials-test-context.ts[36m(1,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/credentials-test-context.ts[36m(2,26): error TS2307: [39mCannot find module '@n8n/decorators' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/credentials-test-context.ts[36m(3,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/credentials-test-context.ts[36m(4,47): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(18,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(25,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(98,23): error TS7006: [39mParameter 'itemIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(98,34): error TS7006: [39mParameter 'propertyName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(100,32): error TS7006: [39mParameter 'itemIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(100,43): error TS7006: [39mParameter 'propertyName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(106,27): error TS7006: [39mParameter 'filePath' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(106,37): error TS7006: [39mParameter 'fileName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-context.ts[36m(106,47): error TS7006: [39mParameter 'mimeType' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-single-context.ts[36m(13,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-single-context.ts[36m(14,78): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-single-context.ts[36m(67,23): error TS7006: [39mParameter 'propertyName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-single-context.ts[36m(69,32): error TS7006: [39mParameter 'propertyName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/execute-single-context.ts[36m(71,27): error TS7006: [39mParameter 'buffer' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/hook-context.ts[36m(11,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/hook-context.ts[36m(12,34): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/load-options-context.ts[36m(10,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/local-load-options-context.ts[36m(2,44): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/local-load-options-context.ts[36m(11,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/local-load-options-context.ts[36m(34,55): error TS7006: [39mParameter 'node' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(1,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(2,26): error TS2307: [39mCannot find module '@n8n/decorators' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(3,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(24,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(31,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(133,5): error TS7006: [39mParameter 'input' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(144,5): error TS7006: [39mParameter 'output' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(151,10): error TS7006: [39mParameter 'nodeName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(152,13): error TS7006: [39mParameter 'node' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(153,13): error TS7006: [39mParameter 'node' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/node-execution-context.ts[36m(214,6): error TS7006: [39mParameter 'credentialTypeDescription' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/poll-context.ts[36m(9,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/poll-context.ts[36m(10,57): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/supply-data-context.ts[36m(20,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/supply-data-context.ts[36m(21,60): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/supply-data-context.ts[36m(92,23): error TS7006: [39mParameter 'itemIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/supply-data-context.ts[36m(92,34): error TS7006: [39mParameter 'propertyName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/supply-data-context.ts[36m(94,32): error TS7006: [39mParameter 'itemIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/supply-data-context.ts[36m(94,43): error TS7006: [39mParameter 'propertyName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/trigger-context.ts[36m(9,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/trigger-context.ts[36m(10,57): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(1,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(14,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(15,76): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(29,19): error TS2339: [39mProperty 'encoding' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(202,13): error TS2339: [39mProperty 'responseUrl' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(204,17): error TS2339: [39mProperty 'contentDisposition' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(205,68): error TS2339: [39mProperty 'req' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(209,26): error TS2339: [39mProperty 'contentType' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(287,28): error TS7006: [39mParameter 'binaryData' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(287,40): error TS7006: [39mParameter 'filePath' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(287,50): error TS7006: [39mParameter 'mimeType' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(289,30): error TS7006: [39mParameter 'data' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/binary-helper-functions.ts[36m(289,36): error TS7006: [39mParameter 'binaryData' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/cleanup-parameter-data.ts[36m(2,62): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/construct-execution-metadata.ts[36m(1,85): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/copy-input-items.ts[36m(1,54): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/copy-input-items.ts[36m(2,26): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/create-node-as-tool.ts[36m(2,68): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/create-node-as-tool.ts[36m(8,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/create-node-as-tool.ts[36m(84,7): error TS18046: [39m'placeholder' is of type 'unknown'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/deduplication-helper-functions.ts[36m(12,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/ensure-type.ts[36m(1,40): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/ensure-type.ts[36m(2,33): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/execution-metadata.ts[36m(1,40): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/execution-metadata.ts[36m(2,39): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/extract-value.ts[36m(17,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/extract-value.ts[36m(99,48): error TS7006: [39mParameter 'i' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/file-system-helper-functions.ts[36m(1,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/file-system-helper-functions.ts[36m(2,55): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/file-system-helper-functions.ts[36m(3,36): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/file-system-helper-functions.ts[36m(86,25): error TS7006: [39mParameter 'filePath' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/file-system-helper-functions.ts[36m(113,27): error TS7006: [39mParameter 'filePath' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/file-system-helper-functions.ts[36m(113,37): error TS7006: [39mParameter 'content' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/file-system-helper-functions.ts[36m(113,46): error TS7006: [39mParameter 'flag' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-additional-keys.ts[36m(6,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-additional-keys.ts[36m(7,29): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-input-connection-data.ts[36m(18,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-input-connection-data.ts[36m(24,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-input-connection-data.ts[36m(60,48): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-input-connection-data.ts[36m(64,22): error TS7006: [39mParameter 'x' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-input-connection-data.ts[36m(64,36): error TS7006: [39mParameter 'y' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-input-connection-data.ts[36m(65,50): error TS7006: [39mParameter 'x' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-input-connection-data.ts[36m(105,51): error TS7006: [39mParameter 'input' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-secrets-proxy.ts[36m(1,66): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/get-secrets-proxy.ts[36m(2,33): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(1,54): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(2,34): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(17,27): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(20,26): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(24,27): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(26,26): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(40,26): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/normalize-items.ts[36m(44,28): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/parse-incoming-message.ts[36m(87,11): error TS2339: [39mProperty 'contentType' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/parse-incoming-message.ts[36m(88,11): error TS2339: [39mProperty 'encoding' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/parse-incoming-message.ts[36m(93,11): error TS2339: [39mProperty 'contentDisposition' does not exist on type 'IncomingMessage'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(9,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(15,8): error TS2307: [39mCannot find module '@n8n/client-oauth2' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(16,30): error TS2307: [39mCannot find module '@n8n/client-oauth2' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(17,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(51,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(61,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1047,10): error TS7006: [39mParameter 'response' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1179,2): error TS2578: [39mUnused '@ts-expect-error' directive.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1682,4): error TS7006: [39mParameter 'credentialsType' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1683,4): error TS7006: [39mParameter 'requestOptions' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1684,4): error TS7006: [39mParameter 'additionalCredentialOptions' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1697,19): error TS7006: [39mParameter 'uriOrObject' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1697,32): error TS7006: [39mParameter 'options' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1702,4): error TS7006: [39mParameter 'credentialsType' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1703,4): error TS7006: [39mParameter 'requestOptions' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1704,4): error TS7006: [39mParameter 'additionalCredentialOptions' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/request-helper-functions.ts[36m(1705,4): error TS7006: [39mParameter 'itemIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/return-json-array.ts[36m(1,54): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/scheduling-helper-functions.ts[36m(1,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/scheduling-helper-functions.ts[36m(2,52): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/scheduling-helper-functions.ts[36m(9,18): error TS7006: [39mParameter 'cronExpression' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/scheduling-helper-functions.ts[36m(9,34): error TS7006: [39mParameter 'onTick' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/ssh-tunnel-helper-functions.ts[36m(1,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/ssh-tunnel-helper-functions.ts[36m(2,41): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/ssh-tunnel-helper-functions.ts[36m(9,24): error TS7006: [39mParameter 'credentials' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/validate-value-against-schema.ts[36m(10,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/validate-value-against-schema.ts[36m(16,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/validate-value-against-schema.ts[36m(44,36): error TS7006: [39mParameter 's' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/validate-value-against-schema.ts[36m(162,4): error TS7006: [39mParameter 'prop' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/webhook-helper-functions.ts[36m(9,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/utils/webhook-helper-functions.ts[36m(10,29): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/webhook-context.ts[36m(18,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/webhook-context.ts[36m(19,57): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/node-execution-context/webhook-context.ts[36m(71,27): error TS7006: [39mParameter 'filePath' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/webhook-context.ts[36m(71,37): error TS7006: [39mParameter 'fileName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/webhook-context.ts[36m(71,47): error TS7006: [39mParameter 'mimeType' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/node-execution-context/workflow-node-context.ts[36m(7,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/clean-run-data.ts[36m(1,64): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/directed-graph.ts[36m(2,82): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/directed-graph.ts[36m(3,47): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/directed-graph.ts[36m(472,55): error TS2769: [39mNo overload matches this call.
+n8n-core:dev:   Overload 1 of 2, '(o: ArrayLike<unknown> | { [s: string]: unknown; }): [string, unknown][]', gave the following error.
+n8n-core:dev:     Argument of type 'unknown' is not assignable to parameter of type 'ArrayLike<unknown> | { [s: string]: unknown; }'.
+n8n-core:dev:   Overload 2 of 2, '(o: {}): [string, any][]', gave the following error.
+n8n-core:dev:     Argument of type 'unknown' is not assignable to parameter of type '{}'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/directed-graph.ts[36m(473,40): error TS18046: [39m'outputs' is of type 'unknown'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/filter-disabled-nodes.ts[36m(1,37): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-start-nodes.ts[36m(1,79): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-subgraph.ts[36m(1,49): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(2,59): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(9,9): error TS7006: [39mParameter 'name' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(21,12): error TS7006: [39mParameter 'value' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(22,14): error TS7031: [39mBinding element 'nodeType' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(23,11): error TS7031: [39mBinding element 'node' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(49,4): error TS7006: [39mParameter 'trigger' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(63,12): error TS7006: [39mParameter 'trigger' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(66,10): error TS7006: [39mParameter 'a' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(66,13): error TS7006: [39mParameter 'b' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/find-trigger-for-partial-execution.ts[36m(72,49): error TS7006: [39mParameter 'trigger' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/partial-execution-utils/get-incoming-data.ts[36m(1,71): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/get-source-data-groups.ts[36m(1,58): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/handle-cycles.ts[36m(1,28): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/is-tool.ts[36m(1,66): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/recreate-node-execution-stack.ts[36m(14,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/rewire-graph.ts[36m(2,70): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/run-data-utils.ts[36m(1,31): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/partial-execution-utils/run-data-utils.ts[36m(17,22): error TS18046: [39m'taskData' is of type 'unknown'.
+n8n-core:dev: src/execution-engine/routing-node.ts[36m(15,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/routing-node.ts[36m(39,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/routing-node.ts[36m(78,68): error TS7006: [39mParameter 'x' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/routing-node.ts[36m(546,41): error TS7006: [39mParameter 'json' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/routing-node.ts[36m(970,83): error TS7006: [39mParameter 'action' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/scheduled-task-manager.ts[36m(1,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/scheduled-task-manager.ts[36m(3,47): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/ssh-clients-manager.ts[36m(1,29): error TS2307: [39mCannot find module '@n8n/config' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/ssh-clients-manager.ts[36m(2,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/ssh-clients-manager.ts[36m(3,37): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/triggers-and-pollers.ts[36m(1,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/triggers-and-pollers.ts[36m(2,34): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/triggers-and-pollers.ts[36m(15,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/triggers-and-pollers.ts[36m(60,41): error TS7006: [39mParameter 'response' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/triggers-and-pollers.ts[36m(64,49): error TS7006: [39mParameter 'runData' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(5,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(45,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(57,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(137,4): error TS18048: [39m'runNodeFilter' is possibly 'undefined'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(317,15): error TS7006: [39mParameter 'parentNodeName' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(319,5): error TS18048: [39m'runNodeFilter' is possibly 'undefined'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(422,60): error TS2345: [39mArgument of type 'string | undefined' is not assignable to parameter of type 'string'.
+n8n-core:dev:   Type 'undefined' is not assignable to type 'string'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(774,9): error TS7006: [39mParameter 'stackData' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(914,7): error TS2322: [39mType 'null' is not assignable to type '(INodeExecutionData[] | null)[]'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1153,67): error TS7006: [39mParameter 'input' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1438,9): error TS7006: [39mParameter 'input' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1438,16): error TS7006: [39mParameter 'inputIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1443,27): error TS7006: [39mParameter 'item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1443,33): error TS7006: [39mParameter 'itemIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1591,43): error TS7006: [39mParameter 'inputData' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1591,54): error TS7006: [39mParameter 'inputIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1595,30): error TS7006: [39mParameter '_item' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1595,37): error TS7006: [39mParameter 'itemIndex' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1811,28): error TS7015: [39mElement implicitly has an 'any' type because index expression is not of type 'number'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1812,29): error TS7015: [39mElement implicitly has an 'any' type because index expression is not of type 'number'.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1935,50): error TS7006: [39mParameter 'value' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1952,77): error TS7006: [39mParameter 'data' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1952,83): error TS7006: [39mParameter 'index' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1955,18): error TS7006: [39mParameter 'data' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1982,20): error TS7006: [39mParameter 'data' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(1987,33): error TS7006: [39mParameter 'data' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(2024,33): error TS7006: [39mParameter 'data' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(2077,8): error TS7006: [39mParameter 'error' implicitly has an 'any' type.
+n8n-core:dev: src/execution-engine/workflow-execute.ts[36m(2256,47): error TS7006: [39mParameter 'output' implicitly has an 'any' type.
+n8n-core:dev: src/instance-settings/instance-settings.ts[36m(1,32): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/instance-settings/instance-settings.ts[36m(2,40): error TS2307: [39mCannot find module '@n8n/config' or its corresponding type declarations.
+n8n-core:dev: src/instance-settings/instance-settings.ts[36m(3,49): error TS2307: [39mCannot find module '@n8n/constants' or its corresponding type declarations.
+n8n-core:dev: src/instance-settings/instance-settings.ts[36m(4,26): error TS2307: [39mCannot find module '@n8n/decorators' or its corresponding type declarations.
+n8n-core:dev: src/instance-settings/instance-settings.ts[36m(5,25): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/instance-settings/instance-settings.ts[36m(7,65): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/instance-settings/worker-missing-encryption-key.error.ts[36m(1,27): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/interfaces.ts[36m(5,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/node-execute-functions.ts[36m(9,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/nodes-loader/constants.ts[36m(1,38): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/nodes-loader/constants.ts[36m(2,33): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(1,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(2,27): error TS2307: [39mCannot find module '@n8n/di' or its corresponding type declarations.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(18,8): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(19,49): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(139,23): error TS18046: [39m'versionNode' is of type 'unknown'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(262,5): error TS2345: [39mArgument of type '(this: undefined, { description }: { description: any; }) => any' is not assignable to parameter of type '(this: undefined, value: unknown, index: number, array: unknown[]) => any'.
+n8n-core:dev:   Types of parameters '__0' and 'value' are incompatible.
+n8n-core:dev:     Type 'unknown' is not assignable to type '{ description: any; }'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(277,5): error TS18046: [39m'element' is of type 'unknown'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(278,5): error TS18046: [39m'element' is of type 'unknown'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(282,25): error TS18046: [39m'node' is of type 'unknown'.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(361,47): error TS7031: [39mBinding element 'name' implicitly has an 'any' type.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(420,5): error TS7006: [39mParameter 'parameter' implicitly has an 'any' type.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(434,19): error TS7006: [39mParameter 'a' implicitly has an 'any' type.
+n8n-core:dev: src/nodes-loader/directory-loader.ts[36m(434,22): error TS7006: [39mParameter 'b' implicitly has an 'any' type.
+n8n-core:dev: src/nodes-loader/load-class-in-isolation.ts[36m(1,24): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/nodes-loader/package-directory-loader.ts[36m(1,45): error TS2307: [39mCannot find module 'n8n-workflow' or its corresponding type declarations.
+n8n-core:dev:   There are types at '/workspaces/n8n/packages/core/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+n8n-core:dev: src/nodes-loader/package-directory-loader.ts[36m(61,16): error TS2339: [39mProperty 'type' does not exist on type 'unknown'.
+n8n-core:dev: src/utils/serialized-buffer.ts[36m(1,33): error TS2307: [39mCannot find module '@n8n/backend-common' or its corresponding type declarations.
+n8n-core:dev: src/utils/serialized-buffer.ts[36m(17,13): error TS18046: [39m'candidate' is of type 'unknown'.
+n8n-core:dev: 
+n8n-core:dev: 8:25:27 AM -[31m Found 294 errors. Watching for file changes.[39m
+@n8n/db:dev: src/entities/abstract-entity.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/entities/abstract-entity.ts(12,28): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/entities/abstract-entity.ts(18,25): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ sqlite: string; postgresdb: string; mysqldb: string; mariadb: string; }'.
+@n8n/db:dev: src/entities/abstract-entity.ts(49,24): error TS2507: Type 'T' is not a constructor function type.
+@n8n/db:dev: src/entities/abstract-entity.ts(65,24): error TS2507: Type 'T' is not a constructor function type.
+@n8n/db:dev: src/entities/api-key.ts(1,34): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/credentials-entity.ts(9,14): error TS2420: Class 'CredentialsEntity' incorrectly implements interface 'ICredentialsDb'.
+@n8n/db:dev:   Type 'CredentialsEntity' is missing the following properties from type 'ICredentialsDb': createdAt, updatedAt
+@n8n/db:dev: src/entities/event-destinations.ts(2,51): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/execution-annotation.ee.ts(13,37): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/execution-data.ts(2,31): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/execution-entity.ts(14,54): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/processed-data.ts(2,66): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/project-relation.ts(1,29): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/settings.ts(2,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/shared-credentials.ts(1,39): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/shared-workflow.ts(1,37): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/test-case-execution.ee.ts(2,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/test-run.ee.ts(2,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/types-db.ts(1,40): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/types-db.ts(14,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/types-db.ts(68,38): error TS2344: Type '"name" | "id" | "createdAt" | "updatedAt"' does not satisfy the constraint 'keyof TagEntity'.
+@n8n/db:dev:   Type '"createdAt"' is not assignable to type 'keyof TagEntity'.
+@n8n/db:dev: src/entities/types-db.ts(216,33): error TS2344: Type 'OptionalBaseFields' does not satisfy the constraint 'keyof WorkflowEntity'.
+@n8n/db:dev:   Type '"createdAt"' is not assignable to type 'keyof WorkflowEntity'.
+@n8n/db:dev: src/entities/user.ts(1,36): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/user.ts(2,28): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/entities/user.ts(15,43): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/webhook-entity.ts(2,37): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-entity.ts(12,78): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-entity.ts(13,61): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-history.ts(2,30): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/entities/workflow-history.ts(3,28): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(2,36): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(64,33): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(98,32): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(146,45): error TS18047: 'creds' is possibly 'null'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(146,51): error TS2339: Property 'id' does not exist on type 'object'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(180,33): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(188,45): error TS18047: 'creds' is possibly 'null'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(188,51): error TS2339: Property 'id' does not exist on type 'object'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(222,32): error TS7006: Parameter 'node' implicitly has an 'any' type.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(230,44): error TS18047: 'creds' is possibly 'null'.
+@n8n/db:dev: src/migrations/common/1630330987096-UpdateWorkflowCredentials.ts(230,50): error TS2339: Property 'id' does not exist on type 'object'.
+@n8n/db:dev: src/migrations/common/1658930531669-AddNodeIds.ts(1,28): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1659888469333-AddJsonKeyPinData.ts(2,54): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1675940580449-PurgeInvalidWorkflowConnections.ts(1,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1700571993961-AddGlobalAdminRole.ts(1,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1711390882123-MoveSshKeysToDatabase.ts(1,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1711390882123-MoveSshKeysToDatabase.ts(2,42): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1711390882123-MoveSshKeysToDatabase.ts(3,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1714133768519-CreateProject.ts(1,34): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1714133768519-CreateProject.ts(2,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/common/1742918400000-AddScopesColumnToApiKeys.ts(1,33): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/common/1742918400000-AddScopesColumnToApiKeys.ts(2,40): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/dsl/table.ts(3,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/migration-helpers.ts(3,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/migration-helpers.ts(7,34): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/migration-helpers.ts(8,44): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/postgresdb/1740445074052-UpdateParentFolderIdColumn.ts(1,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/migrations/sqlite/1690000000002-MigrateIntegerKeysToString.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/migrations/sqlite/1690000000002-MigrateIntegerKeysToString.ts(4,34): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/annotation-tag-mapping.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/annotation-tag.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/api-key.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/auth-identity.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/auth-provider-sync-history.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/credentials.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/credentials.repository.ts(41,69): error TS2322: Type '"createdAt"' is not assignable to type 'keyof CredentialsEntity'.
+@n8n/db:dev: src/repositories/credentials.repository.ts(41,82): error TS2322: Type '"updatedAt"' is not assignable to type 'keyof CredentialsEntity'.
+@n8n/db:dev: src/repositories/event-destinations.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution-annotation.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution-data.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution-metadata.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(3,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(26,50): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/execution.repository.ts(27,58): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/execution.repository.ts(33,8): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/execution.repository.ts(419,5): error TS2578: Unused '@ts-expect-error' directive.
+@n8n/db:dev: src/repositories/execution.repository.ts(434,5): error TS2578: Unused '@ts-expect-error' directive.
+@n8n/db:dev: src/repositories/execution.repository.ts(824,41): error TS7006: Parameter 'e' implicitly has an 'any' type.
+@n8n/db:dev: src/repositories/execution.repository.ts(869,26): error TS7006: Parameter 'execution' implicitly has an 'any' type.
+@n8n/db:dev: src/repositories/folder-tag-mapping.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/folder.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/folder.repository.ts(4,30): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/installed-nodes.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/installed-packages.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/installed-packages.repository.ts(3,45): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/invalid-auth-token.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/license-metrics.repository.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/processed-data.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/project-relation.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/project-relation.repository.ts(2,34): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/project.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/settings.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-credentials.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-credentials.repository.ts(2,57): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-workflow.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/shared-workflow.repository.ts(2,42): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/tag.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/tag.repository.ts(37,12): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/tag.repository.ts(38,16): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/tag.repository.ts(39,12): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/tag.repository.ts(39,55): error TS2339: Property 'createdAt' does not exist on type 'TagEntity'.
+@n8n/db:dev: src/repositories/test-case-execution.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/test-case-execution.repository.ee.ts(5,34): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/test-run.repository.ee.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/test-run.repository.ee.ts(4,51): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/test-run.repository.ee.ts(72,13): error TS2353: Object literal may only specify known properties, and 'createdAt' does not exist in type 'FindOptionsOrder<TestRun>'.
+@n8n/db:dev: src/repositories/user.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/user.repository.ts(2,33): error TS2307: Cannot find module '@n8n/permissions' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/variables.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/webhook.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow-history.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow-statistics.repository.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow-tag-mapping.repository.ts(1,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow.repository.ts(2,25): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/repositories/workflow.repository.ts(13,30): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/repositories/workflow.repository.ts(78,50): error TS2345: Argument of type '{ take?: number | undefined; order?: { createdAt: string; } | undefined; select: "id"[]; where: { active: true; }; }' is not assignable to parameter of type 'FindManyOptions<WorkflowEntity>'.
+@n8n/db:dev:   Types of property 'order' are incompatible.
+@n8n/db:dev:     Type '{ createdAt: string; } | undefined' is not assignable to type 'FindOptionsOrder<WorkflowEntity> | undefined'.
+@n8n/db:dev:       Object literal may only specify known properties, and 'createdAt' does not exist in type 'FindOptionsOrder<WorkflowEntity>'.
+@n8n/db:dev: src/repositories/workflow.repository.ts(120,5): error TS2353: Object literal may only specify known properties, and 'updatedAt' does not exist in type '_QueryDeepPartialEntity<WorkflowEntity>'.
+@n8n/db:dev: src/subscribers/user-subscriber.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/subscribers/user-subscriber.ts(5,31): error TS2307: Cannot find module 'n8n-core' or its corresponding type declarations.
+@n8n/db:dev: src/subscribers/user-subscriber.ts(6,33): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/utils/generators.ts(2,26): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: src/utils/transformers.ts(2,27): error TS2307: Cannot find module '@n8n/di' or its corresponding type declarations.
+@n8n/db:dev: src/utils/transformers.ts(4,27): error TS2307: Cannot find module 'n8n-workflow' or its corresponding type declarations.
+@n8n/db:dev:   There are types at '/workspaces/n8n/packages/@n8n/db/node_modules/n8n-workflow/src/index.ts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+@n8n/db:dev: 
+@n8n/db:dev: 8:25:32 AM - Found 123 errors. Watching for file changes.

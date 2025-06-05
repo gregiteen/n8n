@@ -1,7 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useUserStats } from "@/hooks/use-users";
 import { Users, UserCheck, UserX, UserPlus, Shield, Eye, UserCog } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useUserStats } from "@/hooks/use-users";
+
 
 export function UserStats() {
   const { data: stats, isLoading, error } = useUserStats();

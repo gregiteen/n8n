@@ -1,9 +1,10 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Server, Database, Cpu, HardDrive, Network } from 'lucide-react';
+
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Server, Database, Cpu, HardDrive, Network, Shield } from 'lucide-react';
 import { useSystemHealth } from '@/hooks/use-system-health';
 
 export function SystemHealthOverview() {

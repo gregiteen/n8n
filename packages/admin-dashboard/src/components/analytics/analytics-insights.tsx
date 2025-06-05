@@ -1,10 +1,5 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Progress } from "@/components/ui/progress";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -13,11 +8,15 @@ import {
   Target, 
   Lightbulb,
   ArrowRight,
-  Activity,
-  Users,
-  Clock,
-  Zap
+  Activity
 } from "lucide-react";
+
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+
 
 interface Insight {
   id: string;

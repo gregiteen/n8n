@@ -1,7 +1,8 @@
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { WorkflowsList } from '@/components/workflows/workflows-list';
-import { WorkflowStats } from '@/components/workflows/workflow-stats';
 import { WorkflowActions } from '@/components/workflows/workflow-actions';
+import { WorkflowStats } from '@/components/workflows/workflow-stats';
+import { WorkflowsList } from '@/components/workflows/workflows-list';
+
 
 export default function WorkflowsPage() {
   return (

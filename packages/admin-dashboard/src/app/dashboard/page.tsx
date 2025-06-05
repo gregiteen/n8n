@@ -1,8 +1,8 @@
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { SystemOverview } from '@/components/dashboard/system-overview';
 import { AgentStatus } from '@/components/dashboard/agent-status';
-import { RecentActivity } from '@/components/dashboard/recent-activity';
 import { QuickActions } from '@/components/dashboard/quick-actions';
+import { RecentActivity } from '@/components/dashboard/recent-activity';
+import { SystemOverview } from '@/components/dashboard/system-overview';
+import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 export default function DashboardPage() {
   return (

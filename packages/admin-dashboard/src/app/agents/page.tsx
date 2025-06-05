@@ -1,7 +1,7 @@
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { AgentsList } from '@/components/agents/agents-list';
-import { AgentStats } from '@/components/agents/agent-stats';
 import { AgentActions } from '@/components/agents/agent-actions';
+import { AgentStats } from '@/components/agents/agent-stats';
+import { AgentsList } from '@/components/agents/agents-list';
+import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 export default function AgentsPage() {
   return (

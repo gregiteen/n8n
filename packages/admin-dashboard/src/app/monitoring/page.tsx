@@ -1,7 +1,8 @@
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { SystemHealthOverview } from '@/components/monitoring/system-health-overview';
-import { MetricsCharts } from '@/components/monitoring/metrics-charts';
 import { AlertsPanel } from '@/components/monitoring/alerts-panel';
+import { MetricsCharts } from '@/components/monitoring/metrics-charts';
+import { SystemHealthOverview } from '@/components/monitoring/system-health-overview';
+
 
 export default function MonitoringPage() {
   return (

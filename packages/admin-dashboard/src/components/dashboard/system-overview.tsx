@@ -1,7 +1,8 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Activity, Server, Database, Cpu } from 'lucide-react';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSystemMetrics } from '@/hooks/use-system-metrics';
 
 export function SystemOverview() {

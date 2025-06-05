@@ -1,7 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { UserPlus, Download, Upload } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 
 export function UserActions() {
   return (

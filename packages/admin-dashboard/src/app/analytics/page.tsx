@@ -1,7 +1,7 @@
-import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { AnalyticsOverview } from '@/components/analytics/analytics-overview';
 import { AnalyticsCharts } from '@/components/analytics/analytics-charts';
 import { AnalyticsInsights } from '@/components/analytics/analytics-insights';
+import { AnalyticsOverview } from '@/components/analytics/analytics-overview';
+import { DashboardLayout } from '@/components/layout/dashboard-layout';
 
 export default function AnalyticsPage() {
   return (

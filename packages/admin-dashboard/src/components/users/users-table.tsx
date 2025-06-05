@@ -1,10 +1,18 @@
 'use client';
 
+import { Search, MoreHorizontal, Edit, Trash2, Shield } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import { 
   Table, 
   TableBody, 
@@ -13,13 +21,6 @@ import {
   TableHeader, 
   TableRow 
 } from '@/components/ui/table';
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import { Search, MoreHorizontal, Edit, Trash2, Shield } from 'lucide-react';
 import { useUsers, type UserFilters } from '@/hooks/use-users';
 
 export function UsersTable() {

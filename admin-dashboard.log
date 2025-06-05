@@ -1,0 +1,9 @@
+
+> @n8n/admin-dashboard@1.0.0 dev /workspaces/n8n/packages/admin-dashboard
+> next dev --port 3001
+
+  ▲ Next.js 14.2.29
+  - Local:        http://localhost:3001
+
+ ✓ Starting...
+ ✓ Ready in 3.1s

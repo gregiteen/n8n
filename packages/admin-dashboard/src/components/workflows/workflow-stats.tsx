@@ -1,7 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useWorkflowStats } from "@/hooks/use-workflows";
 import { Workflow, Play, CheckCircle, XCircle, Clock, Activity } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useWorkflowStats } from "@/hooks/use-workflows";
+
 
 export function WorkflowStats() {
   const { data: stats, isLoading, error } = useWorkflowStats();

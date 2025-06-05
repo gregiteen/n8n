@@ -1,8 +1,9 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, AlertCircle, CheckCircle } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSystemAlerts } from '@/hooks/use-system-alerts';
 
 export function AlertsPanel() {
