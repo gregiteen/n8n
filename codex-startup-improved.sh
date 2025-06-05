@@ -243,7 +243,7 @@ fix_project_errors() {
     # Ensure turbo is available
     if [ ! -f "node_modules/.bin/turbo" ] && [ ! -f "node_modules/turbo/bin/turbo" ]; then
         print_step "Installing turbo dependency..."
-        pnpm add -D turbo@2.5.4 -w --no-frozen-lockfile
+        pnpm add -D turbo@2.5.4 -w
     fi
     
     # Fix admin dashboard next.config.js if it has deprecated options
@@ -282,9 +282,9 @@ install_dependencies() {
     fi
     
     # Install with proper error handling
-    if ! pnpm install --no-frozen-lockfile; then
+    if ! pnpm install; then
         print_warning "Standard install failed, trying with --force..."
-        if ! pnpm install --no-frozen-lockfile --force; then
+        if ! pnpm install --force; then
             print_error "Dependencies installation failed"
             return 1
         fi
