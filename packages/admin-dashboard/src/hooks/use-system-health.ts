@@ -2,22 +2,30 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-export interface SystemHealth {
+export interface SystemHealthService {
+	name: string;
+	status: 'healthy' | 'warning' | 'error';
+	responseTime: number;
+}
+
+export interface SystemHealthSnapshot {
+	timestamp: string;
 	cpu: number;
 	memory: number;
 	disk: number;
 	network: number;
-	uptime: number;
-	services: Array<{
-		name: string;
-		status: 'healthy' | 'warning' | 'error';
-		responseTime: number;
-	}>;
+	status: 'healthy' | 'warning' | 'critical';
+	services: SystemHealthService[];
 }
 
-// API function to fetch system health
-const fetchSystemHealth = async (): Promise<SystemHealth> => {
-	const response = await fetch('/api/monitoring/health');
+export interface SystemHealthResponse {
+	current: SystemHealthSnapshot;
+	history: SystemHealthSnapshot[];
+}
+
+// API function to fetch system health data
+const fetchSystemHealth = async (): Promise<SystemHealthResponse> => {
+	const response = await fetch('/api/monitoring/system');
 
 	if (!response.ok) {
 		throw new Error('Failed to fetch system health');
