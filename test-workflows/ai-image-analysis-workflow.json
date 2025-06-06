@@ -1,0 +1,75 @@
+{
+  "name": "AI Image Analysis Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "imageSource": "url",
+        "imageUrl": "https://example.com/sample-image.jpg",
+        "analysisType": "comprehensive",
+        "analysisPrompt": "Analyze this image and describe its contents, colors, composition, and any text visible",
+        "includeMetadata": true
+      },
+      "id": "ai-image-analyzer",
+      "name": "AI Image Analyzer",
+      "type": "n8n-nodes-base.aiImageAnalyzer",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "contentType": "social_media",
+        "topic": "Image Analysis Results",
+        "tone": "engaging",
+        "length": "short",
+        "prompt": "Create an engaging social media post based on this image analysis: {{ $json.analysis }}"
+      },
+      "id": "ai-content-writer",
+      "name": "AI Content Writer",
+      "type": "n8n-nodes-base.aiContentWriter",
+      "typeVersion": 1,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Image Analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Image Analyzer": {
+      "main": [
+        [
+          {
+            "node": "AI Content Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-07T12:00:00.000Z",
+  "updatedAt": "2025-01-07T12:00:00.000Z",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": ["ai", "image", "content"]
+}

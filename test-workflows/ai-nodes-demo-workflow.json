@@ -1,0 +1,124 @@
+{
+  "name": "AI Nodes Demo Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "start-trigger",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "agentName": "Demo Chat Assistant",
+        "systemPrompt": "You are a helpful AI assistant specialized in data analysis and content creation. You work as part of an n8n workflow.",
+        "message": "Hello! I'm testing the AI Chat Agent integration in n8n. Please respond with a brief introduction of your capabilities.",
+        "conversationHistory": "",
+        "maxTokens": 150,
+        "temperature": 0.7
+      },
+      "id": "ai-chat-agent",
+      "name": "AI Chat Agent",
+      "type": "n8n-nodes-base.aiChatAgent",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "analysisType": "summarize",
+        "dataInput": "{{ $json.response }}",
+        "analysisPrompt": "Analyze the AI response and provide insights on the agent's capabilities.",
+        "outputFormat": "structured"
+      },
+      "id": "ai-data-analyst",
+      "name": "AI Data Analyst",
+      "type": "n8n-nodes-base.aiDataAnalyst",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "contentType": "blog_post",
+        "topic": "AI Integration in n8n Workflows",
+        "tone": "professional",
+        "length": "medium",
+        "prompt": "Write a brief blog post about integrating AI nodes in n8n workflows, based on this analysis: {{ $json.analysis }}"
+      },
+      "id": "ai-content-writer",
+      "name": "AI Content Writer", 
+      "type": "n8n-nodes-base.aiContentWriter",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "criteria": "quality",
+        "options": ["Approve for publication", "Needs revision", "Reject"],
+        "context": "Blog post content: {{ $json.content }}",
+        "decisionPrompt": "Evaluate this blog post for quality, accuracy, and readability. Make a decision about publication readiness."
+      },
+      "id": "ai-decision-maker",
+      "name": "AI Decision Maker",
+      "type": "n8n-nodes-base.aiDecisionMaker", 
+      "typeVersion": 1,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "AI Chat Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Chat Agent": {
+      "main": [
+        [
+          {
+            "node": "AI Data Analyst",
+            "type": "main", 
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Data Analyst": {
+      "main": [
+        [
+          {
+            "node": "AI Content Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Content Writer": {
+      "main": [
+        [
+          {
+            "node": "AI Decision Maker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-07T12:00:00.000Z",
+  "updatedAt": "2025-01-07T12:00:00.000Z",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": ["ai", "demo", "workflow"]
+}
