@@ -6,6 +6,7 @@ import { OpenAIClient } from './clients/openai';
 import { AnthropicClient } from './clients/anthropic';
 import { GeminiClient } from './clients/gemini';
 import { OpenRouterClient } from './clients/openrouter';
+import { AgentMemoryService, MemoryEntry } from './services/agent-memory.service';
 
 export type ModelProvider = 'openai' | 'anthropic' | 'gemini' | 'openrouter';
 
@@ -14,6 +15,8 @@ export interface AgentOptions {
 	provider?: ModelProvider;
 	systemPrompt?: string;
 	capabilities?: string[];
+	agentId?: string;
+	persistMemory?: boolean;
 }
 
 export interface ToolDefinition {
@@ -31,18 +34,33 @@ export class Agent {
 	private anthropicClient: AnthropicClientClass;
 	private geminiClient: GeminiClientClass;
 	private openrouterClient: OpenRouterClientClass;
+	private memoryService?: AgentMemoryService;
 	private model?: string;
 	private tools: ToolDefinition[] = [];
+	private agentId?: string;
+	private useMemory = false;
 
 	constructor(options: AgentOptions = {}) {
 		this.provider = options.provider || 'openai';
 		this.model = options.model;
+		this.agentId = options.agentId;
 
 		// Initialize clients
 		this.openaiClient = new OpenAIClient();
 		this.anthropicClient = new AnthropicClient();
 		this.geminiClient = new GeminiClient();
 		this.openrouterClient = new OpenRouterClient();
+
+		// Initialize memory service if agent ID is provided
+		if (this.agentId) {
+			try {
+				this.memoryService = new AgentMemoryService();
+				this.useMemory = true;
+			} catch (error) {
+				console.warn('Failed to initialize memory service:', error);
+				this.useMemory = false;
+			}
+		}
 
 		// Add system prompt if provided
 		if (options.systemPrompt) {
@@ -54,10 +72,38 @@ export class Agent {
 		const activeProvider = provider || this.provider;
 		const activeModel = model || this.model;
 
+		// If memory is enabled, retrieve relevant memories first
+		if (this.useMemory && this.memoryService && this.agentId) {
+			try {
+				const memories = await this.memoryService.searchMemory({
+					agentId: this.agentId,
+					query: input,
+					limit: 5,
+				});
+
+				// If memories are found, add them to context
+				if (memories.length > 0) {
+					const memoryContext = `
+Relevant information from your previous conversations:
+${memories.map((m) => `- ${m.content}`).join('\n')}
+
+Given this context, please respond to the user's current message.
+`;
+
+					// Add memory context as a system message
+					this.messages.push({ role: 'system', content: memoryContext });
+				}
+			} catch (error) {
+				console.warn('Failed to retrieve memories:', error);
+			}
+		}
+
+		// Add the user input to messages
 		this.messages.push({ role: 'user', content: input });
 
 		let response: string;
 
+		// Get response from appropriate model provider
 		switch (activeProvider) {
 			case 'anthropic':
 				response = await this.anthropicClient.chat(input, activeModel);
@@ -74,7 +120,30 @@ export class Agent {
 				break;
 		}
 
+		// Add the assistant response to messages
 		this.messages.push({ role: 'assistant', content: response });
+
+		// If memory is enabled, save both the user input and assistant response
+		if (this.useMemory && this.memoryService && this.agentId) {
+			try {
+				// Save user message to memory
+				await this.memoryService.addMemory({
+					agentId: this.agentId,
+					content: `User: ${input}`,
+					metadata: { type: 'user_message', timestamp: new Date().toISOString() },
+				});
+
+				// Save assistant response to memory
+				await this.memoryService.addMemory({
+					agentId: this.agentId,
+					content: `Assistant: ${response}`,
+					metadata: { type: 'assistant_message', timestamp: new Date().toISOString() },
+				});
+			} catch (error) {
+				console.warn('Failed to save to memory:', error);
+			}
+		}
+
 		return response;
 	}
 
@@ -105,7 +174,6 @@ export class Agent {
 				throw new Error(`Web browsing not supported for provider: ${this.provider}`);
 		}
 	}
-
 	getMemory() {
 		return this.messages;
 	}
@@ -115,8 +183,79 @@ export class Agent {
 		return this;
 	}
 
+	getProvider(): ModelProvider {
+		return this.provider;
+	}
+
 	setModel(model: string) {
 		this.model = model;
 		return this;
+	}
+
+	getModel(): string | undefined {
+		return this.model;
+	}
+
+	getTools(): ToolDefinition[] {
+		return this.tools;
+	}
+
+	/**
+	 * Retrieve all memories for this agent
+	 */
+	async getAllMemories(): Promise<MemoryEntry[]> {
+		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			throw new Error('Memory service is not available or agent ID is not set');
+		}
+
+		return this.memoryService.getAgentMemories(this.agentId);
+	}
+
+	/**
+	 * Search agent memories by query
+	 */
+	async searchMemories(query: string, limit = 10): Promise<MemoryEntry[]> {
+		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			throw new Error('Memory service is not available or agent ID is not set');
+		}
+
+		return this.memoryService.searchMemory({
+			agentId: this.agentId,
+			query,
+			limit,
+		});
+	}
+
+	/**
+	 * Add a memory entry explicitly
+	 */
+	async addMemory(content: string, metadata: Record<string, unknown> = {}): Promise<string> {
+		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			throw new Error('Memory service is not available or agent ID is not set');
+		}
+
+		return this.memoryService.addMemory({
+			agentId: this.agentId,
+			content,
+			metadata: { ...metadata, timestamp: new Date().toISOString() },
+		});
+	}
+
+	/**
+	 * Clear all memories for this agent
+	 */
+	async clearMemory(): Promise<void> {
+		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			throw new Error('Memory service is not available or agent ID is not set');
+		}
+
+		await this.memoryService.clearAgentMemory(this.agentId);
+	}
+
+	/**
+	 * Enable or disable memory persistence
+	 */
+	setMemoryEnabled(enabled: boolean): void {
+		this.useMemory = enabled && !!this.memoryService && !!this.agentId;
 	}
 }

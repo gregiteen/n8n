@@ -1,6 +1,8 @@
 import express from 'express';
 
 import { Agent, ModelProvider } from './agent';
+import { AgentFactory, AgentType } from './agent-factory';
+import { ModelSelector } from './models/model-selector';
 
 export function createApp(agent = new Agent()) {
 	const app = express();
@@ -76,27 +78,89 @@ export function createApp(agent = new Agent()) {
 		}
 
 		try {
-			// Set the provider if specified
-			if (provider) {
-				agent.setProvider(provider);
-			}
+			// Use the AgentFactory to create a web browsing agent
+			const webBrowsingAgent = AgentFactory.createAgent({
+				agentType: 'web-browsing',
+				provider: provider || agent.getProvider(),
+				model: model || agent.getModel(),
+			});
 
-			// Set the model if specified
-			if (model) {
-				agent.setModel(model);
-			}
-
-			// Create a web browsing agent and use it
-			const webAgent = await agent.createWebBrowsingAgent();
-			const response = await webAgent.generateContent(query);
+			const response = await webBrowsingAgent.send(query);
 
 			res.json({
-				response: response?.text() || 'No response from web browsing agent',
-				memory: agent.getMemory(),
+				response,
+				memory: webBrowsingAgent.getMemory(),
 			});
 		} catch (error) {
 			console.error('Web browsing error:', error);
 			res.status(500).json({ error: `Failed to browse the web: ${(error as Error).message}` });
+		}
+	});
+
+	// Get available models
+	app.get('/models', (_req, res) => {
+		try {
+			const models = ModelSelector.getAllModels();
+			res.json({ models });
+		} catch (error) {
+			console.error('Error fetching models:', error);
+			res.status(500).json({ error: `Failed to fetch models: ${(error as Error).message}` });
+		}
+	});
+
+	// Get models by provider
+	app.get('/models/:provider', (req, res) => {
+		try {
+			const { provider } = req.params;
+			if (!['openai', 'anthropic', 'gemini', 'openrouter'].includes(provider)) {
+				res.status(400).json({ error: 'Invalid provider' });
+				return;
+			}
+
+			const models = ModelSelector.getModelsByProvider(provider as ModelProvider);
+			res.json({ models });
+		} catch (error) {
+			console.error('Error fetching models by provider:', error);
+			res.status(500).json({ error: `Failed to fetch models: ${(error as Error).message}` });
+		}
+	});
+
+	// Create a specialized agent
+	app.post('/agents', async (req, res) => {
+		try {
+			const { agentType, model, provider, systemPrompt, tools } = (req.body ?? {}) as {
+				agentType?: AgentType;
+				model?: string;
+				provider?: ModelProvider;
+				systemPrompt?: string;
+				tools?: any[];
+			};
+
+			if (!agentType) {
+				res.status(400).json({ error: 'agentType is required' });
+				return;
+			}
+
+			const specializedAgent = AgentFactory.createAgent({
+				agentType,
+				provider,
+				model,
+				systemPrompt,
+				tools,
+			});
+
+			// For now, just return success - in a real implementation, we would store the agent
+			res.json({
+				success: true,
+				agent: {
+					type: agentType,
+					provider: provider || 'openai',
+					model: model || 'Default model for provider',
+				},
+			});
+		} catch (error) {
+			console.error('Error creating agent:', error);
+			res.status(500).json({ error: `Failed to create agent: ${(error as Error).message}` });
 		}
 	});
 

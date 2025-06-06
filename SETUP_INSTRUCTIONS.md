@@ -112,6 +112,42 @@ CREATE POLICY "Users can access memory of their agents" ON agent_memory
     SELECT 1 FROM agents WHERE agents.id = agent_memory.agent_id AND agents.created_by = auth.uid()
   ));
 
+-- Create vector similarity search function
+CREATE OR REPLACE FUNCTION match_memories(
+  query_embedding vector(1536),
+  match_threshold float,
+  match_count int,
+  agent_id uuid
+)
+RETURNS TABLE (
+  id uuid,
+  agent_id uuid,
+  content text,
+  embedding vector(1536),
+  metadata jsonb,
+  created_at timestamptz,
+  similarity float
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    agent_memory.id,
+    agent_memory.agent_id,
+    agent_memory.content,
+    agent_memory.embedding,
+    agent_memory.metadata,
+    agent_memory.created_at,
+    1 - (agent_memory.embedding <=> query_embedding) as similarity
+  FROM agent_memory
+  WHERE agent_memory.agent_id = match_memories.agent_id
+  AND 1 - (agent_memory.embedding <=> query_embedding) > match_threshold
+  ORDER BY similarity DESC
+  LIMIT match_count;
+END;
+$$;
+
 -- System Health table
 CREATE TABLE IF NOT EXISTS system_health (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

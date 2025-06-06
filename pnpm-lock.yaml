@@ -2836,6 +2836,9 @@ importers:
       '@google/generative-ai':
         specifier: 0.21.0
         version: 0.21.0
+      '@supabase/supabase-js':
+        specifier: 2.49.9
+        version: 2.49.9
       axios:
         specifier: ^1.8.3
         version: 1.9.0(debug@4.4.1)

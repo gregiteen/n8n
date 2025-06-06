@@ -8,7 +8,8 @@
 			"n8n-workflow": ["types/n8n-workflow.d.ts"]
 		},
 		"tsBuildInfoFile": "dist/typecheck.tsbuildinfo",
-		"moduleResolution": "nodenext"
+		"moduleResolution": "nodenext",
+		"esModuleInterop": true
 	},
 	"include": ["src/**/*.ts", "test/**/*.ts", "src/types/**/*.d.ts"]
 }
