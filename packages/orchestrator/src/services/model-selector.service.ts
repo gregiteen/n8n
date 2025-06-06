@@ -161,4 +161,135 @@ export class ModelSelectorService {
 	getModelsByCapability(capability: string): ModelInfo[] {
 		return this.models.filter((model) => model.capabilities.includes(capability));
 	}
+
+	/**
+	 * Select the best model for an agent based on task requirements
+	 */
+	selectModelForAgent(requirements: {
+		taskDescription: string;
+		agentType?: string;
+		requiredCapabilities?: string[];
+		estimatedContextSize?: number;
+		budgetConstrained?: boolean;
+		preferredProvider?: ModelProvider;
+	}): ModelInfo {
+		const {
+			// taskDescription is reserved for future semantic model selection
+			agentType,
+			requiredCapabilities = [],
+			estimatedContextSize = 0,
+			budgetConstrained = false,
+			preferredProvider,
+		} = requirements;
+
+		// Add capability requirements based on agent type
+		const capabilities: string[] = [...requiredCapabilities];
+		if (agentType === 'web-browsing') {
+			capabilities.push('browsing');
+		}
+		if (agentType === 'data-analysis' || agentType === 'function-calling') {
+			capabilities.push('functions');
+		}
+
+		// Calculate minimum context window size
+		// Add 25% buffer to the estimated context size
+		const minContextWindow = Math.ceil(estimatedContextSize * 1.25);
+
+		// Filter models based on requirements
+		let candidateModels = [...this.models];
+
+		// Filter by required capabilities
+		if (capabilities.length > 0) {
+			candidateModels = candidateModels.filter((model) =>
+				capabilities.every((cap) => model.capabilities.includes(cap)),
+			);
+		}
+
+		// Filter by context window
+		if (minContextWindow > 0) {
+			candidateModels = candidateModels.filter((model) => model.contextWindow >= minContextWindow);
+		}
+
+		// Filter by preferred provider if specified
+		if (preferredProvider) {
+			const providerModels = candidateModels.filter(
+				(model) => model.provider === preferredProvider,
+			);
+
+			// Only use provider models if there are any that meet requirements
+			if (providerModels.length > 0) {
+				candidateModels = providerModels;
+			}
+		}
+
+		// If budget constrained, sort by cost and take cheapest option
+		if (budgetConstrained) {
+			candidateModels.sort((a, b) => a.costPer1kTokens - b.costPer1kTokens);
+			if (candidateModels.length > 0) {
+				return candidateModels[0];
+			}
+		}
+
+		// Otherwise, prioritize models with the largest context windows for flexibility
+		candidateModels.sort((a, b) => {
+			// Context window is the primary sorting factor
+			const contextWindowDiff = b.contextWindow - a.contextWindow;
+
+			// If context windows are similar (within 20%), prefer cheaper model
+			if (Math.abs(contextWindowDiff) / Math.max(a.contextWindow, b.contextWindow) < 0.2) {
+				return a.costPer1kTokens - b.costPer1kTokens;
+			}
+
+			return contextWindowDiff;
+		});
+
+		// Return best candidate or default to a generally capable model
+		return candidateModels[0] || this.getDefaultModel(preferredProvider);
+	}
+
+	/**
+	 * Get best model for a specific task type
+	 */
+	getModelForTaskType(
+		taskType: 'conversation' | 'code' | 'summarization' | 'data-analysis' | 'agent',
+	): ModelInfo {
+		switch (taskType) {
+			case 'code':
+				return this.selectModelForAgent({
+					taskDescription: 'Code generation and analysis',
+					requiredCapabilities: ['text', 'functions'],
+					estimatedContextSize: 16000, // Assuming code tasks need moderate context
+				});
+
+			case 'summarization':
+				return this.selectModelForAgent({
+					taskDescription: 'Text summarization',
+					requiredCapabilities: ['text'],
+					estimatedContextSize: 32000, // Summarization may need larger context
+				});
+
+			case 'data-analysis':
+				return this.selectModelForAgent({
+					taskDescription: 'Data analysis and visualization',
+					requiredCapabilities: ['text', 'functions'],
+					estimatedContextSize: 16000,
+				});
+
+			case 'agent':
+				return this.selectModelForAgent({
+					taskDescription: 'Autonomous agent operation',
+					requiredCapabilities: ['text', 'functions'],
+					estimatedContextSize: 32000,
+				});
+
+			case 'conversation':
+			default:
+				return this.selectModelForAgent({
+					taskDescription: 'Conversational assistant',
+					requiredCapabilities: ['text'],
+					estimatedContextSize: 8000,
+					budgetConstrained: true, // Use cheaper models for basic conversation
+				});
+		}
+	}
 }

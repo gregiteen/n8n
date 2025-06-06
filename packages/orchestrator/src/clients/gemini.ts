@@ -1,10 +1,4 @@
-import {
-	GoogleGenerativeAI,
-	HarmCategory,
-	HarmBlockThreshold,
-	Tool,
-	FunctionDeclaration,
-} from '@google/generative-ai';
+import { GoogleGenerativeAI, Tool, FunctionDeclaration } from '@google/generative-ai';
 import dotenv from 'dotenv';
 import { ApplicationError } from 'n8n-workflow';
 
@@ -92,8 +86,13 @@ export class GeminiClient {
 				{
 					name: tool.name,
 					description: tool.description,
-					parameters: tool.parameters,
-				} as FunctionDeclaration,
+					// Convert to the expected format for Gemini's FunctionDeclarationSchema
+					parameters: {
+						type: 'object',
+						properties: (tool.parameters as any).properties || {},
+						required: (tool.parameters as any).required || [],
+					},
+				} as unknown as FunctionDeclaration,
 			],
 		}));
 	}
@@ -145,6 +144,71 @@ export class GeminiClient {
 		} catch (error) {
 			console.error('Error running Gemini agent:', error);
 			throw new ApplicationError(`Gemini agent execution failed: ${(error as Error).message}`);
+		}
+	}
+
+	/**
+	 * Chat with tools - specialized implementation for function calling
+	 */
+	async chatWithTools(
+		messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }>,
+		tools: GeminiToolDefinition[],
+		model = 'gemini-1.5-pro',
+	): Promise<{
+		response: string;
+		toolResults?: Record<string, unknown>;
+	}> {
+		try {
+			// Convert OpenAI-style messages to Gemini format
+			const geminiMessages = this.convertToGeminiFormat(messages);
+
+			// Convert tool definitions to Gemini tools format
+			const geminiTools = this.convertToolsToGeminiFormat(tools);
+
+			// Get the generative model with tools
+			const generativeModel = this.client.getGenerativeModel({
+				model,
+				systemInstruction: this.extractSystemMessage(messages),
+				tools: geminiTools,
+			});
+
+			// Start a chat session
+			const chat = generativeModel.startChat();
+
+			// Send each message in order to build the conversation context
+			let response;
+			let toolResults: Record<string, unknown> | undefined;
+
+			for (const msg of geminiMessages) {
+				response = await chat.sendMessage(msg.parts);
+
+				// Check for tool calls in the response
+				const responseText = response?.response?.text() ?? '';
+				const functionCallMatch = responseText.match(/Function call: (\w+)\(([^)]*)\)/);
+
+				if (functionCallMatch) {
+					const functionName = functionCallMatch[1];
+					let args;
+					try {
+						args = JSON.parse(functionCallMatch[2]);
+					} catch {
+						args = {}; // Default to empty object if parsing fails
+					}
+
+					// Store tool call info
+					toolResults = {
+						[functionName]: args,
+					};
+				}
+			}
+
+			return {
+				response: response?.response?.text() ?? '',
+				toolResults,
+			};
+		} catch (error) {
+			console.error('Error in Gemini chat with tools:', error);
+			throw new ApplicationError(`Gemini chat with tools failed: ${(error as Error).message}`);
 		}
 	}
 }

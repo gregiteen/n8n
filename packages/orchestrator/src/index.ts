@@ -9,3 +9,4 @@ export * from './services/node-discovery.service';
 export * from './services/model-selector.service';
 export * from './services/agent-factory.service';
 export * from './services/web-browser.service';
+export * from './services/agent-memory.service';

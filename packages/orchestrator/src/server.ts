@@ -3,6 +3,7 @@ import express from 'express';
 import { Agent, ModelProvider } from './agent';
 import { AgentFactory, AgentType } from './agent-factory';
 import { ModelSelector } from './models/model-selector';
+import { ModelSelectorService } from './model-selector-service';
 
 export function createApp(agent = new Agent()) {
 	const app = express();
@@ -141,7 +142,7 @@ export function createApp(agent = new Agent()) {
 				return;
 			}
 
-			const specializedAgent = AgentFactory.createAgent({
+			AgentFactory.createAgent({
 				agentType,
 				provider,
 				model,
@@ -161,6 +162,221 @@ export function createApp(agent = new Agent()) {
 		} catch (error) {
 			console.error('Error creating agent:', error);
 			res.status(500).json({ error: `Failed to create agent: ${(error as Error).message}` });
+		}
+	});
+
+	// Memory management endpoints
+	app.get('/agents/:agentId/memory', async (req, res) => {
+		try {
+			const { agentId } = req.params;
+
+			if (!agentId) {
+				res.status(400).json({ error: 'agentId is required' });
+				return;
+			}
+
+			// Create an agent with the specified ID
+			const memoryAgent = new Agent({ agentId });
+
+			// Get all memories
+			const memories = await memoryAgent.getAllMemories();
+
+			res.json({ memories });
+		} catch (error) {
+			console.error('Error retrieving memories:', error);
+			res.status(500).json({ error: `Failed to retrieve memories: ${(error as Error).message}` });
+		}
+	});
+
+	// Search agent memories
+	app.post('/agents/:agentId/memory/search', async (req, res) => {
+		try {
+			const { agentId } = req.params;
+			const { query, limit } = (req.body ?? {}) as {
+				query?: string;
+				limit?: number;
+			};
+
+			if (!agentId) {
+				res.status(400).json({ error: 'agentId is required' });
+				return;
+			}
+
+			if (!query) {
+				res.status(400).json({ error: 'query is required' });
+				return;
+			}
+
+			// Create an agent with the specified ID
+			const memoryAgent = new Agent({ agentId });
+
+			// Search memories
+			const memories = await memoryAgent.searchMemories(query, limit);
+
+			res.json({ memories });
+		} catch (error) {
+			console.error('Error searching memories:', error);
+			res.status(500).json({ error: `Failed to search memories: ${(error as Error).message}` });
+		}
+	});
+
+	// Add a memory explicitly
+	app.post('/agents/:agentId/memory', async (req, res) => {
+		try {
+			const { agentId } = req.params;
+			const { content, metadata } = (req.body ?? {}) as {
+				content?: string;
+				metadata?: Record<string, unknown>;
+			};
+
+			if (!agentId) {
+				res.status(400).json({ error: 'agentId is required' });
+				return;
+			}
+
+			if (!content) {
+				res.status(400).json({ error: 'content is required' });
+				return;
+			}
+
+			// Create an agent with the specified ID
+			const memoryAgent = new Agent({ agentId });
+
+			// Add memory
+			const memoryId = await memoryAgent.addMemory(content, metadata || {});
+
+			res.json({ success: true, memoryId });
+		} catch (error) {
+			console.error('Error adding memory:', error);
+			res.status(500).json({ error: `Failed to add memory: ${(error as Error).message}` });
+		}
+	});
+
+	// Clear agent memories
+	app.delete('/agents/:agentId/memory', async (req, res) => {
+		try {
+			const { agentId } = req.params;
+
+			if (!agentId) {
+				res.status(400).json({ error: 'agentId is required' });
+				return;
+			}
+
+			// Create an agent with the specified ID
+			const memoryAgent = new Agent({ agentId });
+
+			// Clear memories
+			await memoryAgent.clearMemory();
+
+			res.json({ success: true });
+		} catch (error) {
+			console.error('Error clearing memories:', error);
+			res.status(500).json({ error: `Failed to clear memories: ${(error as Error).message}` });
+		}
+	});
+
+	// Model selector service endpoints
+
+	// Initialize model selector service
+	const modelSelectorService = new ModelSelectorService();
+
+	// Get filtered models
+	app.get('/model-selector/models', (req, res) => {
+		try {
+			const { provider, capability, maxCost } = req.query as {
+				provider?: ModelProvider;
+				capability?: string;
+				maxCost?: string;
+			};
+
+			const filteredModels = modelSelectorService.getModels({
+				provider,
+				capability,
+				maxCost: maxCost ? parseFloat(maxCost) : undefined,
+			});
+
+			res.json({ models: filteredModels });
+		} catch (error) {
+			console.error('Error getting models:', error);
+			res.status(500).json({ error: `Failed to get models: ${(error as Error).message}` });
+		}
+	});
+
+	// Get model by ID
+	app.get('/model-selector/models/:modelId', (req, res) => {
+		try {
+			const { modelId } = req.params;
+
+			if (!modelId) {
+				res.status(400).json({ error: 'modelId is required' });
+				return;
+			}
+
+			const model = modelSelectorService.getModel(modelId);
+			res.json({ model });
+		} catch (error) {
+			console.error('Error getting model by ID:', error);
+			res.status(500).json({ error: `Failed to get model: ${(error as Error).message}` });
+		}
+	});
+
+	// Get model for task type
+	app.get('/model-selector/task/:taskType', (req, res) => {
+		try {
+			const { taskType } = req.params as {
+				taskType: 'conversation' | 'code' | 'summarization' | 'data-analysis' | 'agent';
+			};
+
+			if (!['conversation', 'code', 'summarization', 'data-analysis', 'agent'].includes(taskType)) {
+				res.status(400).json({ error: 'Invalid taskType' });
+				return;
+			}
+
+			const model = modelSelectorService.getModelForTaskType(taskType);
+			res.json({ model });
+		} catch (error) {
+			console.error('Error getting model for task:', error);
+			res.status(500).json({ error: `Failed to get model for task: ${(error as Error).message}` });
+		}
+	});
+
+	// Select model for agent
+	app.post('/model-selector/select-for-agent', (req, res) => {
+		try {
+			const {
+				taskDescription,
+				agentType,
+				requiredCapabilities,
+				estimatedContextSize,
+				budgetConstrained,
+				preferredProvider,
+			} = req.body as {
+				taskDescription: string;
+				agentType?: string;
+				requiredCapabilities?: string[];
+				estimatedContextSize?: number;
+				budgetConstrained?: boolean;
+				preferredProvider?: ModelProvider;
+			};
+
+			if (!taskDescription) {
+				res.status(400).json({ error: 'taskDescription is required' });
+				return;
+			}
+
+			const model = modelSelectorService.selectModelForAgent({
+				taskDescription,
+				agentType,
+				requiredCapabilities,
+				estimatedContextSize,
+				budgetConstrained,
+				preferredProvider,
+			});
+
+			res.json({ model });
+		} catch (error) {
+			console.error('Error selecting model for agent:', error);
+			res.status(500).json({ error: `Failed to select model: ${(error as Error).message}` });
 		}
 	});
 
