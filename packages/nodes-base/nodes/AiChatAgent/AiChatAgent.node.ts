@@ -105,11 +105,18 @@ export class AiChatAgent extends BaseAiNode {
 				];
 
 				// Make API request
-				const response = await this.makeApiRequest('/api/agents/chat', 'POST', {
-					agent: agentConfig,
-					messages: messages,
-					format: responseFormat,
-				});
+				const requestOptions = {
+					method: 'POST' as const,
+					url: '/api/agents/chat',
+					json: true,
+					body: {
+						agent: agentConfig,
+						messages: messages,
+						format: responseFormat,
+					},
+				};
+
+				const response = await this.helpers.request(requestOptions);
 
 				// Format response
 				const outputData = {
