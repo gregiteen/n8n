@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { Agent, ModelProvider } from '../agent';
-import { AgentFactoryService } from './agent-factory.service';
 import { ApplicationError } from 'n8n-workflow';
+
+import type { ModelProvider } from '../agent';
+import { AgentFactoryService } from './agent-factory.service';
 
 export interface SearchResult {
 	title: string;

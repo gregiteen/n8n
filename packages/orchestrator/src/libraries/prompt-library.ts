@@ -383,23 +383,23 @@ What specific aspect of {{subject_area}} would you like to explore today? I'm he
 		});
 	}
 
-	public getPrompt(id: string): PromptTemplate | undefined {
+	getPrompt(id: string): PromptTemplate | undefined {
 		return this.prompts.get(id);
 	}
 
-	public getAllPrompts(): PromptTemplate[] {
+	getAllPrompts(): PromptTemplate[] {
 		return Array.from(this.prompts.values());
 	}
 
-	public getPromptsByCategory(category: string): PromptTemplate[] {
+	getPromptsByCategory(category: string): PromptTemplate[] {
 		return this.getAllPrompts().filter((prompt) => prompt.category === category);
 	}
 
-	public getPromptsByTags(tags: string[]): PromptTemplate[] {
+	getPromptsByTags(tags: string[]): PromptTemplate[] {
 		return this.getAllPrompts().filter((prompt) => tags.some((tag) => prompt.tags.includes(tag)));
 	}
 
-	public searchPrompts(query: string): PromptTemplate[] {
+	searchPrompts(query: string): PromptTemplate[] {
 		const searchTerm = query.toLowerCase();
 		return this.getAllPrompts().filter(
 			(prompt) =>
@@ -410,11 +410,11 @@ What specific aspect of {{subject_area}} would you like to explore today? I'm he
 		);
 	}
 
-	public addPrompt(prompt: PromptTemplate): void {
+	addPrompt(prompt: PromptTemplate): void {
 		this.prompts.set(prompt.id, prompt);
 	}
 
-	public updatePrompt(id: string, updates: Partial<PromptTemplate>): boolean {
+	updatePrompt(id: string, updates: Partial<PromptTemplate>): boolean {
 		const existingPrompt = this.prompts.get(id);
 		if (!existingPrompt) {
 			return false;
@@ -434,11 +434,11 @@ What specific aspect of {{subject_area}} would you like to explore today? I'm he
 		return true;
 	}
 
-	public deletePrompt(id: string): boolean {
+	deletePrompt(id: string): boolean {
 		return this.prompts.delete(id);
 	}
 
-	public renderPrompt(id: string, variables: Record<string, string>): string | null {
+	renderPrompt(id: string, variables: Record<string, string>): string | null {
 		const prompt = this.getPrompt(id);
 		if (!prompt) {
 			return null;
@@ -455,19 +455,19 @@ What specific aspect of {{subject_area}} would you like to explore today? I'm he
 		return renderedTemplate;
 	}
 
-	public getCategories(): string[] {
+	getCategories(): string[] {
 		const categories = new Set<string>();
 		this.getAllPrompts().forEach((prompt) => categories.add(prompt.category));
 		return Array.from(categories).sort();
 	}
 
-	public getAllTags(): string[] {
+	getAllTags(): string[] {
 		const tags = new Set<string>();
 		this.getAllPrompts().forEach((prompt) => prompt.tags.forEach((tag) => tags.add(tag)));
 		return Array.from(tags).sort();
 	}
 
-	public validatePrompt(prompt: PromptTemplate): string[] {
+	validatePrompt(prompt: PromptTemplate): string[] {
 		const errors: string[] = [];
 
 		if (!prompt.id || prompt.id.trim() === '') {
@@ -525,7 +525,7 @@ What specific aspect of {{subject_area}} would you like to explore today? I'm he
 		return variables;
 	}
 
-	public exportPrompts(): string {
+	exportPrompts(): string {
 		const promptsData = {
 			version: '1.0',
 			exportDate: new Date().toISOString(),
@@ -535,7 +535,7 @@ What specific aspect of {{subject_area}} would you like to explore today? I'm he
 		return JSON.stringify(promptsData, null, 2);
 	}
 
-	public importPrompts(jsonData: string): { success: number; errors: string[] } {
+	importPrompts(jsonData: string): { success: number; errors: string[] } {
 		try {
 			const data = JSON.parse(jsonData);
 			const results = { success: 0, errors: [] as string[] };

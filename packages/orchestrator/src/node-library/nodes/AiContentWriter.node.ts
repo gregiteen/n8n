@@ -1,6 +1,7 @@
 // AI Content Writer Node - AI-powered content creation and writing assistance
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -169,7 +170,7 @@ export class AiContentWriter extends BaseAiNode {
 				// Calculate target word count
 				let targetWordCount = wordCount;
 				if (contentLength !== 'custom') {
-					const lengthMap = {
+					const lengthMap: Record<string, number> = {
 						short: 300,
 						medium: 600,
 						long: 1200,
@@ -206,11 +207,12 @@ export class AiContentWriter extends BaseAiNode {
 				};
 
 				// Make API request
-				const response = await this.makeApiRequest(
-					'/api/agents/generate-content',
-					'POST',
-					contentRequest,
-				);
+				const response = await this.helpers.request({
+					method: 'POST',
+					url: '/api/agents/generate-content',
+					body: contentRequest,
+					json: true,
+				});
 
 				// Format output
 				const outputData: any = {
@@ -252,7 +254,7 @@ export class AiContentWriter extends BaseAiNode {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
-							error: error.message,
+							error: (error as Error).message,
 							contentType: this.getNodeParameter('contentType', itemIndex, ''),
 							topic: this.getNodeParameter('topic', itemIndex, ''),
 							timestamp: new Date().toISOString(),

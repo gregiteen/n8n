@@ -1,6 +1,7 @@
 // AI Chat Agent Node - Conversational AI agent for n8n workflows
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -105,10 +106,15 @@ export class AiChatAgent extends BaseAiNode {
 				];
 
 				// Make API request
-				const response = await this.makeApiRequest('/api/agents/chat', 'POST', {
-					agent: agentConfig,
-					messages: messages,
-					format: responseFormat,
+				const response = await this.helpers.request({
+					method: 'POST',
+					url: '/api/agents/chat',
+					body: {
+						agent: agentConfig,
+						messages,
+						format: responseFormat,
+					},
+					json: true,
 				});
 
 				// Format response
@@ -135,7 +141,7 @@ export class AiChatAgent extends BaseAiNode {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
-							error: error.message,
+							error: (error as Error).message,
 							timestamp: new Date().toISOString(),
 						},
 					});

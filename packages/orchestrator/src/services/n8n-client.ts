@@ -19,6 +19,13 @@ export interface WorkflowCreateParams {
 	connections: Record<string, unknown>;
 }
 
+export interface WorkflowUpdateParams {
+	name?: string;
+	nodes?: Array<Record<string, unknown>>;
+	connections?: Record<string, unknown>;
+	active?: boolean;
+}
+
 export interface WorkflowExecution {
 	id: string;
 	finished: boolean;
@@ -33,12 +40,9 @@ export interface NodeType {
 }
 
 export class N8nClient {
-	private config: N8nConfig;
-
 	private axios: AxiosInstance;
 
 	constructor(config: N8nConfig) {
-		this.config = config;
 		this.axios = axios.create({
 			baseURL: config.baseUrl,
 			timeout: config.timeout ?? 30000,
@@ -61,6 +65,11 @@ export class N8nClient {
 
 	async createWorkflow(workflow: WorkflowCreateParams): Promise<Workflow> {
 		const response = await this.axios.post<Workflow>('/workflows', workflow);
+		return response.data;
+	}
+
+	async updateWorkflow(id: string, updates: WorkflowUpdateParams): Promise<Workflow> {
+		const response = await this.axios.put<Workflow>(`/workflows/${id}`, updates);
 		return response.data;
 	}
 

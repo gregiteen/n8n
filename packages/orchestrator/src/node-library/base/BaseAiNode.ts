@@ -1,4 +1,5 @@
-// Base AI Node - Common functionality for all AI agent nodes
+// filepath: /workspaces/n8n/packages/orchestrator/src/node-library/base/BaseAiNode.ts
+// Base class for AI nodes
 
 import type {
 	IExecuteFunctions,
@@ -8,7 +9,7 @@ import type {
 	INodeTypeDescription,
 } from 'n8n-workflow';
 
-export interface BaseAiNodeConfig {
+interface BaseAiNodeConfig {
 	name: string;
 	displayName: string;
 	description: string;
@@ -31,20 +32,15 @@ export abstract class BaseAiNode implements INodeType {
 		this.description = {
 			displayName: config.displayName,
 			name: config.name,
-			icon: config.icon,
 			group: config.group as any,
 			version: config.version,
 			description: config.description,
 			defaults: config.defaults,
-			inputs: config.inputs,
-			outputs: config.outputs,
-			credentials: [
-				{
-					name: 'aiOrchestratorApi',
-					required: true,
-				},
-			],
+			icon: config.icon as any,
+			inputs: config.inputs as any,
+			outputs: config.outputs as any,
 			properties: [
+				...config.properties,
 				{
 					displayName: 'Model Provider',
 					name: 'modelProvider',
@@ -53,16 +49,17 @@ export abstract class BaseAiNode implements INodeType {
 						{ name: 'OpenAI', value: 'openai' },
 						{ name: 'Anthropic', value: 'anthropic' },
 						{ name: 'Google Gemini', value: 'gemini' },
+						{ name: 'OpenRouter', value: 'openrouter' },
 					],
 					default: 'openai',
-					description: 'The AI model provider to use',
+					description: 'AI model provider to use',
 				},
 				{
 					displayName: 'Model',
 					name: 'model',
 					type: 'string',
-					default: 'gpt-4',
-					description: 'The specific model to use',
+					default: 'gpt-3.5-turbo',
+					description: 'Specific model to use (e.g., gpt-4, claude-3-sonnet)',
 				},
 				{
 					displayName: 'Temperature',
@@ -74,8 +71,7 @@ export abstract class BaseAiNode implements INodeType {
 						numberStepSize: 0.1,
 					},
 					default: 0.7,
-					description:
-						'Controls randomness in the AI response (0 = deterministic, 2 = very random)',
+					description: 'Controls randomness in the AI response',
 				},
 				{
 					displayName: 'Max Tokens',
@@ -84,49 +80,9 @@ export abstract class BaseAiNode implements INodeType {
 					default: 1000,
 					description: 'Maximum number of tokens in the response',
 				},
-				...config.properties,
 			],
 		};
 	}
 
 	abstract execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]>;
-
-	protected async makeApiRequest(
-		this: IExecuteFunctions,
-		endpoint: string,
-		method: string = 'POST',
-		body?: any,
-	) {
-		const credentials = await this.getCredentials('aiOrchestratorApi');
-		const baseUrl = (credentials.url as string) || 'http://localhost:3001';
-
-		const options = {
-			method,
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${credentials.apiKey}`,
-			},
-			uri: `${baseUrl}${endpoint}`,
-			json: true,
-		};
-
-		if (body) {
-			options.body = body;
-		}
-
-		try {
-			return await this.helpers.request(options);
-		} catch (error) {
-			throw new Error(`AI Orchestrator API request failed: ${error.message}`);
-		}
-	}
-
-	protected getCommonParameters(this: IExecuteFunctions) {
-		return {
-			modelProvider: this.getNodeParameter('modelProvider', 0) as string,
-			model: this.getNodeParameter('model', 0) as string,
-			temperature: this.getNodeParameter('temperature', 0) as number,
-			maxTokens: this.getNodeParameter('maxTokens', 0) as number,
-		};
-	}
 }

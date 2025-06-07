@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
-import { ApplicationError } from 'n8n-workflow';
 import dotenv from 'dotenv';
+import { ApplicationError } from 'n8n-workflow';
 import OpenAI from 'openai';
 
 dotenv.config();
@@ -23,6 +23,7 @@ export interface SearchQuery {
 
 export class AgentMemoryService {
 	private supabase;
+
 	private openai;
 
 	constructor() {
@@ -81,7 +82,7 @@ export class AgentMemoryService {
 				.single();
 
 			if (error) {
-				throw new Error(error.message);
+				throw new ApplicationError();
 			}
 
 			return data.id;
@@ -106,7 +107,7 @@ export class AgentMemoryService {
 			});
 
 			if (error) {
-				throw new Error(error.message);
+				throw new ApplicationError();
 			}
 
 			return data.map((item: any) => ({
@@ -131,7 +132,7 @@ export class AgentMemoryService {
 			const { error } = await this.supabase.from('agent_memory').delete().eq('id', id);
 
 			if (error) {
-				throw new Error(error.message);
+				throw new ApplicationError();
 			}
 		} catch (error) {
 			console.error('Error deleting memory:', error);
@@ -147,7 +148,7 @@ export class AgentMemoryService {
 			const { error } = await this.supabase.from('agent_memory').delete().eq('agent_id', agentId);
 
 			if (error) {
-				throw new Error(error.message);
+				throw new ApplicationError();
 			}
 		} catch (error) {
 			console.error('Error clearing agent memory:', error);
@@ -167,7 +168,7 @@ export class AgentMemoryService {
 				.order('created_at', { ascending: false });
 
 			if (error) {
-				throw new Error(error.message);
+				throw new ApplicationError();
 			}
 
 			return data.map((item: any) => ({

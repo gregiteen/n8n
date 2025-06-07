@@ -12,6 +12,11 @@ export type {
 	AdaptationRule,
 } from './library-manager';
 
+// Import instances for use in convenience exports
+import { keywordLibrary } from './keyword-library';
+import { libraryManager } from './library-manager';
+import { promptLibrary } from './prompt-library';
+
 // Convenience exports for commonly used functionality
 export const libraries = {
 	prompt: promptLibrary,

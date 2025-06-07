@@ -1,6 +1,7 @@
 // AI Decision Maker Node - Smart decision support system
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -180,11 +181,12 @@ export class AiDecisionMaker extends BaseAiNode {
 				};
 
 				// Make API request
-				const response = await this.makeApiRequest(
-					'/api/agents/make-decision-analysis',
-					'POST',
-					decisionRequest,
-				);
+				const response = await this.helpers.request({
+					method: 'POST',
+					url: '/api/agents/make-decision-analysis',
+					body: decisionRequest,
+					json: true,
+				});
 
 				// Format comprehensive output
 				const outputData: any = {
@@ -245,7 +247,7 @@ export class AiDecisionMaker extends BaseAiNode {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
-							error: error.message,
+							error: (error as Error).message,
 							decisionContext: this.getNodeParameter('decisionContext', itemIndex, ''),
 							timestamp: new Date().toISOString(),
 						},

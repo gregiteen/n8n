@@ -56,7 +56,7 @@ export class AnthropicClient {
 							: msg.role === 'assistant'
 								? 'assistant'
 								: 'user';
-				return { role: role as 'user' | 'assistant', content: msg.content };
+				return { role, content: msg.content };
 			});
 
 			// Convert tools to Anthropic tool format

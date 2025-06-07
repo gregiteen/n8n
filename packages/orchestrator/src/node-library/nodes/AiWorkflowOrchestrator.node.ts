@@ -1,6 +1,7 @@
 // AI Workflow Orchestrator Node - Smart workflow decision making and routing
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -176,14 +177,18 @@ export class AiWorkflowOrchestrator extends BaseAiNode {
 				};
 
 				// Make API request
-				const response = await this.makeApiRequest(
-					'/api/agents/make-decision',
-					'POST',
-					decisionRequest,
-				);
+				const response = await this.helpers.request({
+					method: 'POST',
+					uri: '/api/agents/make-decision',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: decisionRequest,
+					json: true,
+				});
 
 				// Build output data
-				const outputData = {
+				const outputData: any = {
 					...currentItem.json,
 					decision: {
 						result: response.decision,
@@ -191,6 +196,10 @@ export class AiWorkflowOrchestrator extends BaseAiNode {
 						reasoning: includeReasoning ? response.reasoning : undefined,
 						route: response.route,
 						timestamp: new Date().toISOString(),
+						status: '',
+						fallbackAction: '',
+						requiresManualReview: false,
+						matchedRoute: null,
 					},
 					usage: response.usage,
 				};
@@ -241,7 +250,7 @@ export class AiWorkflowOrchestrator extends BaseAiNode {
 						case 'multi':
 							// Find matching route
 							const matchedRoute = routeDefinitions.find(
-								(route) =>
+								(route: any) =>
 									response.route === route.output ||
 									decision.toString().toLowerCase().includes(route.condition.toLowerCase()),
 							);
@@ -259,7 +268,7 @@ export class AiWorkflowOrchestrator extends BaseAiNode {
 				if (this.continueOnFail()) {
 					const errorData = {
 						...items[itemIndex].json,
-						error: error.message,
+						error: (error as Error).message,
 						decision: {
 							status: 'error',
 							timestamp: new Date().toISOString(),

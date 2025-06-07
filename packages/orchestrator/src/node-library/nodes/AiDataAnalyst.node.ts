@@ -1,6 +1,7 @@
 // AI Data Analyst Node - Intelligent data analysis and insights
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -122,7 +123,7 @@ export class AiDataAnalyst extends BaseAiNode {
 						break;
 					case 'csv':
 						const csvContent = NodeHelpers.extractText(currentItem.json);
-						analysisData = this.parseCsvData(csvContent);
+						analysisData = AiDataAnalyst.parseCsvData(csvContent);
 						break;
 					case 'json':
 						analysisData = Array.isArray(currentItem.json.data)
@@ -152,7 +153,7 @@ export class AiDataAnalyst extends BaseAiNode {
 					agent: agentConfig,
 					data: analysisData,
 					analysisType,
-					query: analysisQuery || this.getDefaultQuery(analysisType),
+					query: analysisQuery || AiDataAnalyst.getDefaultQuery(analysisType),
 					outputFormat,
 					includeRecommendations,
 					options: {
@@ -161,11 +162,15 @@ export class AiDataAnalyst extends BaseAiNode {
 				};
 
 				// Make API request
-				const response = await this.makeApiRequest(
-					'/api/agents/analyze-data',
-					'POST',
-					analysisRequest,
-				);
+				const response = await this.helpers.request({
+					method: 'POST',
+					uri: '/api/agents/analyze-data',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: analysisRequest,
+					json: true,
+				});
 
 				// Format output
 				const outputData = {
@@ -190,7 +195,7 @@ export class AiDataAnalyst extends BaseAiNode {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
-							error: error.message,
+							error: (error as Error).message,
 							timestamp: new Date().toISOString(),
 						},
 					});
@@ -203,8 +208,8 @@ export class AiDataAnalyst extends BaseAiNode {
 		return [returnData];
 	}
 
-	private getDefaultQuery(analysisType: string): string {
-		const queries = {
+	private static getDefaultQuery(analysisType: string): string {
+		const queries: Record<string, string> = {
 			descriptive: 'Provide descriptive statistics and data overview',
 			trends: 'Identify trends and patterns in the data',
 			correlation: 'Analyze correlations between variables',
@@ -214,7 +219,7 @@ export class AiDataAnalyst extends BaseAiNode {
 		return queries[analysisType] || 'Analyze the data and provide insights';
 	}
 
-	private parseCsvData(csvContent: string): any[] {
+	private static parseCsvData(csvContent: string): any[] {
 		const lines = csvContent.trim().split('\n');
 		if (lines.length < 2) return [];
 

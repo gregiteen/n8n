@@ -1,4 +1,4 @@
-import { ModelProvider } from '../agent';
+import type { ModelProvider } from '../agent';
 
 export interface ModelOption {
 	id: string;

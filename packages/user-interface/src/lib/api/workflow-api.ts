@@ -79,6 +79,12 @@ export class WorkflowAPI {
 		});
 	}
 
+	async pauseWorkflow(executionId: string): Promise<WorkflowExecution> {
+		return this.client.request<WorkflowExecution>(`/api/workflow-executions/${executionId}/pause`, {
+			method: 'POST',
+		});
+	}
+
 	async getWorkflowExecution(executionId: string): Promise<WorkflowExecution> {
 		return this.client.request<WorkflowExecution>(`/api/workflow-executions/${executionId}`);
 	}

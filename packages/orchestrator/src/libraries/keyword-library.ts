@@ -25,6 +25,7 @@ export interface KeywordMatch {
 
 export class KeywordLibrary {
 	private keywordSets: Map<string, KeywordSet> = new Map();
+
 	private keywordIndex: Map<string, string[]> = new Map(); // keyword -> keywordSet IDs
 
 	constructor() {
@@ -772,24 +773,24 @@ export class KeywordLibrary {
 		}
 	}
 
-	public addKeywordSet(keywordSet: KeywordSet): void {
+	addKeywordSet(keywordSet: KeywordSet): void {
 		this.keywordSets.set(keywordSet.id, keywordSet);
 		this.buildIndex(); // Rebuild index to include new keywords
 	}
 
-	public getKeywordSet(id: string): KeywordSet | undefined {
+	getKeywordSet(id: string): KeywordSet | undefined {
 		return this.keywordSets.get(id);
 	}
 
-	public getAllKeywordSets(): KeywordSet[] {
+	getAllKeywordSets(): KeywordSet[] {
 		return Array.from(this.keywordSets.values());
 	}
 
-	public getKeywordSetsByCategory(category: string): KeywordSet[] {
+	getKeywordSetsByCategory(category: string): KeywordSet[] {
 		return this.getAllKeywordSets().filter((set) => set.category === category);
 	}
 
-	public analyzeText(text: string): KeywordMatch[] {
+	analyzeText(text: string): KeywordMatch[] {
 		const matches: KeywordMatch[] = [];
 		const normalizedText = text.toLowerCase();
 		const words = normalizedText.split(/\s+/);
@@ -880,7 +881,7 @@ export class KeywordLibrary {
 		});
 	}
 
-	public extractIntents(text: string): string[] {
+	extractIntents(text: string): string[] {
 		const matches = this.analyzeText(text);
 		const intents = new Set<string>();
 
@@ -893,7 +894,7 @@ export class KeywordLibrary {
 		return Array.from(intents);
 	}
 
-	public detectSentiment(text: string): {
+	detectSentiment(text: string): {
 		sentiment: 'positive' | 'negative' | 'neutral';
 		confidence: number;
 	} {
@@ -923,7 +924,7 @@ export class KeywordLibrary {
 		}
 	}
 
-	public detectUrgency(text: string): { level: 'high' | 'medium' | 'low'; confidence: number } {
+	detectUrgency(text: string): { level: 'high' | 'medium' | 'low'; confidence: number } {
 		const matches = this.analyzeText(text);
 		let urgencyScore = 0;
 
@@ -942,7 +943,7 @@ export class KeywordLibrary {
 		}
 	}
 
-	public categorizeQuery(text: string): { category: string; confidence: number }[] {
+	categorizeQuery(text: string): Array<{ category: string; confidence: number }> {
 		const matches = this.analyzeText(text);
 		const categoryScores = new Map<string, number>();
 
@@ -958,7 +959,7 @@ export class KeywordLibrary {
 		return categories;
 	}
 
-	public searchKeywords(query: string): KeywordSet[] {
+	searchKeywords(query: string): KeywordSet[] {
 		const searchTerm = query.toLowerCase();
 		return this.getAllKeywordSets().filter(
 			(keywordSet) =>
@@ -969,13 +970,13 @@ export class KeywordLibrary {
 		);
 	}
 
-	public getCategories(): string[] {
+	getCategories(): string[] {
 		const categories = new Set<string>();
 		this.getAllKeywordSets().forEach((keywordSet) => categories.add(keywordSet.category));
 		return Array.from(categories).sort();
 	}
 
-	public updateKeywordSet(id: string, updates: Partial<KeywordSet>): boolean {
+	updateKeywordSet(id: string, updates: Partial<KeywordSet>): boolean {
 		const existingSet = this.keywordSets.get(id);
 		if (!existingSet) {
 			return false;
@@ -996,7 +997,7 @@ export class KeywordLibrary {
 		return true;
 	}
 
-	public deleteKeywordSet(id: string): boolean {
+	deleteKeywordSet(id: string): boolean {
 		const deleted = this.keywordSets.delete(id);
 		if (deleted) {
 			this.buildIndex(); // Rebuild index after deletion
@@ -1004,7 +1005,7 @@ export class KeywordLibrary {
 		return deleted;
 	}
 
-	public exportKeywords(): string {
+	exportKeywords(): string {
 		const keywordsData = {
 			version: '1.0',
 			exportDate: new Date().toISOString(),
@@ -1014,7 +1015,7 @@ export class KeywordLibrary {
 		return JSON.stringify(keywordsData, null, 2);
 	}
 
-	public importKeywords(jsonData: string): { success: number; errors: string[] } {
+	importKeywords(jsonData: string): { success: number; errors: string[] } {
 		try {
 			const data = JSON.parse(jsonData);
 			const results = { success: 0, errors: [] as string[] };

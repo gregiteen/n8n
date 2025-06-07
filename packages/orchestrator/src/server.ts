@@ -1,9 +1,11 @@
 import express from 'express';
 
-import { Agent, ModelProvider } from './agent';
-import { AgentFactory, AgentType } from './agent-factory';
+import type { ModelProvider } from './agent';
+import { Agent } from './agent';
+import type { AgentType } from './agent-factory';
+import { AgentFactory } from './agent-factory';
 import { ModelSelector } from './models/model-selector';
-import { ModelSelectorService } from './model-selector-service';
+import { ModelSelectorService } from './services/model-selector.service';
 
 export function createApp(agent = new Agent()) {
 	const app = express();

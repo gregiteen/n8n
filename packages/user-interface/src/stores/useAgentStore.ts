@@ -12,12 +12,24 @@ interface AgentState {
 	// State
 	agents: Agent[];
 	activeAgents: Agent[];
+	selectedAgentId: string | null;
+	chatMessages: Record<
+		string,
+		Array<{ id: string; role: 'user' | 'assistant'; content: string; timestamp: Date }>
+	>;
 	loading: boolean;
 	error: string | null;
 
 	// Actions
 	setAgents: (agents: Agent[]) => void;
 	setActiveAgents: (agents: Agent[]) => void;
+	setSelectedAgentId: (agentId: string | null) => void;
+	setChatMessages: (
+		messages: Record<
+			string,
+			Array<{ id: string; role: 'user' | 'assistant'; content: string; timestamp: Date }>
+		>,
+	) => void;
 	setLoading: (loading: boolean) => void;
 	setError: (error: string | null) => void;
 
@@ -31,6 +43,8 @@ interface AgentState {
 	// Agent Operations
 	activateAgent: (agentId: string) => Promise<void>;
 	deactivateAgent: (agentId: string) => Promise<void>;
+	selectAgent: (agentId: string) => void;
+	sendMessage: (agentId: string, message: string) => Promise<void>;
 
 	// Real-time handlers
 	handleAgentUpdate: (agent: Agent) => void;
@@ -47,12 +61,16 @@ export const useAgentStore = create<AgentState>()(
 		// Initial state
 		agents: [],
 		activeAgents: [],
+		selectedAgentId: null,
+		chatMessages: {},
 		loading: false,
 		error: null,
 
 		// Basic setters
 		setAgents: (agents) => set({ agents }),
 		setActiveAgents: (agents) => set({ activeAgents: agents }),
+		setSelectedAgentId: (selectedAgentId) => set({ selectedAgentId }),
+		setChatMessages: (chatMessages) => set({ chatMessages }),
 		setLoading: (loading) => set({ loading }),
 		setError: (error) => set({ error }),
 
@@ -190,6 +208,58 @@ export const useAgentStore = create<AgentState>()(
 			});
 
 			setAgents(updatedAgents);
+		},
+
+		// Agent selection and messaging
+		selectAgent: (agentId: string) => {
+			set({ selectedAgentId: agentId });
+		},
+
+		sendMessage: async (agentId: string, message: string) => {
+			const { chatMessages, setChatMessages, setError } = get();
+
+			try {
+				setError(null);
+
+				// Add user message to chat
+				const userMessage = {
+					id: `user-${Date.now()}`,
+					role: 'user' as const,
+					content: message,
+					timestamp: new Date(),
+				};
+
+				// Get current messages for this agent
+				const currentAgentMessages = chatMessages[agentId] || [];
+				const updatedMessages = [...currentAgentMessages, userMessage];
+
+				// Update chat messages for this agent
+				setChatMessages({
+					...chatMessages,
+					[agentId]: updatedMessages,
+				});
+
+				// Send message to agent via API
+				const response = await apiService.agents.sendChatMessage(agentId, message);
+
+				// Add agent response to chat
+				const agentMessage = {
+					id: `agent-${Date.now()}`,
+					role: 'assistant' as const,
+					content: response.message,
+					timestamp: new Date(),
+				};
+
+				// Update with agent response
+				setChatMessages({
+					...chatMessages,
+					[agentId]: [...updatedMessages, agentMessage],
+				});
+			} catch (error) {
+				console.error('Failed to send message:', error);
+				setError(error instanceof Error ? error.message : 'Failed to send message');
+				throw error;
+			}
 		},
 
 		// Computed getters

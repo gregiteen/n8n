@@ -1,6 +1,8 @@
-import { Agent, AgentOptions, ModelProvider, ToolDefinition } from '../agent';
-import { ModelInfo, ModelSelectorService } from './model-selector.service';
 import { ApplicationError } from 'n8n-workflow';
+
+import type { AgentOptions, ModelProvider, ToolDefinition } from '../agent';
+import { Agent } from '../agent';
+import { ModelSelectorService } from './model-selector.service';
 
 export interface AgentConfig {
 	type: 'chat' | 'web-browsing' | 'workflow-automation' | 'data-analysis';
@@ -88,7 +90,7 @@ export class AgentFactoryService {
 	}
 
 	async createWebBrowsingAgent(model?: string, provider?: ModelProvider): Promise<Agent> {
-		return this.createAgent({
+		return await this.createAgent({
 			type: 'web-browsing',
 			model,
 			provider,
@@ -119,7 +121,7 @@ export class AgentFactoryService {
 			},
 		];
 
-		return this.createAgent({
+		return await this.createAgent({
 			type: 'workflow-automation',
 			model,
 			provider,

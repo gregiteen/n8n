@@ -1,4 +1,5 @@
-import { GoogleGenerativeAI, Tool, FunctionDeclaration } from '@google/generative-ai';
+import type { Tool, FunctionDeclaration } from '@google/generative-ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 import { ApplicationError } from 'n8n-workflow';
 

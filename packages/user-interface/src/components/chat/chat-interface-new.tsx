@@ -8,6 +8,13 @@ import { Button } from '@/components/ui/button';
 import { cn, formatRelativeTime } from '@/lib/utils';
 import { useAgentStore } from '@/stores';
 
+type ChatMessage = {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+};
+
 export function ChatInterface() {
   const { 
     agents, 
@@ -184,7 +191,7 @@ export function ChatInterface() {
                   No messages yet. Start the conversation!
                 </div>
               ) : (
-                currentMessages.map((msg) => (
+                currentMessages.map((msg: ChatMessage) => (
                   <div
                     key={msg.id}
                     className={cn(

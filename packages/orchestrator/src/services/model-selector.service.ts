@@ -1,5 +1,6 @@
-import { ModelProvider } from '../agent';
 import { ApplicationError } from 'n8n-workflow';
+
+import type { ModelProvider } from '../agent';
 
 export interface ModelInfo {
 	id: string;

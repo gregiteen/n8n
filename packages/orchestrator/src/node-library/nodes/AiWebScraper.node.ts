@@ -1,6 +1,7 @@
 // AI Web Scraper Node - Intelligent web scraping with AI analysis
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -161,14 +162,15 @@ export class AiWebScraper extends BaseAiNode {
 				};
 
 				// Make API request
-				const response = await this.makeApiRequest(
-					'/api/agents/scrape-web',
-					'POST',
-					scrapingRequest,
-				);
+				const response = await this.helpers.request({
+					method: 'POST',
+					url: '/api/agents/scrape-web',
+					body: scrapingRequest,
+					json: true,
+				});
 
 				// Format output
-				const outputData = {
+				const outputData: any = {
 					url: response.url,
 					title: response.title,
 					content: response.content,
@@ -184,12 +186,12 @@ export class AiWebScraper extends BaseAiNode {
 
 				// Add structured data if available
 				if (response.structuredData) {
-					outputData['structuredData'] = response.structuredData;
+					outputData.structuredData = response.structuredData;
 				}
 
 				// Add sentiment if analyzed
 				if (response.sentiment) {
-					outputData['sentiment'] = response.sentiment;
+					outputData.sentiment = response.sentiment;
 				}
 
 				returnData.push({
@@ -199,7 +201,7 @@ export class AiWebScraper extends BaseAiNode {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
-							error: error.message,
+							error: (error as Error).message,
 							url: this.getNodeParameter('url', itemIndex, ''),
 							timestamp: new Date().toISOString(),
 						},

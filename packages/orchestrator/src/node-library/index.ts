@@ -9,8 +9,6 @@ export * from './nodes/AiContentWriter.node';
 export * from './nodes/AiImageAnalyzer.node';
 export * from './nodes/AiWorkflowOrchestrator.node';
 export * from './nodes/AiDecisionMaker.node';
-export * from './nodes/AiEmailAssistant.node';
-export * from './nodes/AiDocumentProcessor.node';
 
 export * from './base/BaseAiNode';
 export * from './utils/NodeHelpers';

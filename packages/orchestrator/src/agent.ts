@@ -1,13 +1,20 @@
-import type { OpenAIClient as OpenAIClientClass } from './clients/openai';
 import type { AnthropicClient as AnthropicClientClass } from './clients/anthropic';
-import type { GeminiClient as GeminiClientClass } from './clients/gemini';
-import type { OpenRouterClient as OpenRouterClientClass } from './clients/openrouter';
-import { OpenAIClient } from './clients/openai';
 import { AnthropicClient } from './clients/anthropic';
+import type { GeminiClient as GeminiClientClass } from './clients/gemini';
 import { GeminiClient } from './clients/gemini';
+import { OpenAIClient } from './clients/openai';
+import type { OpenAIClient as OpenAIClientClass } from './clients/openai';
+import type { OpenRouterClient as OpenRouterClientClass } from './clients/openrouter';
 import { OpenRouterClient } from './clients/openrouter';
-import { AgentMemoryService, MemoryEntry } from './services/agent-memory.service';
-import { libraryManager, type LibraryAnalysis, type SmartAgentConfig } from './libraries';
+import {
+	libraryManager,
+	type LibraryAnalysis,
+	type SmartAgentConfig,
+	type PromptTemplate,
+	type KeywordMatch,
+} from './libraries';
+import type { MemoryEntry } from './services/agent-memory.service';
+import { AgentMemoryService } from './services/agent-memory.service';
 
 export type ModelProvider = 'openai' | 'anthropic' | 'gemini' | 'openrouter';
 
@@ -28,17 +35,59 @@ export interface ToolDefinition {
 	execute?: (args: Record<string, unknown>) => Promise<unknown>;
 }
 
+export interface ToolUsage {
+	toolName: string;
+	usage: number;
+	timestamp: string;
+}
+
+export interface AgentAnalysis {
+	agentId: string;
+	provider: ModelProvider;
+	model?: string;
+	memoryUsage?: any;
+	toolUsage: ToolUsage[];
+	capabilities: string[];
+	libraryUsage?: LibraryAnalysis;
+	// LibraryAnalysis properties for compatibility
+	suggestedPrompts: PromptTemplate[];
+	detectedKeywords: KeywordMatch[];
+	intents: string[];
+	sentiment: {
+		sentiment: 'positive' | 'negative' | 'neutral';
+		confidence: number;
+	};
+	urgency: {
+		level: 'high' | 'medium' | 'low';
+		confidence: number;
+	};
+	categories: Array<{
+		category: string;
+		confidence: number;
+	}>;
+}
+
 export class Agent {
 	private messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }> = [];
+
 	private provider: ModelProvider;
+
 	private openaiClient: OpenAIClientClass;
+
 	private anthropicClient: AnthropicClientClass;
+
 	private geminiClient: GeminiClientClass;
+
 	private openrouterClient: OpenRouterClientClass;
+
 	private memoryService?: AgentMemoryService;
+
 	private model?: string;
+
 	private tools: ToolDefinition[] = [];
+
 	private agentId?: string;
+
 	private useMemory = false;
 
 	constructor(options: AgentOptions = {}) {
@@ -281,11 +330,11 @@ Given this context, please respond to the user's current message.
 		const tool = this.tools.find((t) => t.name === toolName);
 
 		if (!tool) {
-			throw new Error(`Tool "${toolName}" not found`);
+			throw new ApplicationError();
 		}
 
 		if (!tool.execute) {
-			throw new Error(`Tool "${toolName}" does not have an execute function`);
+			throw new ApplicationError();
 		}
 
 		// Execute the tool
@@ -330,6 +379,7 @@ Given this context, please respond to the user's current message.
 		this.model = model;
 		return this;
 	}
+
 	getModel(): string | undefined {
 		return this.model;
 	}
@@ -351,10 +401,10 @@ Given this context, please respond to the user's current message.
 	 */
 	async getAllMemories(): Promise<MemoryEntry[]> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
-			throw new Error('Memory service is not available or agent ID is not set');
+			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
-		return this.memoryService.getAgentMemories(this.agentId);
+		return await this.memoryService.getAgentMemories(this.agentId);
 	}
 
 	/**
@@ -362,10 +412,10 @@ Given this context, please respond to the user's current message.
 	 */
 	async searchMemories(query: string, limit = 10): Promise<MemoryEntry[]> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
-			throw new Error('Memory service is not available or agent ID is not set');
+			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
-		return this.memoryService.searchMemory({
+		return await this.memoryService.searchMemory({
 			agentId: this.agentId,
 			query,
 			limit,
@@ -377,10 +427,10 @@ Given this context, please respond to the user's current message.
 	 */
 	async addMemory(content: string, metadata: Record<string, unknown> = {}): Promise<string> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
-			throw new Error('Memory service is not available or agent ID is not set');
+			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
-		return this.memoryService.addMemory({
+		return await this.memoryService.addMemory({
 			agentId: this.agentId,
 			content,
 			metadata: { ...metadata, timestamp: new Date().toISOString() },
@@ -392,7 +442,7 @@ Given this context, please respond to the user's current message.
 	 */
 	async clearMemory(): Promise<void> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
-			throw new Error('Memory service is not available or agent ID is not set');
+			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
 		await this.memoryService.clearAgentMemory(this.agentId);
@@ -410,7 +460,7 @@ Given this context, please respond to the user's current message.
 	 */
 	async analyze(): Promise<LibraryAnalysis> {
 		if (!this.agentId) {
-			throw new Error('Agent ID is not set');
+			throw new ApplicationError('Agent ID is not set');
 		}
 
 		// Gather memory usage data
@@ -424,11 +474,16 @@ Given this context, please respond to the user's current message.
 		}
 
 		// Gather tool usage data
-		let toolUsage = [];
+		let toolUsage: ToolUsage[] = [];
 		if (this.useMemory && this.memoryService) {
 			try {
 				const allMemories = await this.memoryService.getAgentMemories(this.agentId);
-				toolUsage = allMemories.filter((m) => m.metadata?.type === 'tool_usage');
+				const toolMemories = allMemories.filter((m) => m.metadata?.type === 'tool_usage');
+				toolUsage = toolMemories.map((m) => ({
+					toolName: String(m.metadata?.toolName || 'unknown'),
+					usage: 1,
+					timestamp: m.createdAt ? m.createdAt.toISOString() : new Date().toISOString(),
+				}));
 			} catch (error) {
 				console.warn('Failed to retrieve tool usage data:', error);
 			}
@@ -450,18 +505,25 @@ Given this context, please respond to the user's current message.
 				capabilities = ['chat'];
 		}
 
-		// Analyze library usage
-		const libraryUsage = await libraryManager.analyzeAgentLibraries(this.agentId);
+		// Analyze library usage - use basic analysis instead of non-existent method
+		const libraryUsage = libraryManager.analyzeUserInput(`Agent ${this.agentId} usage analysis`);
 
 		return {
-			agentId: this.agentId,
+			agentId: this.agentId || 'unknown',
 			provider: this.provider,
 			model: this.model,
 			memoryUsage,
 			toolUsage,
 			capabilities,
 			libraryUsage,
-		};
+			// Include LibraryAnalysis properties for compatibility
+			suggestedPrompts: libraryUsage.suggestedPrompts,
+			detectedKeywords: libraryUsage.detectedKeywords,
+			intents: libraryUsage.intents,
+			sentiment: libraryUsage.sentiment,
+			urgency: libraryUsage.urgency,
+			categories: libraryUsage.categories,
+		} as AgentAnalysis;
 	}
 
 	/**

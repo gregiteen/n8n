@@ -1,6 +1,7 @@
 // AI Image Analyzer Node - AI-powered image analysis and understanding
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -168,7 +169,7 @@ export class AiImageAnalyzer extends BaseAiNode {
 				switch (imageSource) {
 					case 'url':
 						if (!imageUrl) {
-							throw new Error('Image URL is required');
+							throw new ApplicationError('Image URL is required');
 						}
 						imageData = imageUrl;
 						imageName = imageUrl.split('/').pop() || 'image';
@@ -176,7 +177,7 @@ export class AiImageAnalyzer extends BaseAiNode {
 
 					case 'base64':
 						if (!imageBase64) {
-							throw new Error('Base64 image data is required');
+							throw new ApplicationError('Base64 image data is required');
 						}
 						imageData = imageBase64;
 						imageName = 'base64_image';
@@ -189,14 +190,14 @@ export class AiImageAnalyzer extends BaseAiNode {
 							imageData = fileInfo.content;
 							imageName = fileInfo.name || 'uploaded_image';
 						} else {
-							throw new Error('No image data found in input');
+							throw new ApplicationError('No image data found in input');
 						}
 						break;
 				}
 
 				// Validate custom query for custom analysis
 				if (analysisType === 'custom' && !customQuery) {
-					throw new Error('Custom analysis query is required');
+					throw new ApplicationError('Custom analysis query is required');
 				}
 
 				// Build image analysis request
@@ -209,7 +210,7 @@ export class AiImageAnalyzer extends BaseAiNode {
 					},
 					analysis: {
 						type: analysisType,
-						customQuery: customQuery,
+						customQuery,
 						detailLevel,
 						extractColors,
 						generateAltText,
@@ -219,11 +220,15 @@ export class AiImageAnalyzer extends BaseAiNode {
 				};
 
 				// Make API request
-				const response = await this.makeApiRequest(
-					'/api/agents/analyze-image',
-					'POST',
-					analysisRequest,
-				);
+				const response = await this.helpers.request({
+					method: 'POST',
+					uri: '/api/agents/analyze-image',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: analysisRequest,
+					json: true,
+				});
 
 				// Format output
 				const outputData: any = {
@@ -309,7 +314,7 @@ export class AiImageAnalyzer extends BaseAiNode {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
-							error: error.message,
+							error: (error as Error).message,
 							imageSource: this.getNodeParameter('imageSource', itemIndex, ''),
 							analysisType: this.getNodeParameter('analysisType', itemIndex, ''),
 							timestamp: new Date().toISOString(),

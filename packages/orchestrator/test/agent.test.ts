@@ -1,18 +1,21 @@
 import { Agent } from '../src/agent';
-import { OpenAIClient } from '../src/clients/openai';
 
 jest.mock('n8n-workflow', () => ({ ApplicationError: class ApplicationError extends Error {} }), {
 	virtual: true,
 });
 
-jest.mock('../src/clients/openai');
-
 describe('Agent', () => {
 	test('send stores messages and returns response', async () => {
-		const chat = jest.fn().mockResolvedValue('world');
-		(OpenAIClient as jest.Mock).mockImplementation(() => ({ chat }));
+		const mockChat = jest.fn().mockResolvedValue('world');
 
-		const agent = new Agent(new OpenAIClient());
+		const agent = new Agent({
+			provider: 'openai',
+			model: 'gpt-3.5-turbo',
+		});
+
+		// Mock the chat method directly on the agent
+		(agent as any).openaiClient = { chat: mockChat };
+
 		const res = await agent.send('hello');
 
 		expect(res).toBe('world');

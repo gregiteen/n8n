@@ -4,14 +4,30 @@
  */
 
 export class AIOrchestrator {
-	constructor(private readonly config: any = {}) {}
+	constructor(private readonly config: any = {}) {
+		// Store configuration for use during initialization
+		this.validateConfig(config);
+	}
+
+	/**
+	 * Validate the orchestrator configuration
+	 */
+	private validateConfig(config: any): void {
+		// Basic config validation
+		if (config && typeof config !== 'object') {
+			throw new Error('Configuration must be an object');
+		}
+	}
 
 	/**
 	 * Initialize the AI Orchestrator
 	 */
 	async initialize(): Promise<void> {
-		console.log('AI Orchestrator initializing...');
-		// Initialization logic will go here
+		console.log('AI Orchestrator initializing with config:', this.config);
+		// Use the config to set up services, connections, etc.
+		if (this.config.verbose) {
+			console.log('Verbose logging enabled');
+		}
 	}
 
 	/**

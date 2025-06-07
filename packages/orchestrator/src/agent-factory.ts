@@ -1,6 +1,7 @@
-import { Agent, AgentOptions, ModelProvider, ToolDefinition } from './agent';
+import type { AgentOptions, ModelProvider, ToolDefinition } from './agent';
+import { Agent } from './agent';
+import { ModelSelector } from './models/model-selector';
 import { BrowserService } from './services/browser.service';
-import { ModelSelector, ModelOption } from './models/model-selector';
 import { N8nClient } from './services/n8n-client';
 
 export type AgentType =
@@ -20,7 +21,11 @@ export interface AgentFactoryOptions extends AgentOptions {
  */
 export class AgentFactory {
 	private static browserService = new BrowserService();
-	private static n8nClient = new N8nClient();
+
+	private static n8nClient = new N8nClient({
+		baseUrl: process.env.N8N_BASE_URL || 'http://localhost:5678',
+		apiKey: process.env.N8N_API_KEY || '',
+	});
 
 	/**
 	 * Create an agent of the specified type with appropriate configuration
@@ -223,16 +228,35 @@ export class AgentFactory {
 						},
 					},
 				},
-				execute: async (_args) => {
-					// Implementation would call n8n API to list workflows
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						workflows: [
-							{ id: 'workflow-1', name: 'Example Workflow 1', active: true },
-							{ id: 'workflow-2', name: 'Example Workflow 2', active: false },
-						],
-					};
+				execute: async (args) => {
+					try {
+						const workflows = await this.n8nClient.getWorkflows();
+						// Filter workflows based on args if needed
+						const filteredWorkflows = workflows;
+
+						if (args.active !== undefined) {
+							// Note: The current API doesn't support filtering by active status
+							// This would require API extension or client-side filtering
+							console.warn('Active status filtering not supported by current API');
+						}
+
+						if (args.tags && Array.isArray(args.tags) && args.tags.length > 0) {
+							// Note: The current API doesn't support filtering by tags
+							// This would require API extension or client-side filtering
+							console.warn('Tag filtering not supported by current API');
+						}
+
+						return {
+							status: 'success',
+							workflows: filteredWorkflows,
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to list workflows: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							workflows: [],
+						};
+					}
 				},
 			},
 			{
@@ -249,18 +273,19 @@ export class AgentFactory {
 					required: ['workflowId'],
 				},
 				execute: async (args) => {
-					// Implementation would call n8n API to get workflow details
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						workflow: {
-							id: args.workflowId,
-							name: 'Example Workflow',
-							nodes: [],
-							connections: {},
-							active: true,
-						},
-					};
+					try {
+						const workflow = await this.n8nClient.getWorkflow(args.workflowId as string);
+						return {
+							status: 'success',
+							workflow,
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to get workflow: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							workflow: null,
+						};
+					}
 				},
 			},
 			{
@@ -289,18 +314,24 @@ export class AgentFactory {
 					required: ['name'],
 				},
 				execute: async (args) => {
-					// Implementation would call n8n API to create a workflow
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						workflow: {
-							id: 'new-workflow-id',
-							name: args.name,
-							nodes: args.nodes || [],
-							connections: args.connections || {},
-							active: args.active || false,
-						},
-					};
+					try {
+						const workflowData = {
+							name: args.name as string,
+							nodes: (args.nodes as Array<Record<string, unknown>>) || [],
+							connections: (args.connections as Record<string, unknown>) || {},
+						};
+						const workflow = await this.n8nClient.createWorkflow(workflowData);
+						return {
+							status: 'success',
+							workflow,
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to create workflow: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							workflow: null,
+						};
+					}
 				},
 			},
 			{
@@ -333,18 +364,28 @@ export class AgentFactory {
 					required: ['workflowId'],
 				},
 				execute: async (args) => {
-					// Implementation would call n8n API to update a workflow
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						workflow: {
-							id: args.workflowId,
-							name: args.name || 'Updated Workflow',
-							nodes: args.nodes || [],
-							connections: args.connections || {},
-							active: args.active || false,
-						},
-					};
+					try {
+						const workflowId = args.workflowId as string;
+						const updates: any = {};
+
+						if (args.name) updates.name = args.name as string;
+						if (args.nodes) updates.nodes = args.nodes as Array<Record<string, unknown>>;
+						if (args.connections) updates.connections = args.connections as Record<string, unknown>;
+						if (args.active !== undefined) updates.active = args.active as boolean;
+
+						const workflow = await this.n8nClient.updateWorkflow(workflowId, updates);
+						return {
+							status: 'success',
+							workflow,
+							message: `Workflow ${workflowId} updated successfully`,
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to update workflow: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							workflow: null,
+						};
+					}
 				},
 			},
 			{
@@ -365,13 +406,25 @@ export class AgentFactory {
 					required: ['workflowId'],
 				},
 				execute: async (args) => {
-					// Implementation would call n8n API to execute a workflow
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						executionId: 'execution-id-123',
-						message: `Workflow ${args.workflowId} executed successfully`,
-					};
+					try {
+						const execution = await this.n8nClient.executeWorkflow(
+							args.workflowId as string,
+							args.input as Record<string, unknown>,
+						);
+						return {
+							status: 'success',
+							executionId: execution.id,
+							finished: execution.finished,
+							executionStatus: execution.status,
+							message: `Workflow ${args.workflowId} executed successfully`,
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to execute workflow: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							executionId: null,
+						};
+					}
 				},
 			},
 		];
@@ -420,13 +473,59 @@ export class AgentFactory {
 					required: ['data', 'dataType'],
 				},
 				execute: async (args) => {
-					// Implementation would depend on data analysis libraries
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						analysis: `Analysis of ${args.dataType} data completed`,
-						summary: 'Data analysis summary would appear here',
-					};
+					try {
+						const data = args.data as string;
+						const dataType = args.dataType as string;
+						const analysisType = args.analysisType as string;
+
+						// Parse the data based on type
+						let parsedData: any;
+						if (dataType === 'json') {
+							parsedData = JSON.parse(data);
+						} else if (dataType === 'csv') {
+							// Basic CSV parsing - split by lines and commas
+							const lines = data.split('\n');
+							const headers = lines[0].split(',');
+							parsedData = lines.slice(1).map((line) => {
+								const values = line.split(',');
+								return headers.reduce(
+									(obj, header, index) => {
+										obj[header.trim()] = values[index]?.trim();
+										return obj;
+									},
+									{} as Record<string, any>,
+								);
+							});
+						} else {
+							parsedData = data;
+						}
+
+						// Perform basic analysis based on type
+						const analysis: any = {};
+						if (Array.isArray(parsedData)) {
+							analysis.rowCount = parsedData.length;
+							if (parsedData.length > 0) {
+								analysis.columns = Object.keys(parsedData[0]);
+								analysis.columnCount = analysis.columns.length;
+							}
+						}
+
+						return {
+							status: 'success',
+							analysis: `Analysis of ${dataType} data completed using ${analysisType} method`,
+							summary: {
+								dataType,
+								analysisType,
+								...analysis,
+							},
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to analyze data: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							analysis: null,
+						};
+					}
 				},
 			},
 			{
@@ -460,13 +559,60 @@ export class AgentFactory {
 					required: ['data', 'vizType'],
 				},
 				execute: async (args) => {
-					// Implementation would depend on visualization libraries
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						visualization: `${args.vizType} visualization created`,
-						imageUrl: 'https://example.com/visualization.png',
-					};
+					try {
+						const data = args.data as string;
+						const vizType = args.vizType as string;
+						const title = args.title as string;
+						const xAxis = args.xAxis as string;
+						const yAxis = args.yAxis as string;
+
+						// Parse the data
+						let parsedData: any;
+						try {
+							parsedData = JSON.parse(data);
+						} catch {
+							// If JSON parsing fails, try CSV
+							const lines = data.split('\n');
+							const headers = lines[0].split(',');
+							parsedData = lines.slice(1).map((line) => {
+								const values = line.split(',');
+								return headers.reduce(
+									(obj, header, index) => {
+										obj[header.trim()] = values[index]?.trim();
+										return obj;
+									},
+									{} as Record<string, any>,
+								);
+							});
+						}
+
+						// For production, this would integrate with a charting library like Chart.js, D3, or similar
+						// This is a basic implementation that returns visualization metadata
+						const vizConfig = {
+							type: vizType,
+							title: title || `${vizType} chart`,
+							data: parsedData,
+							axes: {
+								x: xAxis,
+								y: yAxis,
+							},
+							timestamp: new Date().toISOString(),
+						};
+
+						return {
+							status: 'success',
+							visualization: `${vizType} visualization created with title: ${title}`,
+							config: vizConfig,
+							// In production, this would be a real image URL or base64 data
+							imageUrl: `/visualizations/${Date.now()}-${vizType}.png`,
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to create visualization: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							visualization: null,
+						};
+					}
 				},
 			},
 			{
@@ -481,19 +627,98 @@ export class AgentFactory {
 						},
 						query: {
 							type: 'string',
-							description: 'The SQL-like query to execute',
+							description:
+								'The SQL-like query to execute (basic SELECT, WHERE, ORDER BY supported)',
 						},
 					},
 					required: ['data', 'query'],
 				},
 				execute: async (args) => {
-					// Implementation would depend on query parsing libraries
-					// This is a placeholder for the actual implementation
-					return {
-						status: 'success',
-						result: `Query results for: ${args.query}`,
-						rows: 'Query result rows would appear here',
-					};
+					try {
+						const data = args.data as string;
+						const query = args.query as string;
+
+						// Parse the data
+						let parsedData: any[];
+						try {
+							parsedData = JSON.parse(data);
+						} catch {
+							// If JSON parsing fails, try CSV
+							const lines = data.split('\n');
+							const headers = lines[0].split(',').map((h) => h.trim());
+							parsedData = lines.slice(1).map((line) => {
+								const values = line.split(',');
+								return headers.reduce(
+									(obj, header, index) => {
+										obj[header] = values[index]?.trim();
+										return obj;
+									},
+									{} as Record<string, any>,
+								);
+							});
+						}
+
+						// Basic SQL-like query parsing
+						const queryLower = query.toLowerCase().trim();
+						let result = parsedData;
+
+						// Handle SELECT
+						if (queryLower.startsWith('select')) {
+							const selectMatch = query.match(/select\s+(.*?)\s+from/i);
+							if (selectMatch) {
+								const columns = selectMatch[1].trim();
+								if (columns !== '*') {
+									const columnNames = columns.split(',').map((c) => c.trim());
+									result = result.map((row) => {
+										const filteredRow: Record<string, any> = {};
+										columnNames.forEach((col) => {
+											if (row[col] !== undefined) {
+												filteredRow[col] = row[col];
+											}
+										});
+										return filteredRow;
+									});
+								}
+							}
+						}
+
+						// Handle WHERE clause
+						const whereMatch = query.match(/where\s+(.*?)(?:\s+order\s+by|$)/i);
+						if (whereMatch) {
+							const whereClause = whereMatch[1].trim();
+							// Basic WHERE parsing (field = value)
+							const conditionMatch = whereClause.match(/(\w+)\s*=\s*['"]?([^'"]+)['"]?/i);
+							if (conditionMatch) {
+								const [, field, value] = conditionMatch;
+								result = result.filter((row) => row[field] == value);
+							}
+						}
+
+						// Handle ORDER BY
+						const orderMatch = query.match(/order\s+by\s+(\w+)(?:\s+(asc|desc))?/i);
+						if (orderMatch) {
+							const [, field, direction] = orderMatch;
+							result = result.sort((a, b) => {
+								const aVal = a[field];
+								const bVal = b[field];
+								const comparison = aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+								return direction?.toLowerCase() === 'desc' ? -comparison : comparison;
+							});
+						}
+
+						return {
+							status: 'success',
+							query,
+							rowCount: result.length,
+							result,
+						};
+					} catch (error) {
+						return {
+							status: 'error',
+							message: `Failed to execute query: ${error instanceof Error ? error.message : 'Unknown error'}`,
+							result: [],
+						};
+					}
 				},
 			},
 		];

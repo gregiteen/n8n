@@ -31,6 +31,7 @@ interface WorkflowState {
 	// Workflow Operations
 	executeWorkflow: (workflowId: string, inputData?: any) => Promise<void>;
 	stopWorkflow: (workflowId: string) => Promise<void>;
+	pauseWorkflow: (workflowId: string) => Promise<void>;
 
 	// Real-time handlers
 	handleWorkflowUpdate: (workflow: Workflow) => void;
@@ -178,6 +179,19 @@ export const useWorkflowStore = create<WorkflowState>()(
 			} catch (error) {
 				console.error('Failed to stop workflow:', error);
 				setError(error instanceof Error ? error.message : 'Failed to stop workflow');
+				throw error;
+			}
+		},
+
+		pauseWorkflow: async (workflowId: string) => {
+			const { setError } = get();
+
+			try {
+				setError(null);
+				await apiService.workflows.pauseWorkflow(workflowId);
+			} catch (error) {
+				console.error('Failed to pause workflow:', error);
+				setError(error instanceof Error ? error.message : 'Failed to pause workflow');
 				throw error;
 			}
 		},

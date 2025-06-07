@@ -1,5 +1,7 @@
-import { promptLibrary, PromptTemplate } from './prompt-library';
-import { keywordLibrary, KeywordSet, KeywordMatch } from './keyword-library';
+import type { KeywordSet, KeywordMatch } from './keyword-library';
+import { keywordLibrary } from './keyword-library';
+import type { PromptTemplate } from './prompt-library';
+import { promptLibrary } from './prompt-library';
 
 export interface LibraryAnalysis {
 	suggestedPrompts: PromptTemplate[];
@@ -182,7 +184,7 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 		this.adaptationRules.set('content-creation', contentRules);
 	}
 
-	public analyzeUserInput(input: string): LibraryAnalysis {
+	analyzeUserInput(input: string): LibraryAnalysis {
 		// Analyze keywords and extract insights
 		const detectedKeywords = keywordLibrary.analyzeText(input);
 		const intents = keywordLibrary.extractIntents(input);
@@ -243,7 +245,7 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 		return suggestions.slice(0, 5);
 	}
 
-	public createSmartAgentConfig(
+	createSmartAgentConfig(
 		userInput: string,
 		basePromptId: string,
 		variables: Record<string, string> = {},
@@ -329,7 +331,7 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 		return true;
 	}
 
-	public enhancePromptWithContext(
+	enhancePromptWithContext(
 		promptId: string,
 		userContext: string,
 		variables: Record<string, string> = {},
@@ -339,7 +341,8 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 			return null;
 		}
 
-		const analysis = this.analyzeUserInput(userContext);
+		// Analyze user context for smart prompt enhancement
+		this.analyzeUserInput(userContext);
 		const config = this.createSmartAgentConfig(userContext, promptId, variables);
 
 		if (!config) {
@@ -349,7 +352,7 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 		return promptLibrary.renderPrompt(promptId, config.variables);
 	}
 
-	public getPromptRecommendations(
+	getPromptRecommendations(
 		userInput: string,
 		limit: number = 3,
 	): Array<{ prompt: PromptTemplate; relevanceScore: number; reasoning: string }> {
@@ -435,7 +438,7 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 		return reasons.join('; ') || 'General relevance to query content';
 	}
 
-	public searchLibraries(query: string): {
+	searchLibraries(query: string): {
 		prompts: PromptTemplate[];
 		keywords: KeywordSet[];
 		analysis: LibraryAnalysis;
@@ -451,17 +454,17 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 		};
 	}
 
-	public addAdaptationRule(category: string, rule: AdaptationRule): void {
+	addAdaptationRule(category: string, rule: AdaptationRule): void {
 		const existingRules = this.adaptationRules.get(category) || [];
 		existingRules.push(rule);
 		this.adaptationRules.set(category, existingRules);
 	}
 
-	public getAdaptationRules(category: string): AdaptationRule[] {
+	getAdaptationRules(category: string): AdaptationRule[] {
 		return this.adaptationRules.get(category) || [];
 	}
 
-	public exportLibraries(): string {
+	exportLibraries(): string {
 		const libraryData = {
 			version: '1.0',
 			exportDate: new Date().toISOString(),
@@ -473,7 +476,7 @@ SOCIAL MEDIA CONTENT MODE: Create engaging social media content.
 		return JSON.stringify(libraryData, null, 2);
 	}
 
-	public importLibraries(jsonData: string): {
+	importLibraries(jsonData: string): {
 		promptResults: { success: number; errors: string[] };
 		keywordResults: { success: number; errors: string[] };
 		adaptationRules: number;

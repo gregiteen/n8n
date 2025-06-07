@@ -1,6 +1,7 @@
 // AI Code Generator Node - AI-powered code generation and programming assistance
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
 
@@ -157,7 +158,7 @@ export class AiCodeGenerator extends BaseAiNode {
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
 				// Get parameters
-				const operation = this.getNodeParameter('operation', itemIndex) as string;
+				const operation = this.getNodeParameter('operation', itemIndex);
 				const language = this.getNodeParameter('language', itemIndex) as string;
 				const description = this.getNodeParameter('description', itemIndex, '') as string;
 				const existingCode = this.getNodeParameter('existingCode', itemIndex, '') as string;
@@ -170,13 +171,13 @@ export class AiCodeGenerator extends BaseAiNode {
 
 				// Validate required inputs based on operation
 				if (operation === 'generate' && !description) {
-					throw new Error('Description is required for code generation');
+					throw new ApplicationError('Description is required for code generation');
 				}
 				if (
 					['explain', 'refactor', 'debug', 'tests', 'review', 'convert'].includes(operation) &&
 					!existingCode
 				) {
-					throw new Error('Existing code is required for this operation');
+					throw new ApplicationError('Existing code is required for this operation');
 				}
 
 				// Build code generation request
@@ -196,11 +197,12 @@ export class AiCodeGenerator extends BaseAiNode {
 				};
 
 				// Make API request
-				const response = await this.makeApiRequest(
-					'/api/agents/generate-code',
-					'POST',
-					codeRequest,
-				);
+				const response = await this.helpers.request({
+					method: 'POST',
+					url: '/api/agents/generate-code',
+					body: codeRequest,
+					json: true,
+				});
 
 				// Format output based on operation
 				const outputData: any = {
@@ -268,7 +270,7 @@ export class AiCodeGenerator extends BaseAiNode {
 				if (this.continueOnFail()) {
 					returnData.push({
 						json: {
-							error: error.message,
+							error: (error as Error).message,
 							operation: this.getNodeParameter('operation', itemIndex, ''),
 							timestamp: new Date().toISOString(),
 						},
