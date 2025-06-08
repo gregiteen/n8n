@@ -1,9 +1,9 @@
 // AI Code Generator Node - AI-powered code generation and programming assistance
 
-import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-
+import { type IExecuteFunctions, type INodeExecutionData } from 'n8n-workflow';
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
+import { ApplicationError } from 'n8n-workflow';
 
 export class AiCodeGenerator extends BaseAiNode {
 	constructor() {

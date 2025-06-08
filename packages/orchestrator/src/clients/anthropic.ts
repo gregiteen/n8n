@@ -47,16 +47,12 @@ export class AnthropicClient {
 		try {
 			// Convert to Anthropic message format
 			const anthropicMessages = messages.map((msg) => {
-				// Anthropic only supports user and assistant roles in messages
-				const role =
-					msg.role === 'system'
-						? 'user'
-						: msg.role === 'user'
-							? 'user'
-							: msg.role === 'assistant'
-								? 'assistant'
-								: 'user';
-				return { role, content: msg.content };
+				// Ensure role is strictly 'user' or 'assistant'
+				const role = msg.role === 'system' ? 'user' : msg.role;
+				return {
+					role: role as 'user' | 'assistant', // Cast role to the expected literal type
+					content: msg.content,
+				};
 			});
 
 			// Convert tools to Anthropic tool format

@@ -1,9 +1,9 @@
 // AI Image Analyzer Node - AI-powered image analysis and understanding
 
-import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-
+import { type IExecuteFunctions, type INodeExecutionData } from 'n8n-workflow';
 import { BaseAiNode } from '../base/BaseAiNode';
 import { NodeHelpers } from '../utils/NodeHelpers';
+import { ApplicationError } from 'n8n-workflow';
 
 export class AiImageAnalyzer extends BaseAiNode {
 	constructor() {

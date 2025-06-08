@@ -1,6 +1,7 @@
 // Node Helpers - Utility functions for AI agent nodes
 
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+import { ApplicationError } from 'n8n-workflow';
 
 import type { AgentConfig, ChatMessage } from '../types/NodeTypes';
 
@@ -82,7 +83,7 @@ export class NodeHelpers {
 		for (const param of params) {
 			const value = executeFunctions.getNodeParameter(param, itemIndex);
 			if (value === undefined || value === null || value === '') {
-				throw new ApplicationError();
+				throw new ApplicationError(`Required parameter '${param}' is missing`);
 			}
 		}
 	}
@@ -104,7 +105,7 @@ export class NodeHelpers {
 			friendlyMessage = 'AI service is temporarily unavailable. Please try again later.';
 		}
 
-		throw new ApplicationError();
+		throw new ApplicationError(friendlyMessage);
 	}
 
 	/**

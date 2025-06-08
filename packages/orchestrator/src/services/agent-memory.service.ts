@@ -82,7 +82,7 @@ export class AgentMemoryService {
 				.single();
 
 			if (error) {
-				throw new ApplicationError();
+				throw new ApplicationError(`Database error while adding memory: ${error.message}`);
 			}
 
 			return data.id;
@@ -107,7 +107,7 @@ export class AgentMemoryService {
 			});
 
 			if (error) {
-				throw new ApplicationError();
+				throw new ApplicationError(`Failed to match memories: ${error.message}`);
 			}
 
 			return data.map((item: any) => ({
@@ -132,7 +132,7 @@ export class AgentMemoryService {
 			const { error } = await this.supabase.from('agent_memory').delete().eq('id', id);
 
 			if (error) {
-				throw new ApplicationError();
+				throw new ApplicationError(`Failed to delete memory: ${error.message}`);
 			}
 		} catch (error) {
 			console.error('Error deleting memory:', error);
@@ -148,7 +148,7 @@ export class AgentMemoryService {
 			const { error } = await this.supabase.from('agent_memory').delete().eq('agent_id', agentId);
 
 			if (error) {
-				throw new ApplicationError();
+				throw new ApplicationError(`Failed to clear agent memory: ${error.message}`);
 			}
 		} catch (error) {
 			console.error('Error clearing agent memory:', error);
@@ -168,7 +168,7 @@ export class AgentMemoryService {
 				.order('created_at', { ascending: false });
 
 			if (error) {
-				throw new ApplicationError();
+				throw new ApplicationError(`Failed to query agent memories: ${error.message}`);
 			}
 
 			return data.map((item: any) => ({
@@ -184,4 +184,8 @@ export class AgentMemoryService {
 			throw new ApplicationError(`Failed to get agent memories: ${(error as Error).message}`);
 		}
 	}
+
+	// Placeholder for future implementation of message-specific methods
+
+	// ... other methods
 }

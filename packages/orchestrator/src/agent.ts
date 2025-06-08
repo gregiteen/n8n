@@ -1,11 +1,4 @@
-import type { AnthropicClient as AnthropicClientClass } from './clients/anthropic';
-import { AnthropicClient } from './clients/anthropic';
-import type { GeminiClient as GeminiClientClass } from './clients/gemini';
-import { GeminiClient } from './clients/gemini';
-import { OpenAIClient } from './clients/openai';
-import type { OpenAIClient as OpenAIClientClass } from './clients/openai';
-import type { OpenRouterClient as OpenRouterClientClass } from './clients/openrouter';
-import { OpenRouterClient } from './clients/openrouter';
+import { BaseAiAgent } from './base/base-ai-agent';
 import {
 	libraryManager,
 	type LibraryAnalysis,
@@ -13,8 +6,12 @@ import {
 	type PromptTemplate,
 	type KeywordMatch,
 } from './libraries';
-import type { MemoryEntry } from './services/agent-memory.service';
-import { AgentMemoryService } from './services/agent-memory.service';
+import { OpenAIClient } from './clients/openai';
+import { AnthropicClient } from './clients/anthropic';
+import { GeminiClient } from './clients/gemini';
+import { OpenRouterClient } from './clients/openrouter';
+import { AgentMemoryService, type MemoryEntry } from './services/agent-memory.service';
+import { ApplicationError } from 'n8n-workflow';
 
 export type ModelProvider = 'openai' | 'anthropic' | 'gemini' | 'openrouter';
 
@@ -67,18 +64,18 @@ export interface AgentAnalysis {
 	}>;
 }
 
-export class Agent {
+export class Agent extends BaseAiAgent {
 	private messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }> = [];
 
 	private provider: ModelProvider;
 
-	private openaiClient: OpenAIClientClass;
+	private openaiClient: OpenAIClient;
 
-	private anthropicClient: AnthropicClientClass;
+	private anthropicClient: AnthropicClient;
 
-	private geminiClient: GeminiClientClass;
+	private geminiClient: GeminiClient;
 
-	private openrouterClient: OpenRouterClientClass;
+	private openrouterClient: OpenRouterClient;
 
 	private memoryService?: AgentMemoryService;
 
@@ -91,6 +88,7 @@ export class Agent {
 	private useMemory = false;
 
 	constructor(options: AgentOptions = {}) {
+		super(options);
 		this.provider = options.provider || 'openai';
 		this.model = options.model;
 		this.agentId = options.agentId;
@@ -135,7 +133,7 @@ export class Agent {
 				if (memories.length > 0) {
 					const memoryContext = `
 Relevant information from your previous conversations:
-${memories.map((m) => `- ${m.content}`).join('\n')}
+${memories.map((m: MemoryEntry) => `- ${m.content}`).join('\n')}
 
 Given this context, please respond to the user's current message.
 `;
@@ -330,11 +328,11 @@ Given this context, please respond to the user's current message.
 		const tool = this.tools.find((t) => t.name === toolName);
 
 		if (!tool) {
-			throw new ApplicationError();
+			throw new ApplicationError(`Tool "${toolName}" not found`);
 		}
 
 		if (!tool.execute) {
-			throw new ApplicationError();
+			throw new ApplicationError(`Tool "${toolName}" has no execute function`);
 		}
 
 		// Execute the tool
@@ -401,6 +399,7 @@ Given this context, please respond to the user's current message.
 	 */
 	async getAllMemories(): Promise<MemoryEntry[]> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			console.error('Memory service is not available or agent ID is not set.');
 			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
@@ -412,6 +411,7 @@ Given this context, please respond to the user's current message.
 	 */
 	async searchMemories(query: string, limit = 10): Promise<MemoryEntry[]> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			console.error('Memory service is not available or agent ID is not set.');
 			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
@@ -427,6 +427,7 @@ Given this context, please respond to the user's current message.
 	 */
 	async addMemory(content: string, metadata: Record<string, unknown> = {}): Promise<string> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			console.error('Memory service is not available or agent ID is not set.');
 			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
@@ -442,6 +443,7 @@ Given this context, please respond to the user's current message.
 	 */
 	async clearMemory(): Promise<void> {
 		if (!this.useMemory || !this.memoryService || !this.agentId) {
+			console.error('Memory service is not available or agent ID is not set.');
 			throw new ApplicationError('Memory service is not available or agent ID is not set');
 		}
 
@@ -478,8 +480,10 @@ Given this context, please respond to the user's current message.
 		if (this.useMemory && this.memoryService) {
 			try {
 				const allMemories = await this.memoryService.getAgentMemories(this.agentId);
-				const toolMemories = allMemories.filter((m) => m.metadata?.type === 'tool_usage');
-				toolUsage = toolMemories.map((m) => ({
+				const toolMemories = allMemories.filter(
+					(m: MemoryEntry) => m.metadata?.type === 'tool_usage',
+				);
+				toolUsage = toolMemories.map((m: MemoryEntry) => ({
 					toolName: String(m.metadata?.toolName || 'unknown'),
 					usage: 1,
 					timestamp: m.createdAt ? m.createdAt.toISOString() : new Date().toISOString(),
