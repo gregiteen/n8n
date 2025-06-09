@@ -6,16 +6,72 @@ import type { AgentType } from './agent-factory';
 import { AgentFactory } from './agent-factory';
 import { ModelSelector } from './models/model-selector';
 import { ModelSelectorService } from './services/model-selector.service';
+import { ApiKeyService } from './services/api-key.service';
 
 export function createApp(agent = new Agent()) {
 	const app = express();
+	const apiKeyService = new ApiKeyService();
 
 	app.use(express.json());
 
+	// Health check endpoint
 	app.get('/health', (_req, res) => {
 		res.json({ status: 'ok' });
 	});
 
+	// API Key Management endpoints
+	app.get('/api/user/api-keys', async (req, res) => {
+		try {
+			// In production, get userId from authenticated session
+			const userId = (req.headers['user-id'] as string) || 'default-user';
+			const keys = await apiKeyService.getAllKeys(userId);
+			res.json(keys);
+		} catch (error) {
+			console.error('Error getting API keys:', error);
+			res.status(500).json({ error: `Failed to get API keys: ${(error as Error).message}` });
+		}
+	});
+
+	app.post('/api/user/api-keys', async (req, res) => {
+		try {
+			const { serviceName, apiKey } = req.body;
+			// In production, get userId from authenticated session
+			const userId = (req.headers['user-id'] as string) || 'default-user';
+
+			const result = await apiKeyService.saveKey(userId, { serviceName, apiKey });
+			res.json(result);
+		} catch (error) {
+			console.error('Error saving API key:', error);
+			res.status(500).json({ error: `Failed to save API key: ${(error as Error).message}` });
+		}
+	});
+
+	app.delete('/api/user/api-keys/:serviceName', async (req, res) => {
+		try {
+			const { serviceName } = req.params;
+			// In production, get userId from authenticated session
+			const userId = (req.headers['user-id'] as string) || 'default-user';
+
+			await apiKeyService.deleteKey(userId, serviceName);
+			res.json({ success: true });
+		} catch (error) {
+			console.error('Error deleting API key:', error);
+			res.status(500).json({ error: `Failed to delete API key: ${(error as Error).message}` });
+		}
+	});
+
+	app.post('/api/user/api-keys/validate', async (req, res) => {
+		try {
+			const { serviceName, apiKey } = req.body;
+			const result = await apiKeyService.validateKey({ serviceName, apiKey });
+			res.json(result);
+		} catch (error) {
+			console.error('Error validating API key:', error);
+			res.status(500).json({ error: `Failed to validate API key: ${(error as Error).message}` });
+		}
+	});
+
+	// Chat endpoint
 	app.post('/chat', async (req, res) => {
 		const { message, model, provider } = (req.body ?? {}) as {
 			message?: string;

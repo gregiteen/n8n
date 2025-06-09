@@ -10,6 +10,7 @@ import { AgentAPI } from './agent-api';
 import { WorkflowAPI } from './workflow-api';
 import { UserAPI } from './user-api';
 import { SystemAPI } from './system-api';
+import { ApiKeyAPI } from './api-key-api';
 
 import type { APIConfig, WebSocketConfig } from './types';
 
@@ -23,6 +24,7 @@ export class APIService {
 	public readonly workflows: WorkflowAPI;
 	public readonly users: UserAPI;
 	public readonly system: SystemAPI;
+	public readonly apiKeys: ApiKeyAPI;
 
 	constructor(config: APIConfig, wsConfig?: WebSocketConfig) {
 		// Initialize HTTP client
@@ -42,6 +44,7 @@ export class APIService {
 		this.workflows = new WorkflowAPI(this.httpClient);
 		this.users = new UserAPI(this.httpClient);
 		this.system = new SystemAPI(this.httpClient);
+		this.apiKeys = new ApiKeyAPI(this.httpClient);
 	}
 
 	/**
