@@ -51,4 +51,13 @@ export class ApiKeyAPI {
 			body: JSON.stringify(keyData),
 		});
 	}
+
+	/**
+	 * Revalidate all API keys for the current user
+	 */
+	async revalidateAllKeys(): Promise<ApiKeyStatus[]> {
+		return this.client.request<ApiKeyStatus[]>('/api/user/api-keys/revalidate', {
+			method: 'POST',
+		});
+	}
 }

@@ -203,8 +203,26 @@ export class ApiKeyService {
 		}
 
 		try {
-			// In a real implementation, we would make a simple API call to validate
-			// For this implementation, we'll just check the format
+			// Make a simple call to the OpenAI API to validate the key
+			// Using the Models endpoint which is lightweight
+			const response = await fetch('https://api.openai.com/v1/models', {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${apiKey}`,
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				const errorData = await response
+					.json()
+					.catch(() => ({ error: { message: 'Unknown error' } }));
+				return {
+					isValid: false,
+					message: `API key validation failed: ${errorData.error?.message || response.statusText}`,
+				};
+			}
+
 			return { isValid: true };
 		} catch (error) {
 			return {
@@ -221,7 +239,25 @@ export class ApiKeyService {
 		}
 
 		try {
-			// In a real implementation, we would make a simple API call to validate
+			// Make a simple call to the Anthropic API to validate the key
+			// Using the models endpoint which is lightweight
+			const response = await fetch('https://api.anthropic.com/v1/models', {
+				method: 'GET',
+				headers: {
+					'x-api-key': apiKey,
+					'anthropic-version': '2023-06-01',
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+				return {
+					isValid: false,
+					message: `API key validation failed: ${errorData.error || response.statusText}`,
+				};
+			}
+
 			return { isValid: true };
 		} catch (error) {
 			return {
@@ -238,7 +274,25 @@ export class ApiKeyService {
 		}
 
 		try {
-			// In a real implementation, we would make a simple API call to validate
+			// Make a simple call to the Google Generative AI API to validate the key
+			// Using the models endpoint which is lightweight
+			const response = await fetch(
+				`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`,
+				{
+					method: 'GET',
+				},
+			);
+
+			if (!response.ok) {
+				const errorData = await response
+					.json()
+					.catch(() => ({ error: { message: 'Unknown error' } }));
+				return {
+					isValid: false,
+					message: `API key validation failed: ${errorData.error?.message || response.statusText}`,
+				};
+			}
+
 			return { isValid: true };
 		} catch (error) {
 			return {
@@ -254,8 +308,32 @@ export class ApiKeyService {
 			return { isValid: false, message: 'API key cannot be empty' };
 		}
 
+		// Most OpenRouter keys start with sk-or
+		if (!apiKey.startsWith('sk-or') && !apiKey.startsWith('sk-')) {
+			// Not failing but warning
+			console.warn('OpenRouter key format unexpected');
+		}
+
 		try {
-			// In a real implementation, we would make a simple API call to validate
+			// Make a simple call to the OpenRouter API to validate the key
+			const response = await fetch('https://openrouter.ai/api/v1/models', {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${apiKey}`,
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				const errorData = await response
+					.json()
+					.catch(() => ({ error: { message: 'Unknown error' } }));
+				return {
+					isValid: false,
+					message: `API key validation failed: ${errorData.error?.message || response.statusText}`,
+				};
+			}
+
 			return { isValid: true };
 		} catch (error) {
 			return {
@@ -263,5 +341,23 @@ export class ApiKeyService {
 				message: `OpenRouter key validation failed: ${(error as Error).message}`,
 			};
 		}
+	}
+
+	/**
+	 * Update the status of an API key
+	 */
+	async updateKeyStatus(userId: string, serviceName: string, isValid: boolean): Promise<void> {
+		const userKeys = this.apiKeys.get(userId);
+
+		if (!userKeys || !userKeys.has(serviceName)) {
+			return;
+		}
+
+		const entry = userKeys.get(serviceName)!;
+		entry.isValid = isValid;
+		entry.lastValidated = new Date();
+		entry.updatedAt = new Date();
+
+		userKeys.set(serviceName, entry);
 	}
 }

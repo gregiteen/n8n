@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { KeyRound, CheckCircle2, XCircle, Eye, EyeOff, Trash2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -77,6 +77,8 @@ export function ApiKeyManagement() {
     }
   };
 
+  const [keyStrength, setKeyStrength] = useState<Record<string, 'weak' | 'medium' | 'strong'>>({});
+
   const handleInputChange = (serviceName: string, value: string) => {
     setKeyInputs(prev => ({ ...prev, [serviceName]: value }));
     
@@ -88,6 +90,52 @@ export function ApiKeyManagement() {
         return newErrors;
       });
     }
+
+    // Evaluate key strength based on the service and format
+    evaluateKeyStrength(serviceName, value);
+  };
+
+  const evaluateKeyStrength = (serviceName: string, value: string) => {
+    let strength: 'weak' | 'medium' | 'strong' = 'weak';
+
+    if (!value) {
+      setKeyStrength(prev => ({ ...prev, [serviceName]: strength }));
+      return;
+    }
+
+    // Check for expected prefixes and lengths
+    switch (serviceName) {
+      case 'openai':
+        if (value.startsWith('sk-') && value.length > 30) {
+          strength = 'strong';
+        } else if (value.startsWith('sk-') && value.length > 10) {
+          strength = 'medium';
+        }
+        break;
+      case 'anthropic':
+        if (value.startsWith('sk-ant-') && value.length > 35) {
+          strength = 'strong';
+        } else if (value.startsWith('sk-ant-') && value.length > 15) {
+          strength = 'medium';
+        }
+        break;
+      case 'gemini':
+        if (value.startsWith('AIzaSy') && value.length > 30) {
+          strength = 'strong';
+        } else if (value.length > 20) {
+          strength = 'medium';
+        }
+        break;
+      case 'openrouter':
+        if ((value.startsWith('sk-or-') || value.startsWith('sk-')) && value.length > 30) {
+          strength = 'strong';
+        } else if (value.length > 20) {
+          strength = 'medium';
+        }
+        break;
+    }
+
+    setKeyStrength(prev => ({ ...prev, [serviceName]: strength }));
   };
 
   const toggleShowKey = (serviceName: string) => {
@@ -217,14 +265,74 @@ export function ApiKeyManagement() {
     return apiKeys.find(key => key.serviceName === serviceName);
   };
 
+  // Add revalidation interval state
+  const [lastRevalidation, setLastRevalidation] = useState<Date | null>(null);
+  
+  // Function to revalidate all keys
+  const revalidateAllKeys = useCallback(async () => {
+    if (!apiKeys.length) return;
+    
+    try {
+      const results = await api.apiKeys.revalidateAllKeys();
+      
+      if (results) {
+        setApiKeys(results);
+        setLastRevalidation(new Date());
+        
+        // Show toast only if there are invalid keys
+        const invalidKeys = results.filter((key: ApiKeyStatus) => !key.isConnected);
+        if (invalidKeys.length > 0) {
+          toast({
+            title: 'Key validation alert',
+            description: `${invalidKeys.length} API key(s) failed validation. Please check your keys.`,
+            variant: 'destructive',
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error revalidating keys:', error);
+    }
+  }, [apiKeys, toast]);
+  
+  // Periodically revalidate keys
+  useEffect(() => {
+    // Only set up timer if there are keys to validate
+    if (apiKeys.length === 0) return;
+    
+    // Revalidate every 24 hours (set to shorter for testing if needed)
+    const interval = setInterval(() => {
+      revalidateAllKeys();
+    }, 24 * 60 * 60 * 1000);
+    
+    return () => clearInterval(interval);
+  }, [apiKeys, revalidateAllKeys]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">AI Service Connections</h2>
-        <Button size="sm" variant="outline" onClick={loadApiKeys} disabled={loading}>
-          <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-          Refresh
-        </Button>
+        <div>
+          <h2 className="text-xl font-semibold">AI Service Connections</h2>
+          {lastRevalidation && (
+            <p className="text-xs text-muted-foreground">
+              Last key validation: {formatLastValidated(lastRevalidation)}
+            </p>
+          )}
+        </div>
+        <div className="flex space-x-2">
+          <Button 
+            size="sm" 
+            variant="outline" 
+            onClick={revalidateAllKeys} 
+            disabled={loading || !apiKeys.length}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            Validate Keys
+          </Button>
+          <Button size="sm" variant="outline" onClick={loadApiKeys} disabled={loading}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </div>
       </div>
       
       {Object.entries(SERVICE_CONFIG).map(([serviceName, config]) => {
@@ -314,6 +422,33 @@ export function ApiKeyManagement() {
                       )}
                     </Button>
                   </div>
+                  
+                  {/* Key strength indicator */}
+                  {keyInputs[serviceName] && (
+                    <div className="flex items-center space-x-2 mt-1">
+                      <span className="text-xs text-muted-foreground mr-1">Key strength:</span>
+                      <div className="flex items-center space-x-1">
+                        <div 
+                          className={`h-1.5 w-4 rounded-full ${
+                            keyStrength[serviceName] ? 'bg-green-500' : 'bg-gray-300'
+                          }`}
+                        />
+                        <div 
+                          className={`h-1.5 w-4 rounded-full ${
+                            keyStrength[serviceName] === 'medium' || keyStrength[serviceName] === 'strong' ? 'bg-green-500' : 'bg-gray-300'
+                          }`}
+                        />
+                        <div 
+                          className={`h-1.5 w-4 rounded-full ${
+                            keyStrength[serviceName] === 'strong' ? 'bg-green-500' : 'bg-gray-300'
+                          }`}
+                        />
+                        <span className="text-xs ml-1 capitalize">
+                          {keyStrength[serviceName] || 'weak'}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   
                   {errors[serviceName] && (
                     <Alert variant="destructive" className="py-2">
