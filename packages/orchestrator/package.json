@@ -7,7 +7,7 @@
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit --extendedDiagnostics",
     "typecheck:log": "/workspaces/n8n/scripts/check-orchestrator-typescript.sh",
-    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "build": "npx tsc -p tsconfig.build.json && npx tsc-alias -p tsconfig.build.json",
     "format": "biome format --write src",
     "format:check": "biome ci src",
     "test": "jest",
@@ -32,16 +32,27 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.53.0",
     "@google/generative-ai": "0.21.0",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@n8n/di": "workspace:*",
     "@supabase/supabase-js": "2.49.9",
     "axios": "^1.8.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.6",
     "express": "^4.19.2",
     "n8n-workflow": "^1.82.0",
     "openai": "^5.1.1",
-    "openrouter-client": "^1.3.3"
+    "openrouter-client": "^1.3.3",
+    "reflect-metadata": "^0.2.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@n8n/typescript-config": "workspace:*",
-    "nock": "^14.0.5"
+    "@types/cors": "^2.8.17",
+    "nock": "^14.0.5",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.8",
+    "typescript": "^5.0.0",
+    "tsc-watch": "^6.0.4"
   }
 }

@@ -1,0 +1,37 @@
+{
+	"version": 2,
+	"name": "n8n-ai-orchestrator",
+	"builds": [
+		{
+			"src": "dist/server.js",
+			"use": "@vercel/node"
+		}
+	],
+	"routes": [
+		{
+			"src": "/mcp/(.*)",
+			"dest": "dist/server.js"
+		},
+		{
+			"src": "/api/(.*)",
+			"dest": "dist/server.js"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "dist/server.js"
+		}
+	],
+	"env": {
+		"NODE_ENV": "production",
+		"N8N_BASE_URL": "@n8n-base-url",
+		"N8N_API_KEY": "@n8n-api-key",
+		"PORT": "3000",
+		"MAX_JSON_REQUEST_SIZE": "50"
+	},
+	"functions": {
+		"dist/server.js": {
+			"memory": 1024,
+			"maxDuration": 60
+		}
+	}
+}

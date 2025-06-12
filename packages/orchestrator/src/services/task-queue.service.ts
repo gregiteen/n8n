@@ -1,13 +1,24 @@
 /**
  * Task Queue Management Service
  * Handles task scheduling, prioritization, resource allocation, and error recovery
+ *
+ * Features:
+ * - Task scheduling with priority queue
+ * - Resource allocation and constraints
+ * - Error handling and retries
+ * - Task statistics and monitoring
+ * - Event-based communication
+ * - Rate limiting and throttling
  */
 
-import { Service } from '../di';
+import { Service, Inject, container } from '../di';
 import { Logger } from '../logger';
 import { createEventQueue } from '../utils';
 import { nanoid } from 'nanoid';
 import EventEmitter from 'events';
+import PQueue from 'p-queue';
+import { WorkflowExecutionService } from './workflow-execution.service';
+import { ErrorRecoveryService, RecoveryConfig } from '../error-handling/error-recovery';
 
 // Define task priority levels
 export enum TaskPriority {
@@ -47,6 +58,15 @@ export interface TaskResources {
 	modelProvider?: string; // AI model provider (openai, anthropic, etc.)
 }
 
+// Interface for task retry configuration
+export interface TaskRetryConfig {
+	initialDelay: number; // Initial delay for retries in ms
+	maxDelay: number; // Maximum delay for retries in ms
+	backoffFactor: number; // Factor for exponential backoff
+	fallbackFunction?: (task: Task, error: Error) => Promise<any>; // Optional fallback function
+	notifyFunction?: (task: Task, error: Error) => Promise<void>; // Optional notification function
+}
+
 // Define task data interface
 export interface Task {
 	id: string;
@@ -67,6 +87,7 @@ export interface Task {
 	parentTaskId?: string;
 	retries: number;
 	maxRetries: number;
+	retryConfig?: TaskRetryConfig;
 	error?: string;
 	result?: any;
 	input?: any;
@@ -84,6 +105,7 @@ export interface CreateTaskRequest {
 	workflowId?: string;
 	parentTaskId?: string;
 	maxRetries?: number;
+	retryConfig?: TaskRetryConfig;
 	input?: any;
 	metadata?: Record<string, any>;
 }
@@ -140,6 +162,7 @@ export class TaskQueueService {
 	// Statistics tracking
 	private taskCompletionTimes: number[] = [];
 	private taskWaitTimes: Map<string, number> = new Map();
+	private metricsCollectionInterval: NodeJS.Timeout | null = null;
 
 	// Configure system resources
 	private systemResources: SystemResources = {
@@ -151,19 +174,152 @@ export class TaskQueueService {
 	// Task event emitter
 	private eventEmitter = new EventEmitter();
 
+	// Priority-based task processing queue with concurrency control
+	private taskQueue: PQueue = new PQueue({
+		concurrency: 5, // Default concurrency
+		autoStart: true,
+	});
+
 	// Task processing queue
 	private taskProcessor = createEventQueue<string>(async (taskId: string) =>
 		this.processNextTask(taskId),
 	);
 
-	constructor(private readonly logger: Logger) {
+	// Track retry counts for tasks
+	private taskRetryCount: Map<string, number> = new Map();
+
+	constructor(
+		@Inject(Logger) private readonly logger: Logger,
+		@Inject(WorkflowExecutionService)
+		private readonly workflowExecutionService: WorkflowExecutionService,
+		@Inject(ErrorRecoveryService) private readonly errorRecoveryService: ErrorRecoveryService,
+	) {
 		this.logger = this.logger.scoped('task-queue');
+
+		// Set up event listeners
+		this.setupEventListeners();
+
+		// Initialize task executors
+		this.initializeTaskExecutors();
 
 		// Start a periodic task to clean up old completed/failed tasks
 		setInterval(() => this.cleanupOldTasks(), 1000 * 60 * 60); // Run every hour
 
+		// Start periodic metrics collection
+		this.metricsCollectionInterval = setInterval(() => this.collectMetrics(), 60000); // Every minute
+
 		// Start the queue processor
 		this.scheduleTaskProcessing();
+	}
+
+	/**
+	 * Set up event listeners
+	 */
+	private setupEventListeners(): void {
+		this.eventEmitter.on('task.created', (task: Task) => {
+			this.logger.debug(`Task created: ${task.id} - ${task.name}`);
+		});
+
+		this.eventEmitter.on('task.started', (task: Task) => {
+			this.logger.debug(`Task started: ${task.id} - ${task.name}`);
+		});
+
+		this.eventEmitter.on('task.completed', (task: Task) => {
+			this.logger.debug(`Task completed: ${task.id} - ${task.name}`);
+		});
+
+		this.eventEmitter.on('task.failed', (task: Task) => {
+			this.logger.debug(`Task failed: ${task.id} - ${task.name} - ${task.error}`);
+		});
+	}
+
+	/**
+	 * Initialize task executors for different task types
+	 */
+	private initializeTaskExecutors(): void {
+		// Register workflow task executor
+		this.registerTaskExecutor(TaskType.WORKFLOW, async (task: Task) => {
+			if (!task.workflowId) {
+				throw new Error('Workflow ID is required for workflow tasks');
+			}
+
+			try {
+				return await this.workflowExecutionService.executeWorkflow(
+					task.workflowId,
+					task.input || {},
+				);
+			} catch (error: any) {
+				this.logger.error(`Error executing workflow: ${error.message}`);
+				throw error;
+			}
+		});
+	}
+
+	/**
+	 * Execute a workflow task
+	 * @param task The task to execute
+	 */
+	private async executeWorkflowTask(task: Task): Promise<any> {
+		this.logger.info(`Executing workflow task: ${task.id}, workflow: ${task.workflowId}`);
+
+		if (!task.workflowId) {
+			throw new Error('Workflow ID is required for workflow tasks');
+		}
+
+		// Update task progress to indicate workflow started
+		await this.updateTaskProgress(task.id, 10);
+
+		try {
+			// Execute the workflow
+			const result = await this.workflowExecutionService.executeWorkflow(
+				task.workflowId,
+				task.input || {},
+				{ waitForCompletion: true },
+			);
+
+			// Update task progress
+			await this.updateTaskProgress(task.id, 100);
+
+			if (result.status === 'error') {
+				throw new Error(result.error?.message || 'Workflow execution failed');
+			}
+
+			return result.data;
+		} catch (error: any) {
+			this.logger.error(`Error executing workflow task: ${error.message}`);
+			throw error;
+		}
+	}
+
+	/**
+	 * Collect and update task metrics
+	 */
+	private collectMetrics(): void {
+		const now = new Date().getTime();
+		let totalWaitTime = 0;
+		let waitTimeCount = 0;
+
+		// Calculate current wait times
+		for (const [taskId, queueTime] of this.taskWaitTimes.entries()) {
+			totalWaitTime += now - queueTime;
+			waitTimeCount++;
+		}
+
+		// Calculate average processing time
+		const avgProcessingTime =
+			this.taskCompletionTimes.length > 0
+				? this.taskCompletionTimes.reduce((sum, time) => sum + time, 0) /
+					this.taskCompletionTimes.length
+				: 0;
+
+		// Update metrics
+		const stats = this.getQueueStats();
+		this.logger.debug('Task queue metrics collected', {
+			queuedCount: stats.queuedCount,
+			runningCount: stats.runningCount,
+			avgWaitTime: stats.averageWaitTime,
+			avgProcessingTime: stats.averageProcessingTime,
+		});
 	}
 
 	/**
@@ -196,6 +352,7 @@ export class TaskQueueService {
 			parentTaskId: request.parentTaskId,
 			retries: 0,
 			maxRetries: request.maxRetries ?? 3,
+			retryConfig: request.retryConfig,
 			input: request.input,
 			metadata: request.metadata || {},
 		};
@@ -640,6 +797,9 @@ export class TaskQueueService {
 			return;
 		}
 
+		// Get current retry count
+		const retryCount = this.taskRetryCount.get(taskId) || 0;
+
 		try {
 			// Execute task and track execution
 			const executionPromise = executor(task)
@@ -653,15 +813,83 @@ export class TaskQueueService {
 					return result;
 				})
 				.catch(async (error) => {
-					// Task failed
-					this.logger.error(`Task ${taskId} failed: ${error.message}`, { error });
-					await this.updateTask(taskId, {
-						status: TaskStatus.FAILED,
-						error: error.message || 'Unknown error',
-					});
+					// Create recovery config from task configuration or use default
+					const recoveryConfig = this.createRetryConfig(task);
+
+					// Handle error with recovery service
+					const errorRecoveryResult = await this.errorRecoveryService.handleTaskError(
+						task,
+						error,
+						retryCount + 1,
+						recoveryConfig,
+					);
+
+					if (errorRecoveryResult.shouldRetry && retryCount < task.maxRetries) {
+						// Update retry count
+						this.taskRetryCount.set(taskId, retryCount + 1);
+
+						// Log retry attempt
+						this.logger.info(
+							`Retrying task ${taskId} after error (attempt ${retryCount + 1}/${task.maxRetries})`,
+							{
+								error: error.message,
+								delay: errorRecoveryResult.retryDelay,
+								taskType: task.taskType,
+							},
+						);
+
+						// Schedule retry with delay
+						setTimeout(() => {
+							this.retryTask(taskId).catch((retryError) => {
+								this.logger.error(`Error retrying task ${taskId}:`, retryError);
+							});
+						}, errorRecoveryResult.retryDelay || 1000);
+
+						// Update task with status info
+						await this.updateTask(taskId, {
+							status: errorRecoveryResult.status,
+							error: errorRecoveryResult.errorMessage,
+							metadata: {
+								...task.metadata,
+								lastErrorType: this.errorRecoveryService.classifyError(error).toString(),
+								lastRetryTime: new Date().toISOString(),
+								totalRetries: retryCount + 1,
+							},
+						});
+					} else {
+						// Task failed and should not be retried
+						this.logger.error(`Task ${taskId} failed: ${error.message}`, {
+							error,
+							taskType: task.taskType,
+							maxRetries: task.maxRetries,
+							currentAttempt: retryCount + 1,
+						});
+
+						// Update task with final error status
+						await this.updateTask(taskId, {
+							status: errorRecoveryResult.status,
+							error: errorRecoveryResult.errorMessage || error.message || 'Unknown error',
+							result: errorRecoveryResult.fallbackResult,
+							metadata: {
+								...task.metadata,
+								lastErrorType: this.errorRecoveryService.classifyError(error).toString(),
+								finalError: true,
+							},
+						});
+					}
+
 					throw error;
 				})
 				.finally(() => {
+					// Clean up retry count if task is done
+					if (
+						task &&
+						(!this.taskRetryCount.has(taskId) ||
+							(this.taskRetryCount.get(taskId) ?? 0) >= task.maxRetries)
+					) {
+						this.taskRetryCount.delete(taskId);
+					}
+
 					// Remove from running tasks
 					this.runningTasks.delete(taskId);
 
@@ -696,6 +924,20 @@ export class TaskQueueService {
 				this.taskCompletionTimes.shift();
 			}
 		}
+	}
+
+	/**
+	 * Create recovery config from task configuration or use defaults
+	 */
+	private createRetryConfig(task: Task): RecoveryConfig {
+		return {
+			maxRetries: task.maxRetries,
+			initialDelay: task.retryConfig?.initialDelay || 1000,
+			maxDelay: task.retryConfig?.maxDelay || 30000,
+			backoffFactor: task.retryConfig?.backoffFactor || 2,
+			fallbackFunction: task.retryConfig?.fallbackFunction,
+			notifyFunction: task.retryConfig?.notifyFunction,
+		};
 	}
 
 	/**

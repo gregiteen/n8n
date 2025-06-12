@@ -1,0 +1,77 @@
+{
+	"metadata": {
+		"name": "Weather Info Retrieval",
+		"description": "Get current weather information for a location",
+		"tags": ["weather", "api", "example"],
+		"category": "API Integrations"
+	},
+	"definition": {
+		"nodes": [
+			{
+				"name": "Start",
+				"type": "webhook",
+				"parameters": {
+					"path": "weather",
+					"responseMode": "onReceived"
+				}
+			},
+			{
+				"name": "Weather API",
+				"type": "httpRequest",
+				"parameters": {
+					"url": "=`https://api.weatherapi.com/v1/current.json?key={{$node[\"API Key\"].json[\"key\"]}}&q=${$json[\"location\"]}`",
+					"method": "GET"
+				}
+			},
+			{
+				"name": "API Key",
+				"type": "function",
+				"parameters": {
+					"functionCode": "return { key: process.env.WEATHER_API_KEY || 'YOUR_API_KEY' };"
+				}
+			},
+			{
+				"name": "Format Output",
+				"type": "function",
+				"parameters": {
+					"functionCode": "const data = $input.all()[0].json;\nreturn {\n  location: data.location.name + ', ' + data.location.country,\n  temperature: data.current.temp_c + '°C / ' + data.current.temp_f + '°F',\n  condition: data.current.condition.text,\n  humidity: data.current.humidity + '%',\n  windSpeed: data.current.wind_kph + ' km/h',\n  lastUpdated: data.current.last_updated\n};"
+				}
+			}
+		],
+		"connections": {
+			"Start": {
+				"main": [
+					[
+						{
+							"node": "API Key",
+							"type": "main",
+							"index": 0
+						}
+					]
+				]
+			},
+			"API Key": {
+				"main": [
+					[
+						{
+							"node": "Weather API",
+							"type": "main",
+							"index": 0
+						}
+					]
+				]
+			},
+			"Weather API": {
+				"main": [
+					[
+						{
+							"node": "Format Output",
+							"type": "main",
+							"index": 0
+						}
+					]
+				]
+			}
+		}
+	}
+}

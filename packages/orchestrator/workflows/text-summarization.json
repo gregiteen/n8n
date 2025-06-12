@@ -1,0 +1,64 @@
+{
+	"metadata": {
+		"name": "Text Summarization",
+		"description": "Summarize text using AI models",
+		"tags": ["ai", "text", "example"],
+		"category": "AI Tools"
+	},
+	"definition": {
+		"nodes": [
+			{
+				"name": "Start",
+				"type": "webhook",
+				"parameters": {
+					"path": "summarize",
+					"responseMode": "onReceived"
+				}
+			},
+			{
+				"name": "AI Model",
+				"type": "openAi",
+				"parameters": {
+					"authentication": "apiKey",
+					"apiKey": "={{ $env.OPENAI_API_KEY }}",
+					"model": "gpt-3.5-turbo",
+					"prompt": "=`Summarize the following text in 3-5 sentences: \n\n${$json[\"text\"]}`",
+					"options": {
+						"maxTokens": 250
+					}
+				}
+			},
+			{
+				"name": "Format Output",
+				"type": "function",
+				"parameters": {
+					"functionCode": "return {\n  original_length: $node[\"Start\"].json.text.length,\n  summary: $node[\"AI Model\"].json.text.trim(),\n  summary_length: $node[\"AI Model\"].json.text.trim().length,\n  compression_ratio: Math.round(($node[\"AI Model\"].json.text.trim().length / $node[\"Start\"].json.text.length) * 100) + '%'\n};"
+				}
+			}
+		],
+		"connections": {
+			"Start": {
+				"main": [
+					[
+						{
+							"node": "AI Model",
+							"type": "main",
+							"index": 0
+						}
+					]
+				]
+			},
+			"AI Model": {
+				"main": [
+					[
+						{
+							"node": "Format Output",
+							"type": "main",
+							"index": 0
+						}
+					]
+				]
+			}
+		}
+	}
+}

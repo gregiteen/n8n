@@ -1,11 +1,11 @@
 # AI Platform - Implementation Plan
 
-**Version 1.0.0**  
-**Last Updated: June 8, 2025**
+**Version 1.1.0**  
+**Last Updated: June 10, 2025**
 
 ## Overview
 
-This implementation plan outlines the strategy and timeline for developing the AI Platform, a system that leverages n8n as a backend automation engine for a task manager frontend that uses AI agents to perform tasks via n8n workflows and automations.
+This implementation plan outlines the strategy and timeline for developing the AI Platform, a chat-driven task management platform built on top of n8n. The platform leverages AI agents (using SDKs like OpenAI) to orchestrate tasks, with n8n workflows available as tools through webhooks. It includes MCP server generation capabilities for any API, allowing seamless integration between agents and external services.
 
 ## Project Goals
 
@@ -162,9 +162,10 @@ We will follow an iterative development approach with the following phases:
 #### 4.1 MCP Support for n8n Nodes
 - **Tasks**:
   - Create MCP-compliant wrappers for n8n nodes
-  - Implement tool registration system
-  - Develop schema translation
-  - Add permission management
+  - Implement tool registration system for agent access
+  - Develop schema translation between n8n and MCP
+  - Add permission management for tool access
+  - Make n8n workflows accessible as tools via webhooks
 - **Technologies**: Node.js, TypeScript
 - **Priority**: High
 - **Estimated time**: 2 weeks
@@ -175,9 +176,21 @@ We will follow an iterative development approach with the following phases:
   - Create tool execution pipeline
   - Develop response formatting
   - Add error handling
+  - Implement webhook handling for agent tool calls
 - **Technologies**: Node.js, TypeScript
 - **Priority**: High
 - **Estimated time**: 1.5 weeks
+
+#### 4.3 MCP Server Generator
+- **Tasks**:
+  - Create API schema analyzer
+  - Implement MCP schema generator
+  - Develop server template system
+  - Add deployment automation
+  - Create testing framework for generated servers
+- **Technologies**: Node.js, TypeScript
+- **Priority**: Medium (Phase 2)
+- **Estimated time**: 2 weeks
 
 ### 5. Database and Authentication
 
@@ -208,6 +221,8 @@ We will follow an iterative development approach with the following phases:
   - Develop secure key storage with encryption
   - Add key status indicators
   - Build key rotation and update functionality
+  - Support multiple model providers (OpenAI, Anthropic, etc.)
+  - Enable configuration of model-specific settings
 - **Technologies**: React, Supabase, Encryption libraries
 - **Priority**: High
 - **Estimated time**: 1 week

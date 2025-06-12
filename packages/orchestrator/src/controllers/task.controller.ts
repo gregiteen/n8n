@@ -3,7 +3,7 @@
  * REST API endpoints for managing tasks in the queue
  */
 
-import { Service } from '../di';
+import { Service, Inject } from '../di';
 import type { Request, Response } from 'express';
 import { Logger } from '../logger';
 import { TaskQueueService, TaskStatus } from '../services/task-queue.service';
@@ -11,8 +11,8 @@ import { TaskQueueService, TaskStatus } from '../services/task-queue.service';
 @Service()
 export class TaskController {
 	constructor(
-		private readonly logger: Logger,
-		private readonly taskQueue: TaskQueueService,
+		@Inject(Logger) private readonly logger: Logger,
+		@Inject(TaskQueueService) private readonly taskQueue: TaskQueueService,
 	) {
 		this.logger = this.logger.scoped('task-controller');
 	}

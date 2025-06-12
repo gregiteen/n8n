@@ -10,7 +10,10 @@
 		"moduleResolution": "nodenext",
 		"module": "NodeNext",
 		"esModuleInterop": true,
-		"isolatedModules": true
+		"isolatedModules": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"strictPropertyInitialization": false
 	},
 	"include": ["src/**/*.ts", "test/**/*.ts", "src/types/**/*.d.ts"]
 }

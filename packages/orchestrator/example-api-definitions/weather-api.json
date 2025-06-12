@@ -1,0 +1,53 @@
+{
+	"name": "WeatherAPI",
+	"description": "A simple API for getting weather information",
+	"baseUrl": "https://api.weatherapi.com/v1",
+	"authentication": {
+		"type": "api_key",
+		"location": "query",
+		"key": "key"
+	},
+	"endpoints": [
+		{
+			"method": "GET",
+			"path": "/current.json",
+			"description": "Get current weather data",
+			"parameters": {
+				"q": {
+					"type": "string",
+					"description": "Location query (e.g. city name, lat/long, zip code)",
+					"required": true
+				}
+			}
+		},
+		{
+			"method": "GET",
+			"path": "/forecast.json",
+			"description": "Get weather forecast",
+			"parameters": {
+				"q": {
+					"type": "string",
+					"description": "Location query (e.g. city name, lat/long, zip code)",
+					"required": true
+				},
+				"days": {
+					"type": "number",
+					"description": "Number of days to forecast (1-10)",
+					"default": 1
+				}
+			}
+		},
+		{
+			"method": "GET",
+			"path": "/search.json",
+			"description": "Search for locations",
+			"parameters": {
+				"q": {
+					"type": "string",
+					"description": "Location query (e.g. city name)",
+					"required": true
+				}
+			}
+		}
+	]
+}

@@ -44,9 +44,9 @@ export class NodeDiscoveryService {
 	private async refreshCacheIfNeeded(): Promise<void> {
 		const now = Date.now();
 		if (now - this.lastCacheUpdate > this.cacheTTL || this.nodeCache.size === 0) {
-			const nodeTypes = await this.n8nClient.getNodeTypes();
+			const nodeTypes = await this.n8nClient.getAllNodeTypes();
 			this.nodeCache.clear();
-			nodeTypes.forEach((nt) => {
+			nodeTypes.forEach((nt: NodeType) => {
 				this.nodeCache.set(nt.name, nt);
 			});
 			this.lastCacheUpdate = now;

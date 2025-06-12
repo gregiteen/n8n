@@ -1,22 +1,25 @@
-import { Logger } from '../logger';
+import { Express, Request, Response } from 'express';
+import { getService } from '../services';
 import {
 	TaskQueueService,
 	TaskStatus,
 	TaskPriority,
 	TaskType,
+	CreateTaskRequest,
+	UpdateTaskRequest,
 } from '../services/task-queue.service';
 
 /**
  * Configure task queue routes
  */
-export function configureTaskRoutes(app: any, logger: Console): void {
-	// Create task queue service
-	const taskQueueService = new TaskQueueService(logger);
+export function configureTaskRoutes(app: Express): void {
+	// Get task queue service instance
+	const taskQueueService = getService(TaskQueueService);
 
 	// Task routes
 
 	// Get all tasks
-	app.get('/api/tasks', async (req, res) => {
+	app.get('/api/tasks', async (req: Request, res: Response) => {
 		try {
 			const userId = (req.headers['user-id'] as string) || 'default-user';
 			let tasks;

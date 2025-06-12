@@ -3,6 +3,7 @@ import { Agent } from './agent';
 import { ModelSelector } from './models/model-selector';
 import { BrowserService } from './services/browser.service';
 import { N8nClient } from './services/n8n-client';
+import { Logger } from './logger';
 
 export type AgentType =
 	| 'conversational'
@@ -21,11 +22,16 @@ export interface AgentFactoryOptions extends AgentOptions {
  */
 export class AgentFactory {
 	private static browserService = new BrowserService();
+	private static logger = new Logger('AgentFactory');
 
-	private static n8nClient = new N8nClient({
-		baseUrl: process.env.N8N_BASE_URL || 'http://localhost:5678',
-		apiKey: process.env.N8N_API_KEY || '',
-	});
+	private static _n8nClient: N8nClient | null = null;
+
+	private static get n8nClient(): N8nClient {
+		if (!this._n8nClient) {
+			this._n8nClient = new N8nClient(this.logger);
+		}
+		return this._n8nClient;
+	}
 
 	/**
 	 * Create an agent of the specified type with appropriate configuration

@@ -3,22 +3,28 @@
   "name": "n8n-ai-platform",
   "builds": [
     {
-      "src": "packages/user-interface/package.json",
-      "use": "@vercel/next"
-    },
-    {
-      "src": "packages/orchestrator/package.json",
-      "use": "@vercel/node"
+      "src": "packages/orchestrator/dist/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "packages/orchestrator/dist/**",
+          "packages/nodes-base/dist/**"
+        ]
+      }
     }
   ],
   "routes": [
     {
-      "src": "/api/orchestrator/(.*)",
-      "dest": "/packages/orchestrator/src/server.js"
+      "src": "/api/(.*)",
+      "dest": "/packages/orchestrator/dist/server.js"
+    },
+    {
+      "src": "/mcp/(.*)",
+      "dest": "/packages/orchestrator/dist/server.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/packages/user-interface/$1"
+      "dest": "/packages/orchestrator/dist/server.js"
     }
   ],
   "env": {
@@ -31,10 +37,13 @@
     "SUPABASE_SERVICE_ROLE_KEY": "@supabase-service-role-key",
     "DATABASE_URL": "@database-url",
     "NEXTAUTH_SECRET": "@nextauth-secret",
-    "NEXTAUTH_URL": "@nextauth-url"
+    "NEXTAUTH_URL": "@nextauth-url",
+    "NODE_ENV": "production",
+    "PORT": "3000",
+    "MAX_JSON_REQUEST_SIZE": "50"
   },
   "functions": {
-    "packages/orchestrator/src/server.js": {
+    "packages/orchestrator/dist/server.js": {
       "maxDuration": 30
     }
   }
